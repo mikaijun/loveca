@@ -7,13 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "lint:fix": "next lint --fix",
-    "prepare": "husky"
-  },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "next lint --fix"
-    ]
+    "lint:fix": "next lint --fix"
   },
   "dependencies": {
     "next": "15.1.7",
@@ -21,6 +15,8 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^19.7.1",
+    "@commitlint/config-conventional": "^19.7.1",
     "@eslint/eslintrc": "^3.2.0",
     "@types/node": "^20",
     "@types/react": "^19",
@@ -31,7 +27,7 @@
     "eslint-plugin-prettier": "^5.2.3",
     "eslint-plugin-react": "^7.37.4",
     "eslint-plugin-storybook": "^0.11.3",
-    "husky": "^9.1.7",
+    "husky": "^8.0.0",
     "typescript": "^5"
   }
 }
