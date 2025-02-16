@@ -1,5 +1,5 @@
-import { HeartManager } from '@organism/HeartManager'
 import { Container } from '@radix-ui/themes'
+import { HeartManager } from '@organism/HeartManager'
 
 export default function MyApp() {
   return (
