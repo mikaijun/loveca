@@ -1,7 +1,7 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 import { describe, it, expect } from 'vitest'
-import HeartIcon from './HeartIcon'
+import { HeartIcon } from './HeartIcon'
 import '@testing-library/jest-dom'
 
 describe('HeartIcon component', () => {

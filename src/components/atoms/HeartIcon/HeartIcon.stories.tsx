@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import HeartIcon from './HeartIcon'
+import { HeartIcon } from './HeartIcon'
 
 const meta: Meta<typeof HeartIcon> = {
   title: 'Atoms/HeartIcon',
@@ -13,8 +13,6 @@ const meta: Meta<typeof HeartIcon> = {
   decorators: [
     (Story) => (
       <div style={{ backgroundColor: '#f0f0f0', padding: '20px' }}>
-        {' '}
-        {/* 背景色をここで変更 */}
         <Story />
       </div>
     ),

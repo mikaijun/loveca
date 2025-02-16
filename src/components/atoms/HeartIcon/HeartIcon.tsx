@@ -27,10 +27,10 @@ const colorMap = {
   gray: colors.gray,
 }
 
-const HeartIcon = ({ color }: HeartIconProps) => {
+export const HeartIcon = ({ color }: HeartIconProps) => {
   const Icon = iconMap[color]
   const iconColor = colorMap[color]
-  const iconSize = ['red', 'purple', 'yellow'].includes(color) ? '10px' : '16px'
+  const iconSize = ['red', 'purple', 'yellow'].includes(color) ? '8px' : '14px'
 
   return (
     <Flex
@@ -44,13 +44,13 @@ const HeartIcon = ({ color }: HeartIconProps) => {
       <Heart
         color={colors.white}
         fill={colors.white}
-        size="36px"
+        size="32px"
         style={{ position: 'absolute' }}
       />
       <Heart
         color={iconColor}
         fill={iconColor}
-        size="32px"
+        size="28px"
         style={{ position: 'absolute' }}
       />
       {Icon && (
@@ -69,5 +69,3 @@ const HeartIcon = ({ color }: HeartIconProps) => {
     </Flex>
   )
 }
-
-export default HeartIcon
