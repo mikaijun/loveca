@@ -38,14 +38,14 @@ export const HeartCounter: React.FC<HeartCounterProps> = ({
           color={count === 0 ? colors.sage[5] : colors.black}
           data-testid="circle-minus"
           onClick={handleDecrement}
-          size="28px"
+          size="32px"
         />
         <HeartIcon color={color} />
         <CirclePlus
           color={count >= 99 ? colors.sage[5] : colors.black}
           data-testid="circle-plus"
           onClick={handleIncrement}
-          size="28px"
+          size="32px"
         />
       </Flex>
     </Flex>
