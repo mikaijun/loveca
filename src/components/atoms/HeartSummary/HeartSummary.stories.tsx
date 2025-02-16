@@ -24,7 +24,7 @@ type Story = StoryObj<typeof HeartSummary>
 export const Default: Story = {
   args: {
     icon: <Megaphone />,
-    label: '必要エール数',
+    label: '必要ブレードハート数',
     count: 12,
   },
 }

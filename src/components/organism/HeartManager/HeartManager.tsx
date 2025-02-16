@@ -1,6 +1,8 @@
+'use client'
+
 import React from 'react'
-import { Box, Flex, Text } from '@radix-ui/themes'
-import { Megaphone, Theater, UsersRound } from 'lucide-react'
+import { Box, Button, Flex, Text } from '@radix-ui/themes'
+import { Heart, Theater, UsersRound } from 'lucide-react'
 import { HeartIcon } from '@atoms/HeartIcon'
 import { HeartCounter } from '@molecules/HeartCounter'
 import {
@@ -30,6 +32,7 @@ export const HeartManager: React.FC = () => {
     handleDecrementRequiredLiveHeart,
     handleIncrementMemberHeart,
     handleDecrementMemberHeart,
+    handleResetHeart,
   } = useHeartManager()
 
   const {
@@ -45,17 +48,24 @@ export const HeartManager: React.FC = () => {
   return (
     <Flex direction="column" gap="8px">
       <Box>
+        <Button
+          color="red"
+          onClick={handleResetHeart}
+          style={{ display: 'block', marginLeft: 'auto' }}
+        >
+          リセット
+        </Button>
         <HeartSummary
           // NOTE: 以下の2つを出しわけたいため条件式を記述している
-          // ・ライブが実行されないことによる必要エールなし(0と表示)
+          // ・ライブが実行されないことによる必要ブレードハートはなし(0と表示)
           // ・ライブに必要なハートが揃ったことによる必要ブレードハートなし(ライブ成功と表示)
           count={
             requiredLiveHeartCount > 0 && requiredBladeHeartCount === 0
               ? 'ライブ成功'
               : requiredBladeHeartCount
           }
-          icon={<Megaphone size="20px" />}
-          label="エール必要ハート数:"
+          icon={<Heart size="20px" style={{ transform: 'rotate(-90deg)' }} />}
+          label="必要ブレードハート数:"
         />
         <Flex {...HEART_COUNTER_STYLE} gap="0px 32px" mb="16px">
           {REQUIRED_LIVE_HEART_COLORS.map((color) => (

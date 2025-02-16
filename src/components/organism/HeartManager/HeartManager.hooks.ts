@@ -50,7 +50,11 @@ const useHeartState = <T extends Record<string, number>>(initialState: T) => {
     [setState]
   )
 
-  return { state, increment, decrement }
+  const reset = useCallback(() => {
+    setState(initialState)
+  }, [initialState])
+
+  return { state, increment, decrement, reset }
 }
 
 /**
@@ -77,6 +81,7 @@ export const calculateRequiredGreyBladeHeart = ({
 }
 
 /**
+/**
  * ハートの状態を管理するカスタムフックを返す
  */
 export const useHeartManager = () => {
@@ -84,6 +89,7 @@ export const useHeartManager = () => {
     state: requiredLiveHearts,
     increment: handleIncrementRequiredLiveHeart,
     decrement: handleDecrementRequiredLiveHeart,
+    reset: resetRequiredLiveHeart,
   } = useHeartState<RequiredLiveHeartState>({
     pink: 0,
     green: 0,
@@ -98,6 +104,7 @@ export const useHeartManager = () => {
     state: memberHearts,
     increment: incrementMemberHeart,
     decrement: decrementMemberHeart,
+    reset: resetMemberHeart,
   } = useHeartState<MemberHeartState>({
     pink: 0,
     green: 0,
@@ -127,6 +134,11 @@ export const useHeartManager = () => {
     [decrementMemberHeart]
   )
 
+  const handleResetHeart = useCallback(() => {
+    resetRequiredLiveHeart()
+    resetMemberHeart()
+  }, [resetRequiredLiveHeart, resetMemberHeart])
+
   return {
     requiredLiveHearts,
     memberHearts,
@@ -134,6 +146,7 @@ export const useHeartManager = () => {
     handleDecrementRequiredLiveHeart,
     handleIncrementMemberHeart,
     handleDecrementMemberHeart,
+    handleResetHeart,
   }
 }
 
