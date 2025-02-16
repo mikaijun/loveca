@@ -1,53 +1,69 @@
 import React from 'react'
 import { fireEvent, render, screen } from '@testing-library/react'
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import { HeartCounter } from './HeartCounter'
 import '@testing-library/jest-dom'
 
 describe('HeartCounter', () => {
   it('初期状態でカウントが0で表示されること', () => {
-    render(<HeartCounter />)
+    render(
+      <HeartCounter
+        color="red"
+        count={0}
+        onDecrement={() => {}}
+        onIncrement={() => {}}
+      />
+    )
 
     const countText = screen.getByText('0')
     expect(countText).toBeInTheDocument()
   })
 
-  it('CircleMinusをクリックしてもカウントが0未満にはならないこと', () => {
-    render(<HeartCounter />)
+  it('マイナスボタンをクリックしてもカウントが0未満にはならないこと', () => {
+    const onDecrement = vi.fn()
+    render(
+      <HeartCounter
+        color="red"
+        count={0}
+        onDecrement={onDecrement}
+        onIncrement={() => {}}
+      />
+    )
 
-    // CircleMinus アイコンを取得
     const minusButton = screen.getByTestId('circle-minus')
-    fireEvent.click(minusButton) // 一度クリック
-
-    const countText = screen.getByText('0')
-    expect(countText).toBeInTheDocument() // カウントが0のままであること
+    fireEvent.click(minusButton)
+    expect(onDecrement).not.toHaveBeenCalled()
   })
 
-  it('CirclePlusをクリックするとカウントが+1されること', () => {
-    render(<HeartCounter />)
+  it('プラスボタンをクリックするとカウントが+1されること', () => {
+    const onIncrement = vi.fn()
+    render(
+      <HeartCounter
+        color="red"
+        count={0}
+        onDecrement={() => {}}
+        onIncrement={onIncrement}
+      />
+    )
 
-    // CirclePlus アイコンを取得
     const plusButton = screen.getByTestId('circle-plus')
     fireEvent.click(plusButton)
-
-    const countText = screen.getByText('1')
-    expect(countText).toBeInTheDocument() // カウントが1に増えていること
+    expect(onIncrement).toHaveBeenCalled()
   })
 
-  it('カウントが99のときにCirclePlusをクリックしてもカウントが100にならないこと', () => {
-    render(<HeartCounter />)
+  it('カウントが99のときにプラスボタンをクリックしてもカウントが100にならないこと', () => {
+    const onIncrement = vi.fn()
+    render(
+      <HeartCounter
+        color="red"
+        count={99}
+        onDecrement={() => {}}
+        onIncrement={onIncrement}
+      />
+    )
 
-    // まずカウントを99にする
     const plusButton = screen.getByTestId('circle-plus')
-    for (let i = 0; i < 99; i++) {
-      fireEvent.click(plusButton)
-    }
-
-    const countText = screen.getByText('99')
-    expect(countText).toBeInTheDocument() // カウントが99のままであること
-
-    // さらにCirclePlusをクリックしてもカウントは増えない
     fireEvent.click(plusButton)
-    expect(countText).toBeInTheDocument() // まだ99のままであること
+    expect(onIncrement).not.toHaveBeenCalled()
   })
 })

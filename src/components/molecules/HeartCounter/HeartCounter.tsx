@@ -1,36 +1,52 @@
-import React, { useState } from 'react'
+import React, { useCallback } from 'react'
 import { Flex, Text } from '@radix-ui/themes'
 import { CircleMinus, CirclePlus } from 'lucide-react'
-import { HeartIcon } from '@atoms/HeartIcon'
+import { HeartIcon, HeartIconProps } from '@atoms/HeartIcon'
+import { colors } from '@constants/colors'
 
-export const HeartCounter: React.FC = () => {
-  const [count, setCount] = useState(0)
+type HeartCounterProps = HeartIconProps & {
+  count: number
+  onDecrement: (color: HeartIconProps['color']) => void
+  onIncrement: (color: HeartIconProps['color']) => void
+}
 
-  const decrement = () => {
+export const HeartCounter: React.FC<HeartCounterProps> = ({
+  count,
+  color,
+  onDecrement,
+  onIncrement,
+}) => {
+  const handleDecrement = useCallback(() => {
     if (count > 0) {
-      setCount(count - 1)
+      onDecrement(color)
     }
-  }
+  }, [count, color, onDecrement])
 
-  const increment = () => {
+  const handleIncrement = useCallback(() => {
     if (count < 99) {
-      setCount(count + 1)
+      onIncrement(color)
     }
-  }
+  }, [count, color, onIncrement])
 
   return (
-    <Flex align="center" direction="column" gap="8px" justify="center">
+    <Flex align="center" direction="column" justify="center">
       <Text as="p" size="5" weight="bold">
         {count}
       </Text>
       <Flex align="center" gap="4px">
         <CircleMinus
+          color={count === 0 ? colors.lightGray : colors.black}
           data-testid="circle-minus"
-          onClick={decrement}
+          onClick={handleDecrement}
           size="28px"
         />
-        <HeartIcon color="red" />
-        <CirclePlus data-testid="circle-plus" onClick={increment} size="28px" />
+        <HeartIcon color={color} />
+        <CirclePlus
+          color={count >= 99 ? colors.lightGray : colors.black}
+          data-testid="circle-plus"
+          onClick={handleIncrement}
+          size="28px"
+        />
       </Flex>
     </Flex>
   )
