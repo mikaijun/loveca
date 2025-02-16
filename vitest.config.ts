@@ -10,7 +10,7 @@ export default defineConfig({
     alias: {
       '@atoms/': path.join(__dirname, 'src/components/atoms/'),
       '@molecules/': path.join(__dirname, 'src/components/molecules/'),
-      '@organisms/': path.join(__dirname, 'src/components/organisms/'),
+      '@organism/': path.join(__dirname, 'src/components/organism/'),
       '@pages/': path.join(__dirname, 'src/components/pages/'),
       '@constants/': path.join(__dirname, 'src/constants/'),
     },

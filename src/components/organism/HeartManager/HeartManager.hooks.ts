@@ -60,7 +60,7 @@ const useHeartState = <T extends Record<string, number>>(initialState: T) => {
  * A: 必要な灰色ライブハートの数
  * B: メンバーの各色ハートの合計数 - ライブに必要な各色ハートの数の合計
  */
-const calculateRequiredGreyBladeHeart = ({
+export const calculateRequiredGreyBladeHeart = ({
   requiredLiveHearts,
   memberHearts,
 }: CalculateHeartCount): number => {
