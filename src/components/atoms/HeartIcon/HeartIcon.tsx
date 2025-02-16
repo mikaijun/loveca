@@ -18,13 +18,13 @@ const iconMap = {
 }
 
 const colorMap = {
-  pink: colors.pink,
-  green: colors.green,
-  blue: colors.blue,
-  red: colors.red,
-  yellow: colors.yellow,
-  purple: colors.purple,
-  gray: colors.gray,
+  pink: colors.crimson[9],
+  green: colors.grass[9],
+  blue: colors.blue[8],
+  red: colors.tomato[9],
+  yellow: colors.amber[9],
+  purple: colors.purple[10],
+  gray: colors.slate[11],
 }
 
 export const HeartIcon: React.FC<HeartIconProps> = ({ color }) => {

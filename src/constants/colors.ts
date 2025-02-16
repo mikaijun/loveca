@@ -1,13 +1,31 @@
+// NOTE: カラー名と数字は下記のcolor表から引用している
 // see: https://www.radix-ui.com/colors
 export const colors = {
-  pink: '#E93D82',
-  green: '#46A758',
-  blue: '#5EB1EF',
-  red: '#E54D2E',
-  yellow: '#FFC53D',
-  purple: '#8347B9',
-  lightGray: '#DFE2E0',
-  gray: '#60646C',
+  slate: {
+    11: '#60646C',
+  },
+  sage: {
+    5: '#DFE2E0',
+  },
+  tomato: {
+    9: '#E54D2E',
+  },
+  crimson: {
+    9: '#E93D82',
+  },
+  purple: {
+    10: '#8347B9',
+  },
+  blue: {
+    2: '#F4FAFF',
+    8: '#5EB1EF',
+  },
+  grass: {
+    9: '#46A758',
+  },
+  amber: {
+    9: '#FFC53D',
+  },
   white: '#FFFFFF',
-  black: '#202020',
+  black: '#000000',
 }

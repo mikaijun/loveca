@@ -1,46 +1,86 @@
 import React from 'react'
-import { Flex, Text } from '@radix-ui/themes'
-import { HeartIconProps } from '@atoms/HeartIcon'
+import { Box, Flex, Text } from '@radix-ui/themes'
+import { Megaphone, Theater, UsersRound } from 'lucide-react'
+import { HeartIcon } from '@atoms/HeartIcon'
 import { HeartCounter } from '@molecules/HeartCounter'
-import { useHeartManager } from '@organism/HeartManager/HeartManager.hooks'
+import {
+  calculateHeartCount,
+  REQUIRED_LIVE_HEART_COLORS,
+  MEMBER_HEART_COLORS,
+  useHeartManager,
+} from '@organism/HeartManager/HeartManager.hooks'
+import { colors } from '@constants/colors'
+import { HeartSummary } from '@atoms/HeartSummary'
 
-type StageHeartColor = Exclude<HeartIconProps['color'], 'gray'>
-
-const REQUIRED_HEART_COLORS: HeartIconProps['color'][] = [
-  'pink',
-  'green',
-  'blue',
-  'red',
-  'yellow',
-  'purple',
-  'gray',
-]
-
-const STAGE_HEART_COLORS: StageHeartColor[] = REQUIRED_HEART_COLORS.filter(
-  (color): color is StageHeartColor => color !== 'gray'
-)
+const HEART_COUNTER_STYLE = {
+  gap: '0px 16px',
+  style: {
+    backgroundColor: colors.blue[2],
+    borderRadius: '4px',
+    padding: '4px',
+  },
+  wrap: 'wrap' as const,
+}
 
 export const HeartManager: React.FC = () => {
   const {
     requiredLiveHearts,
-    liveHearts,
+    memberHearts,
     handleIncrementRequiredLiveHeart,
     handleDecrementRequiredLiveHeart,
-    handleIncrementStageHeart,
-    handleDecrementStageHeart,
+    handleIncrementMemberHeart,
+    handleDecrementMemberHeart,
   } = useHeartManager()
+
+  const {
+    requiredLiveHeartCount,
+    memberHeartCount,
+    requiredBladeHeart,
+    requiredBladeHeartCount,
+  } = calculateHeartCount({
+    requiredLiveHearts,
+    memberHearts,
+  })
 
   return (
     <Flex direction="column" gap="8px">
-      <Text size="6" weight="bold">
-        合計必要ハート数: 0
-      </Text>
-      <Text size="4" weight="bold">
-        ライブに必要なハート数:
-        {Object.values(requiredLiveHearts).reduce((acc, cur) => acc + cur, 0)}
-      </Text>
-      <Flex gap="12px" wrap="wrap">
-        {REQUIRED_HEART_COLORS.map((color) => (
+      <Box>
+        <HeartSummary
+          // NOTE: 以下の2つを出しわけたいため条件式を記述している
+          // ・ライブが実行されないことによる必要エールなし(0と表示)
+          // ・ライブに必要なハートが揃ったことによる必要ブレードハートなし(ライブ成功と表示)
+          count={
+            requiredLiveHeartCount > 0 && requiredBladeHeartCount === 0
+              ? 'ライブ成功'
+              : requiredBladeHeartCount
+          }
+          icon={<Megaphone size="20px" />}
+          label="エール必要ハート数:"
+        />
+        <Flex {...HEART_COUNTER_STYLE} gap="0px 32px" mb="16px">
+          {REQUIRED_LIVE_HEART_COLORS.map((color) => (
+            <Flex align="center" key={color} width="64px">
+              <HeartIcon color={color} />
+              <Text size="3" weight="bold">
+                {/* NOTE: 以下の2つを出しわけたいため条件式を記述している
+                ・ライブに必要のないハート色(0と表示)
+                ・ライブに必要なハート色が存在していて、メンバーのハートで足りている場合(達成と表示)*/}
+                {requiredLiveHearts[color] > 0 &&
+                requiredBladeHeart[color] === 0
+                  ? '達成'
+                  : requiredBladeHeart[color]}
+              </Text>
+            </Flex>
+          ))}
+        </Flex>
+      </Box>
+      <HeartSummary
+        count={requiredLiveHeartCount}
+        icon={<Theater size="20px" />}
+        label="ライブ成功必要ハート数:"
+      />
+      <Flex {...HEART_COUNTER_STYLE} mb="16px">
+        {REQUIRED_LIVE_HEART_COLORS.map((color) => (
           <HeartCounter
             color={color}
             count={requiredLiveHearts[color]}
@@ -50,18 +90,19 @@ export const HeartManager: React.FC = () => {
           />
         ))}
       </Flex>
-      <Text size="4" weight="bold">
-        ステージに存在するハート:
-        {Object.values(liveHearts).reduce((acc, cur) => acc + cur, 0)}
-      </Text>
-      <Flex gap="12px" wrap="wrap">
-        {STAGE_HEART_COLORS.map((color) => (
+      <HeartSummary
+        count={memberHeartCount}
+        icon={<UsersRound size="20px" />}
+        label="メンバーのハート合計数:"
+      />
+      <Flex {...HEART_COUNTER_STYLE}>
+        {MEMBER_HEART_COLORS.map((color) => (
           <HeartCounter
             color={color}
-            count={liveHearts[color]}
+            count={memberHearts[color]}
             key={color}
-            onDecrement={handleDecrementStageHeart}
-            onIncrement={handleIncrementStageHeart}
+            onDecrement={handleDecrementMemberHeart}
+            onIncrement={handleIncrementMemberHeart}
           />
         ))}
       </Flex>
