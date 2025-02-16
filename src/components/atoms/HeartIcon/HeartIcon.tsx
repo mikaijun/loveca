@@ -30,6 +30,7 @@ const colorMap = {
 export const HeartIcon: React.FC<HeartIconProps> = ({ color }) => {
   const Icon = iconMap[color]
   const iconColor = colorMap[color]
+  // NOTE: ハートの中のアイコンは種類によってサイズが異なるため、サイズを調整する
   const iconSize = ['red', 'purple', 'yellow'].includes(color) ? '8px' : '14px'
 
   return (
@@ -44,13 +45,13 @@ export const HeartIcon: React.FC<HeartIconProps> = ({ color }) => {
       <Heart
         color={colors.white}
         fill={colors.white}
-        size="32px"
+        size="28px"
         style={{ position: 'absolute' }}
       />
       <Heart
         color={iconColor}
         fill={iconColor}
-        size="28px"
+        size="24px"
         style={{ position: 'absolute' }}
       />
       {Icon && (

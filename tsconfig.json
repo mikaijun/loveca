@@ -21,7 +21,7 @@
     "paths": {
       "@atoms/*": ["./src/components/atoms/*"],
       "@molecules/*": ["./src/components/molecules/*"],
-      "@organisms/*": ["./src/components/organisms/*"],
+      "@organism/*": ["./src/components/organism/*"],
       "@pages/*": ["./src/components/pages/*"],
       "@constants/*": ["./src/constants/*"],
     }
