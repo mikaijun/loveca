@@ -19,6 +19,7 @@ export const colors = {
   blue: {
     2: '#F4FAFF',
     8: '#5EB1EF',
+    9: '#0090FF',
   },
   grass: {
     9: '#46A758',

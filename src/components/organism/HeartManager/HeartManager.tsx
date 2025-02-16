@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { Box, Button, Flex, Text } from '@radix-ui/themes'
-import { Heart, Theater, UsersRound } from 'lucide-react'
+import { Heart, RotateCcw, Theater, UsersRound } from 'lucide-react'
 import { HeartIcon } from '@atoms/HeartIcon'
 import { HeartCounter } from '@molecules/HeartCounter'
 import {
@@ -51,8 +51,14 @@ export const HeartManager: React.FC = () => {
         <Button
           color="red"
           onClick={handleResetHeart}
-          style={{ display: 'block', marginLeft: 'auto' }}
+          radius="large"
+          style={{
+            marginLeft: 'auto',
+            display: 'flex',
+            alignItems: 'center',
+          }}
         >
+          <RotateCcw size="16px" />
           リセット
         </Button>
         <HeartSummary
