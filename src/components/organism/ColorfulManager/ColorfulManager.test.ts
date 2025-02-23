@@ -1,10 +1,10 @@
 import { describe, it, expect } from 'vitest'
 import { act, renderHook } from '@testing-library/react'
 import {
-  useHeartManager,
+  useColorfulManager,
   calculateHeartCount,
   calculateRequiredGreyBladeHeart,
-} from '@organism/HeartManager/HeartManager.hooks'
+} from '@organism/ColorfulManager/ColorfulManager.hooks'
 
 const requiredLiveHearts = {
   pink: 1,
@@ -25,9 +25,9 @@ const memberHearts = {
   purple: 1,
 }
 
-describe('useHeartManager hook', () => {
+describe('useColorfulManager hook', () => {
   it('ハート追加・減少した時、数が適切か確認', () => {
-    const { result } = renderHook(() => useHeartManager())
+    const { result } = renderHook(() => useColorfulManager())
 
     expect(result.current.requiredLiveHearts).toEqual({
       pink: 0,
@@ -61,7 +61,7 @@ describe('useHeartManager hook', () => {
   })
 
   it('メンバーの灰色のハートを増減しようとするとエラーが発生するか確認', () => {
-    const { result } = renderHook(() => useHeartManager())
+    const { result } = renderHook(() => useColorfulManager())
 
     expect(() => {
       act(() => {

@@ -9,8 +9,8 @@ import {
   calculateHeartCount,
   REQUIRED_LIVE_HEART_COLORS,
   MEMBER_HEART_COLORS,
-  useHeartManager,
-} from '@organism/HeartManager/HeartManager.hooks'
+  useColorfulManager,
+} from '@organism/ColorfulManager/ColorfulManager.hooks'
 import { colors } from '@constants/colors'
 import { HeartSummary } from '@atoms/HeartSummary'
 
@@ -24,7 +24,7 @@ const HEART_COUNTER_STYLE = {
   wrap: 'wrap' as const,
 }
 
-export const HeartManager: React.FC = () => {
+export const ColorfulManager: React.FC = () => {
   const {
     requiredLiveHearts,
     memberHearts,
@@ -33,7 +33,7 @@ export const HeartManager: React.FC = () => {
     handleIncrementMemberHeart,
     handleDecrementMemberHeart,
     handleResetHeart,
-  } = useHeartManager()
+  } = useColorfulManager()
 
   const {
     requiredLiveHeartCount,

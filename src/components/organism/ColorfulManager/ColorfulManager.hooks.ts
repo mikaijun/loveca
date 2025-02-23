@@ -84,7 +84,7 @@ export const calculateRequiredGreyBladeHeart = ({
 /**
  * ハートの状態を管理するカスタムフックを返す
  */
-export const useHeartManager = () => {
+export const useColorfulManager = () => {
   const {
     state: requiredLiveHearts,
     increment: handleIncrementRequiredLiveHeart,

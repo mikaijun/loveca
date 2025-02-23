@@ -1,5 +1,5 @@
 import { Box, Container, Text } from '@radix-ui/themes'
-import { HeartManager } from '@organism/HeartManager'
+import { ColorfulManager } from '@organism/ColorfulManager'
 import { colors } from '@constants/colors'
 
 export default function MyApp() {
@@ -20,7 +20,7 @@ export default function MyApp() {
         </Text>
       </Box>
       <Container p="8px" size="2">
-        <HeartManager />
+        <ColorfulManager />
         <Text as="p" color="gray" mt="8px" size="1">
           ※ALLハート持ちメンバーは好きな色を選択してください
         </Text>
