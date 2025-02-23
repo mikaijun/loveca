@@ -122,6 +122,9 @@ export const ColorfulManager: React.FC = () => {
           />
         ))}
       </Flex>
+      <Text as="p" color="gray" mt="8px" size="1">
+        ※ALLハート持ちメンバーは好きな色を選択してください
+      </Text>
     </Flex>
   )
 }
