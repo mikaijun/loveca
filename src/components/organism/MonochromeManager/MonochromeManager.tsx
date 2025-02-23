@@ -39,7 +39,7 @@ export const MonochromeManager: React.FC = () => {
         <RotateCcw size="16px" />
         リセット
       </Button>
-      <Flex direction="column" gap="32px">
+      <Flex direction="column" gap="16px">
         <HeartSummary
           count={requiredBladeHeartCount}
           icon={<Heart size="20px" style={{ transform: 'rotate(-90deg)' }} />}
@@ -102,7 +102,7 @@ export const MonochromeManager: React.FC = () => {
           }}
         >
           <Box p="0 8px">
-            <Text as="p" mb="8px" size="2" weight="bold">
+            <Text as="p" mb="8px" size="3" weight="bold">
               ライブ成功確率
             </Text>
             <Flex align="end" justify="between" mb="16px">
