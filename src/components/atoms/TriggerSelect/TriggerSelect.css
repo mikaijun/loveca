@@ -1,0 +1,96 @@
+/* NOTE: 下記記事の一部を引用し、カラーを変更してる
+// see: https: //www.radix-ui.com/primitives/docs/components/select */
+@import "@radix-ui/colors/black-alpha.css";
+@import "@radix-ui/colors/mauve.css";
+
+/* reset */
+button {
+  all: unset;
+}
+
+.SelectTrigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  padding: 0 15px;
+  font-size: 13px;
+  line-height: 1;
+  height: 35px;
+  gap: 5px;
+  background-color: #FFFFFF;
+  color: #60646C;
+  box-shadow: 0 2px 10px var(--black-a7);
+}
+
+.SelectTrigger[data-placeholder] {
+  color: #60646C;
+}
+
+.SelectIcon {
+  color: #60646C;
+}
+
+.SelectContent {
+  overflow: hidden;
+  background-color: #FFFFFF;
+  border-radius: 6px;
+  box-shadow:
+    0px 10px 38px -10px rgba(22, 23, 24, 0.35),
+    0px 10px 20px -15px rgba(22, 23, 24, 0.2);
+}
+
+.SelectViewport {
+  padding: 5px;
+}
+
+.SelectItem {
+  font-size: 13px;
+  line-height: 1;
+  color: #60646C;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  height: 25px;
+  padding: 0 35px 0 25px;
+  position: relative;
+  user-select: none;
+}
+
+.SelectItem[data-highlighted] {
+  outline: none;
+  background-color: #5EB1EF;
+  color: #FFFFFF;
+}
+
+.SelectLabel {
+  padding: 0 25px;
+  font-size: 10px;
+  line-height: 25px;
+  color: #5EB1EF;
+}
+
+.SelectSeparator {
+  height: 1px;
+  background-color: #DFE2E0;
+  margin: 5px;
+}
+
+.SelectItemIndicator {
+  position: absolute;
+  left: 0;
+  width: 25px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.SelectScrollButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 25px;
+  background-color: #FFFFFF;
+  color: #60646C;
+  cursor: default;
+}
