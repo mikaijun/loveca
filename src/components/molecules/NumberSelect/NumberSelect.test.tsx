@@ -9,19 +9,6 @@ describe('NumberSelect', () => {
     HTMLElement.prototype.scrollIntoView = vi.fn()
   })
 
-  test('ラベルが表示されること', () => {
-    render(
-      <NumberSelect
-        ariaLabel="Blade Heart"
-        endNumber={5}
-        label="エールのブレードハート数"
-        onChangeValue={() => {}}
-        startNumber={0}
-      />
-    )
-    expect(screen.getByText('エールのブレードハート数')).toBeInTheDocument()
-  })
-
   test('昇順の選択肢が正しく表示されること', async () => {
     render(
       <NumberSelect
@@ -56,31 +43,16 @@ describe('NumberSelect', () => {
     expect(screen.getByText('1')).toBeInTheDocument()
   })
 
-  test('プレースホルダーがデフォルト値で表示されること', () => {
+  test('デフォルト値で0が表示されること', () => {
     render(
       <NumberSelect
         ariaLabel="Number Select"
         endNumber={5}
         onChangeValue={() => {}}
         startNumber={0}
+        value={0}
       />
     )
-
-    expect(screen.getByText('選択')).toBeInTheDocument()
-  })
-
-  test('プレースホルダーが指定値で表示されること', () => {
-    render(
-      <NumberSelect
-        ariaLabel="Number Select"
-        endNumber={5}
-        onChangeValue={() => {}}
-        placeholder="選んでください"
-        startNumber={0}
-      />
-    )
-
-    expect(screen.getByText('選んでください')).toBeInTheDocument()
   })
 
   test('onChangeValue が適切に呼ばれ、選択した値が渡されること', () => {

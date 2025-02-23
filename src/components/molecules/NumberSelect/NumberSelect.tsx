@@ -2,15 +2,14 @@ import React, { useCallback } from 'react'
 import classnames from 'classnames'
 import { CheckIcon } from 'lucide-react'
 import { Select } from 'radix-ui'
-import { Label } from '@radix-ui/react-label'
+import { Box, BoxProps } from '@radix-ui/themes'
 import { TriggerSelect } from '@atoms/TriggerSelect'
 
-type NumberSelectProps = {
+type NumberSelectProps = BoxProps & {
   startNumber: number
   endNumber: number
   ariaLabel: string
-  label?: string
-  placeholder?: string
+  value?: number
   className?: string
   onChangeValue: (value: number) => void
 }
@@ -19,8 +18,7 @@ export const NumberSelect: React.FC<NumberSelectProps> = ({
   startNumber,
   endNumber,
   ariaLabel,
-  placeholder,
-  label,
+  value,
   className,
   onChangeValue,
   ...props
@@ -40,24 +38,11 @@ export const NumberSelect: React.FC<NumberSelectProps> = ({
   )
 
   return (
-    <>
-      {label && (
-        <Label
-          htmlFor={label}
-          style={{
-            display: 'block',
-            fontSize: '12px',
-            marginBottom: '4px',
-          }}
-        >
-          {label}
-        </Label>
-      )}
+    <Box {...props}>
       <TriggerSelect
         ariaLabel={ariaLabel}
-        id={label}
         onValueChange={handleChangeValue}
-        placeholder={placeholder ?? '選択'}
+        value={String(value)}
       >
         <Select.Group>
           {numbers.map((number, i) => (
@@ -67,7 +52,8 @@ export const NumberSelect: React.FC<NumberSelectProps> = ({
               value={String(number)}
               {...props}
             >
-              <Select.ItemText>{number}</Select.ItemText>
+              {/* NOTE: 数値の0は選択後表示されないので文字列に変換している */}
+              <Select.ItemText>{number === 0 ? '0' : number}</Select.ItemText>
               <Select.ItemIndicator className="SelectItemIndicator">
                 <CheckIcon />
               </Select.ItemIndicator>
@@ -75,6 +61,6 @@ export const NumberSelect: React.FC<NumberSelectProps> = ({
           ))}
         </Select.Group>
       </TriggerSelect>
-    </>
+    </Box>
   )
 }

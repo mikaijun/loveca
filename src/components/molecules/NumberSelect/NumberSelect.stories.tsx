@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react'
+import { useState } from 'react'
 import { NumberSelect } from './NumberSelect'
 
 const meta: Meta<typeof NumberSelect> = {
@@ -9,25 +10,43 @@ const meta: Meta<typeof NumberSelect> = {
 export default meta
 
 export const BladeHeartCount: StoryObj<typeof NumberSelect> = {
-  render: () => (
-    <NumberSelect
-      ariaLabel="Blade Heart"
-      endNumber={60}
-      label="エールのブレードハート数"
-      onChangeValue={() => {}}
-      startNumber={0}
-    />
-  ),
+  render: () => {
+    const [value, setValue] = useState(0)
+    return (
+      <>
+        <p>エールのブレードハート数</p>
+        <NumberSelect
+          ariaLabel="Blade Heart"
+          endNumber={60}
+          onChangeValue={(newValue) => setValue(newValue)}
+          startNumber={0}
+          style={{
+            width: '60px',
+          }}
+          value={value}
+        />
+      </>
+    )
+  },
 }
 
 export const DeckBladeHeartCount: StoryObj<typeof NumberSelect> = {
-  render: () => (
-    <NumberSelect
-      ariaLabel="Deck blade Heart"
-      endNumber={0}
-      label="デッキ内のブレードハート数"
-      onChangeValue={() => {}}
-      startNumber={60}
-    />
-  ),
+  render: () => {
+    const [value, setValue] = useState(60)
+    return (
+      <>
+        <p>デッキの中ののブレードハート数</p>
+        <NumberSelect
+          ariaLabel="Deck blade Heart"
+          endNumber={0}
+          onChangeValue={(newValue) => setValue(newValue)}
+          startNumber={60}
+          style={{
+            width: '60px',
+          }}
+          value={value}
+        />
+      </>
+    )
+  },
 }

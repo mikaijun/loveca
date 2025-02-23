@@ -1,7 +1,7 @@
 import React from 'react'
-import { Flex, Text } from '@radix-ui/themes'
+import { Flex, FlexProps, Text } from '@radix-ui/themes'
 
-type HeartSummaryProps = {
+type HeartSummaryProps = FlexProps & {
   icon: React.ReactNode
   label: string
   count: number | 'ライブ成功'
@@ -10,8 +10,9 @@ export const HeartSummary: React.FC<HeartSummaryProps> = ({
   icon,
   label,
   count,
+  ...props
 }) => (
-  <Flex align="center" gap="8px">
+  <Flex align="center" gap="8px" {...props}>
     {icon}
     <Flex align="center" gap="8px">
       <Text size="2" weight="bold">

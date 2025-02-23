@@ -9,9 +9,10 @@ button {
 }
 
 .SelectTrigger {
+  width: 100%;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   border-radius: 4px;
   padding: 0 15px;
   font-size: 13px;
