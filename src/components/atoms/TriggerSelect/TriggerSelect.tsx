@@ -3,18 +3,21 @@ import { Select } from 'radix-ui'
 import { ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons'
 import './TriggerSelect.css'
 
-type TriggerSelectProps = {
+type TriggerSelectProps = Select.SelectProps & {
   ariaLabel: string
   children: React.ReactNode
+  id?: string
   placeholder?: string
 }
 export const TriggerSelect: React.FC<TriggerSelectProps> = ({
   ariaLabel,
   placeholder,
   children,
+  id,
+  ...props
 }) => (
-  <Select.Root>
-    <Select.Trigger aria-label={ariaLabel} className="SelectTrigger">
+  <Select.Root {...props}>
+    <Select.Trigger aria-label={ariaLabel} className="SelectTrigger" id={id}>
       <Select.Value placeholder={placeholder ?? '選択'} />
       <Select.Icon className="SelectIcon">
         <ChevronDownIcon />
