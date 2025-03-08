@@ -4,7 +4,7 @@ import React from 'react'
 import { Box, Button, Flex, Text } from '@radix-ui/themes'
 import { Heart, RotateCcw, Theater, UsersRound } from 'lucide-react'
 
-import { HeartSummary } from '@atoms/HeartSummary'
+import { Summary } from '@atoms/Summary'
 import { NumberSelect } from '@molecules/NumberSelect'
 import { useMonochromeManager } from '@organism/MonochromeManager/MonochromeManager.hooks'
 import { colors } from '@constants/colors'
@@ -40,10 +40,9 @@ export const MonochromeManager: React.FC = () => {
         リセット
       </Button>
       <Flex direction="column" gap="16px">
-        <HeartSummary
-          count={requiredBladeHeartCount}
+        <Summary
           icon={<Heart size="20px" style={{ transform: 'rotate(-90deg)' }} />}
-          label="必要ブレードハート数:"
+          label={`必要ブレードハート数: ${requiredBladeHeartCount}`}
           style={{
             backgroundColor: colors.blue[2],
             padding: '16px',
@@ -55,10 +54,9 @@ export const MonochromeManager: React.FC = () => {
             padding: '16px',
           }}
         >
-          <HeartSummary
-            count={requiredLiveHeartCount}
+          <Summary
             icon={<Theater size="20px" />}
-            label="ライブ成功必要ハート数:"
+            label={`ライブ成功必要ハート数: ${requiredLiveHeartCount}`}
             style={{
               marginBottom: '4px',
             }}
@@ -77,10 +75,9 @@ export const MonochromeManager: React.FC = () => {
             padding: '16px',
           }}
         >
-          <HeartSummary
-            count={memberHeartCount}
+          <Summary
             icon={<UsersRound size="20px" />}
-            label="メンバーのハート合計数:"
+            label={`メンバーのハート合計数: ${memberHeartCount}`}
             style={{
               marginBottom: '4px',
             }}

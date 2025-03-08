@@ -12,7 +12,7 @@ import {
   useColorfulManager,
 } from '@organism/ColorfulManager/ColorfulManager.hooks'
 import { colors } from '@constants/colors'
-import { HeartSummary } from '@atoms/HeartSummary'
+import { Summary } from '@atoms/Summary'
 
 const HEART_COUNTER_STYLE = {
   gap: '0px 16px',
@@ -45,6 +45,14 @@ export const ColorfulManager: React.FC = () => {
     memberHearts,
   })
 
+  // NOTE: 以下の2つを出しわけたいため条件式を記述している
+  // ・ライブが実行されないことによる必要ブレードハートはなし(0と表示)
+  // ・ライブに必要なハートが揃ったことによる必要ブレードハートなし(ライブ成功と表示)
+  const requiredBladeHeartMessage =
+    requiredLiveHeartCount > 0 && requiredBladeHeartCount === 0
+      ? 'ライブ成功'
+      : `必要ブレードハート数: ${requiredBladeHeartCount}`
+
   return (
     <Flex direction="column" gap="8px">
       <Box>
@@ -61,17 +69,9 @@ export const ColorfulManager: React.FC = () => {
           <RotateCcw size="16px" />
           リセット
         </Button>
-        <HeartSummary
-          // NOTE: 以下の2つを出しわけたいため条件式を記述している
-          // ・ライブが実行されないことによる必要ブレードハートはなし(0と表示)
-          // ・ライブに必要なハートが揃ったことによる必要ブレードハートなし(ライブ成功と表示)
-          count={
-            requiredLiveHeartCount > 0 && requiredBladeHeartCount === 0
-              ? 'ライブ成功'
-              : requiredBladeHeartCount
-          }
+        <Summary
           icon={<Heart size="20px" style={{ transform: 'rotate(-90deg)' }} />}
-          label="必要ブレードハート数:"
+          label={requiredBladeHeartMessage}
         />
         <Flex {...HEART_COUNTER_STYLE} gap="0px 32px" mb="16px">
           {REQUIRED_LIVE_HEART_COLORS.map((color) => (
@@ -90,10 +90,9 @@ export const ColorfulManager: React.FC = () => {
           ))}
         </Flex>
       </Box>
-      <HeartSummary
-        count={requiredLiveHeartCount}
+      <Summary
         icon={<Theater size="20px" />}
-        label="ライブ成功必要ハート数:"
+        label={`ライブ成功必要ハート数: ${requiredLiveHeartCount}`}
         style={{
           marginBottom: '4px',
         }}
@@ -109,10 +108,9 @@ export const ColorfulManager: React.FC = () => {
           />
         ))}
       </Flex>
-      <HeartSummary
-        count={memberHeartCount}
+      <Summary
         icon={<UsersRound size="20px" />}
-        label="メンバーのハート合計数:"
+        label={`メンバーのハート合計数: ${memberHeartCount}`}
         style={{
           marginBottom: '4px',
         }}

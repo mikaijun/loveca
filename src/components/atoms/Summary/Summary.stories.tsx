@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { Megaphone } from 'lucide-react'
-import { HeartSummary } from './HeartSummary'
+import { Summary } from './Summary'
 
-const meta: Meta<typeof HeartSummary> = {
-  title: 'Atoms/HeartSummary',
-  component: HeartSummary,
+const meta: Meta<typeof Summary> = {
+  title: 'Atoms/Summary',
+  component: Summary,
   argTypes: {
     icon: {
       control: 'object',
@@ -12,19 +12,15 @@ const meta: Meta<typeof HeartSummary> = {
     label: {
       control: 'text',
     },
-    count: {
-      control: 'number',
-    },
   },
 }
 
 export default meta
-type Story = StoryObj<typeof HeartSummary>
+type Story = StoryObj<typeof Summary>
 
 export const Default: Story = {
   args: {
     icon: <Megaphone />,
-    label: '必要ブレードハート数',
-    count: 12,
+    label: '必要ブレードハート数: 12',
   },
 }
