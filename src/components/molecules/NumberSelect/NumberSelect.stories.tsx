@@ -20,9 +20,6 @@ export const BladeHeartCount: StoryObj<typeof NumberSelect> = {
           endNumber={60}
           onChangeValue={(newValue) => setValue(newValue)}
           startNumber={0}
-          style={{
-            width: '60px',
-          }}
           value={value}
         />
       </>
@@ -41,9 +38,6 @@ export const DeckBladeHeartCount: StoryObj<typeof NumberSelect> = {
           endNumber={0}
           onChangeValue={(newValue) => setValue(newValue)}
           startNumber={60}
-          style={{
-            width: '60px',
-          }}
           value={value}
         />
       </>

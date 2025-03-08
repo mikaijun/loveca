@@ -8,16 +8,24 @@ type TriggerSelectProps = Select.SelectProps & {
   children: React.ReactNode
   id?: string
   placeholder?: string
+  selectWidth?: string
 }
 export const TriggerSelect: React.FC<TriggerSelectProps> = ({
   ariaLabel,
   placeholder,
   children,
   id,
+  selectWidth,
   ...props
 }) => (
   <Select.Root {...props}>
-    <Select.Trigger aria-label={ariaLabel} className="SelectTrigger" id={id}>
+    <Select.Trigger
+      aria-label={ariaLabel}
+      className="SelectTrigger"
+      id={id}
+      // NOTE: selectWidthで定義した幅になるようにpadding分を引いている
+      style={{ width: `calc(${selectWidth} - 30px)` }}
+    >
       <Select.Value placeholder={placeholder ?? '選択'} />
       <Select.Icon className="SelectIcon">
         <ChevronDownIcon />

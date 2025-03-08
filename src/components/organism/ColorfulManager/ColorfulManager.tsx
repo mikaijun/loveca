@@ -94,6 +94,9 @@ export const ColorfulManager: React.FC = () => {
         count={requiredLiveHeartCount}
         icon={<Theater size="20px" />}
         label="ライブ成功必要ハート数:"
+        style={{
+          marginBottom: '4px',
+        }}
       />
       <Flex {...HEART_COUNTER_STYLE} mb="16px">
         {REQUIRED_LIVE_HEART_COLORS.map((color) => (
@@ -110,6 +113,9 @@ export const ColorfulManager: React.FC = () => {
         count={memberHeartCount}
         icon={<UsersRound size="20px" />}
         label="メンバーのハート合計数:"
+        style={{
+          marginBottom: '4px',
+        }}
       />
       <Flex {...HEART_COUNTER_STYLE}>
         {MEMBER_HEART_COLORS.map((color) => (

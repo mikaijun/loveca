@@ -59,16 +59,15 @@ export const MonochromeManager: React.FC = () => {
             count={requiredLiveHeartCount}
             icon={<Theater size="20px" />}
             label="ライブ成功必要ハート数:"
+            style={{
+              marginBottom: '4px',
+            }}
           />
           <NumberSelect
             ariaLabel="Required Live Heart"
             endNumber={40}
-            mt="2"
             onChangeValue={handleRequiredLiveHeartCount}
             startNumber={0}
-            style={{
-              width: '56px',
-            }}
             value={requiredLiveHeartCount}
           />
         </Box>
@@ -82,16 +81,15 @@ export const MonochromeManager: React.FC = () => {
             count={memberHeartCount}
             icon={<UsersRound size="20px" />}
             label="メンバーのハート合計数:"
+            style={{
+              marginBottom: '4px',
+            }}
           />
           <NumberSelect
             ariaLabel="Member Heart"
             endNumber={40}
-            mt="2"
             onChangeValue={handleChangeMemberHeartCount}
             startNumber={0}
-            style={{
-              width: '56px',
-            }}
             value={memberHeartCount}
           />
         </Box>
@@ -115,9 +113,6 @@ export const MonochromeManager: React.FC = () => {
                   endNumber={40}
                   onChangeValue={handleChangeYellCount}
                   startNumber={0}
-                  style={{
-                    width: '60px',
-                  }}
                   value={yellCount}
                 />
               </Box>

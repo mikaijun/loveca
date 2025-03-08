@@ -2,10 +2,9 @@ import React, { useCallback } from 'react'
 import classnames from 'classnames'
 import { CheckIcon } from 'lucide-react'
 import { Select } from 'radix-ui'
-import { Box, BoxProps } from '@radix-ui/themes'
 import { TriggerSelect } from '@atoms/TriggerSelect'
 
-type NumberSelectProps = BoxProps & {
+type NumberSelectProps = {
   startNumber: number
   endNumber: number
   ariaLabel: string
@@ -38,29 +37,28 @@ export const NumberSelect: React.FC<NumberSelectProps> = ({
   )
 
   return (
-    <Box {...props}>
-      <TriggerSelect
-        ariaLabel={ariaLabel}
-        onValueChange={handleChangeValue}
-        value={String(value)}
-      >
-        <Select.Group>
-          {numbers.map((number, i) => (
-            <Select.Item
-              className={classnames('SelectItem', className)}
-              key={i}
-              value={String(number)}
-              {...props}
-            >
-              {/* NOTE: 数値の0は選択後表示されないので文字列に変換している */}
-              <Select.ItemText>{number === 0 ? '0' : number}</Select.ItemText>
-              <Select.ItemIndicator className="SelectItemIndicator">
-                <CheckIcon />
-              </Select.ItemIndicator>
-            </Select.Item>
-          ))}
-        </Select.Group>
-      </TriggerSelect>
-    </Box>
+    <TriggerSelect
+      ariaLabel={ariaLabel}
+      onValueChange={handleChangeValue}
+      selectWidth="120px"
+      value={String(value)}
+    >
+      <Select.Group>
+        {numbers.map((number, i) => (
+          <Select.Item
+            className={classnames('SelectItem', className)}
+            key={i}
+            value={String(number)}
+            {...props}
+          >
+            {/* NOTE: 数値の0は選択後表示されないので文字列に変換している */}
+            <Select.ItemText>{number === 0 ? '0' : number}</Select.ItemText>
+            <Select.ItemIndicator className="SelectItemIndicator">
+              <CheckIcon />
+            </Select.ItemIndicator>
+          </Select.Item>
+        ))}
+      </Select.Group>
+    </TriggerSelect>
   )
 }
