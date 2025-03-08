@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Theme } from '@radix-ui/themes'
+import { Analytics } from '@vercel/analytics/next'
 import '@radix-ui/themes/styles.css'
 
 export const metadata: Metadata = {
@@ -16,6 +17,7 @@ export default function RootLayout({
     <html lang="ja">
       <body style={{ margin: '0px', padding: '0px' }}>
         <Theme>{children}</Theme>
+        <Analytics />
       </body>
     </html>
   )
