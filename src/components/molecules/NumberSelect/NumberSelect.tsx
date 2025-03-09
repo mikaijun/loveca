@@ -20,7 +20,6 @@ export const NumberSelect: React.FC<NumberSelectProps> = ({
   value,
   className,
   onChangeValue,
-  ...props
 }) => {
   const isAscending = endNumber >= startNumber
   const length = Math.abs(endNumber - startNumber) + 1
@@ -49,7 +48,6 @@ export const NumberSelect: React.FC<NumberSelectProps> = ({
             className={classnames('SelectItem', className)}
             key={i}
             value={String(number)}
-            {...props}
           >
             {/* NOTE: 数値の0は選択後表示されないので文字列に変換している */}
             <Select.ItemText>{number === 0 ? '0' : number}</Select.ItemText>

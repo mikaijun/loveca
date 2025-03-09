@@ -18,6 +18,7 @@ export const colors = {
   },
   blue: {
     2: '#F4FAFF',
+    5: '#C2E5FF',
     8: '#5EB1EF',
     9: '#0090FF',
   },
