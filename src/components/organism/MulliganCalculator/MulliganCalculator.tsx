@@ -1,0 +1,104 @@
+'use client'
+
+import React from 'react'
+import { Box, Button, Flex, Text } from '@radix-ui/themes'
+import { RotateCcw } from 'lucide-react'
+
+import { GiCardPick, GiCardPlay } from 'react-icons/gi'
+import {
+  calculateMulliganProbability,
+  useMulliganCalculator,
+} from './MulliganCalculator.hooks'
+import { Summary } from '@atoms/Summary'
+import { NumberSelect } from '@molecules/NumberSelect'
+
+import { colors } from '@constants/colors'
+import { LineChart } from '@atoms/LineChart'
+
+const labels = [
+  'マリガン直後',
+  ...Array.from({ length: 10 }, (_, i) => `${i + 1}`),
+]
+
+export const MulliganCalculator: React.FC = () => {
+  const {
+    mulliganCount,
+    wantCardCount,
+    handleChangeMulliganCount,
+    handleChangeWantCardCount,
+    handleReset,
+  } = useMulliganCalculator()
+
+  const probabilities = calculateMulliganProbability(
+    wantCardCount,
+    mulliganCount
+  )
+
+  return (
+    <Flex direction="column" gap="8px">
+      <Button
+        color="red"
+        onClick={handleReset}
+        radius="large"
+        style={{
+          marginLeft: 'auto',
+          display: 'flex',
+          alignItems: 'center',
+          marginBottom: '4px',
+        }}
+      >
+        <RotateCcw size="16px" />
+        リセット
+      </Button>
+      <Flex direction="column" gap="16px">
+        <Box
+          style={{
+            border: `1px solid ${colors.blue[5]}`,
+            padding: '16px',
+          }}
+        >
+          <Summary
+            icon={<GiCardPlay size="24px" />}
+            label="マリガンで戻す枚数"
+            style={{ marginBottom: '4px' }}
+          />
+          <NumberSelect
+            ariaLabel="マリガンで戻す枚数"
+            endNumber={6}
+            onChangeValue={handleChangeMulliganCount}
+            startNumber={0}
+            value={mulliganCount}
+          />
+          <Summary
+            icon={<GiCardPick size="24px" />}
+            label="手札に来て欲しいカードの枚数"
+            style={{
+              marginTop: '24px',
+              marginBottom: '4px',
+            }}
+          />
+          <NumberSelect
+            ariaLabel="手札に来て欲しいカードの枚数"
+            endNumber={60}
+            onChangeValue={handleChangeWantCardCount}
+            startNumber={0}
+            value={wantCardCount}
+          />
+          <Text as="p" color="gray" mt="8px" size="1">
+            例) 8枚採用されているコストxのメンバーを引きたい場合は、
+          </Text>
+          <Text as="p" color="gray" size="1">
+            「8」を選択してください。
+          </Text>
+        </Box>
+      </Flex>
+      <LineChart
+        labels={labels}
+        lineData={probabilities}
+        xText="ドロー枚数"
+        yMin={Math.max(Math.floor(probabilities[0] - 5), 0)}
+        yText="1枚以上引く確率 (%)"
+      />
+    </Flex>
+  )
+}

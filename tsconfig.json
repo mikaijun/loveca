@@ -25,6 +25,7 @@
       "@templates/*": ["./src/components/templates/*"],
       "@pages/*": ["./src/components/pages/*"],
       "@constants/*": ["./src/constants/*"],
+      "@utils": ["./src/utils.ts"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "**/*.stories.tsx", "**/*.test.tsx"],
