@@ -56,12 +56,7 @@ export const useLiveSuccessCalculator = () => {
   }, [])
 
   const liveSuccessProbability = useMemo(() => {
-    if (
-      yellCount === 0 ||
-      requiredLiveHeartCount === 0 ||
-      memberHeartCount === 0 ||
-      deckCount === 0
-    )
+    if (yellCount === 0 || requiredLiveHeartCount === 0 || deckCount === 0)
       return '-'
 
     if (deckCount < deckBladeHeartCount) return 'ブレードハート枚数が不正です'
@@ -71,7 +66,7 @@ export const useLiveSuccessCalculator = () => {
     const n = yellCount
     const z = requiredLiveHeartCount - memberHeartCount
     const probability = calculateProbability(N, K, n, z)
-    if (probability === 0) return '0'
+    if (probability <= 0) return '0'
     if (probability === 1) return '100'
     return (Math.floor(probability * 1000) / 10).toFixed(1)
   }, [
