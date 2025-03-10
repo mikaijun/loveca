@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { Box, Flex, Text } from '@radix-ui/themes'
+import { Box, Flex } from '@radix-ui/themes'
 import { Heart, Theater, UsersRound } from 'lucide-react'
 
 import { Summary } from '@atoms/Summary'
@@ -15,13 +15,8 @@ export const MonochromeManager: React.FC = () => {
     memberHeartCount,
     requiredLiveHeartCount,
     requiredBladeHeartCount,
-    yellCount,
-    deckBladeHeartCount,
-    liveSuccessProbability,
     handleChangeMemberHeartCount,
     handleRequiredLiveHeartCount,
-    handleChangeYellCount,
-    handleChangeDeckBladeHeartCount,
     handleResetHeart,
   } = useMonochromeManager()
   return (
@@ -85,65 +80,6 @@ export const MonochromeManager: React.FC = () => {
             startNumber={0}
             value={memberHeartCount}
           />
-        </Box>
-        <Box
-          style={{
-            border: `1px solid ${colors.blue[8]}`,
-            padding: '16px',
-          }}
-        >
-          <Box p="0 8px">
-            <Text as="p" mb="8px" size="3" weight="bold">
-              ライブ成功確率
-            </Text>
-            <Flex align="end" justify="between" mb="16px">
-              <Box>
-                <Text as="p" mb="8px" size="1">
-                  エール回数
-                </Text>
-                <NumberSelect
-                  ariaLabel="Deck blade Heart"
-                  endNumber={40}
-                  onChangeValue={handleChangeYellCount}
-                  startNumber={0}
-                  value={yellCount}
-                />
-              </Box>
-              <Box>
-                <Text as="p" mb="8px" size="1">
-                  デッキ内のブレードハート枚数
-                </Text>
-                <Box
-                  style={{
-                    marginLeft: 'auto',
-                    width: '100px',
-                    marginRight: '32px',
-                  }}
-                >
-                  <NumberSelect
-                    ariaLabel="Deck blade Heart"
-                    endNumber={0}
-                    onChangeValue={handleChangeDeckBladeHeartCount}
-                    startNumber={60}
-                    value={deckBladeHeartCount}
-                  />
-                </Box>
-              </Box>
-            </Flex>
-            <Flex gap="16px">
-              <Text mb="16px" size="5" weight="bold">
-                ライブ成功確率
-              </Text>
-              <Flex gap="4px">
-                <Text mb="16px" size="5" weight="bold">
-                  {liveSuccessProbability}
-                </Text>
-                <Text mb="16px" size="5" weight="bold">
-                  %
-                </Text>
-              </Flex>
-            </Flex>
-          </Box>
         </Box>
       </Flex>
     </Flex>

@@ -5,7 +5,11 @@ import { ColorfulManager } from '@organism/ColorfulManager'
 
 export const ManagerTabs = () => {
   return (
-    <Tabs.Root className="TabsRoot" defaultValue="tab1">
+    <Tabs.Root
+      className="TabsRoot"
+      defaultValue="tab1"
+      style={{ maxWidth: '668px' }}
+    >
       <Tabs.List aria-label="Manage your account" className="TabsList">
         <Tabs.Trigger className="TabsTrigger" value="tab1">
           ハート合計数のみ
@@ -15,10 +19,10 @@ export const ManagerTabs = () => {
         </Tabs.Trigger>
       </Tabs.List>
       <Tabs.Content className="TabsContent" value="tab1">
-        <MonochromeManager />
+        <ColorfulManager />
       </Tabs.Content>
       <Tabs.Content className="TabsContent" value="tab2">
-        <ColorfulManager />
+        <MonochromeManager />
       </Tabs.Content>
     </Tabs.Root>
   )

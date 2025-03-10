@@ -74,7 +74,7 @@ export const MulliganCalculator: React.FC = () => {
             icon={<GiCardPick size="24px" />}
             label="手札に来て欲しいカードの枚数"
             style={{
-              marginTop: '24px',
+              marginTop: '16px',
               marginBottom: '4px',
             }}
           />
@@ -113,7 +113,7 @@ export const MulliganCalculator: React.FC = () => {
           </AccordionContent>
         </Accordion.Item>
       </AccordionWrapper>
-      <Box maxWidth="440px" width="100%">
+      <Flex justify="center">
         <LineChart
           labels={labels}
           lineData={probabilities}
@@ -121,7 +121,7 @@ export const MulliganCalculator: React.FC = () => {
           yMin={Math.max(Math.floor(probabilities[0] - 5), 0)}
           yText="1枚以上引く確率 (%)"
         />
-      </Box>
+      </Flex>
     </Flex>
   )
 }

@@ -39,7 +39,7 @@ export const LineChart: React.FC<LineChartProps> = ({
   lineData,
   xText,
   yText,
-  height = 400,
+  height = 360,
   yMin,
 }) => {
   const data: ChartData<'line'> = {
@@ -58,6 +58,7 @@ export const LineChart: React.FC<LineChartProps> = ({
 
   const options: ChartOptions<'line'> = {
     responsive: true,
+    maintainAspectRatio: false,
     scales: {
       y: {
         beginAtZero: false,
