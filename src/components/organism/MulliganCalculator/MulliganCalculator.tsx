@@ -95,7 +95,7 @@ export const MulliganCalculator: React.FC = () => {
       <AccordionWrapper>
         <Accordion.Item className="AccordionItem" value="item-1">
           <AccordionTrigger>
-            <Text size="2">※ 計算方法について</Text>
+            <Text size="1">※ 計算方法について</Text>
           </AccordionTrigger>
           <AccordionContent>
             <Text as="p" mb="2px" size="1">

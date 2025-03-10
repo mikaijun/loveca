@@ -75,7 +75,7 @@ export const LineChart: React.FC<LineChartProps> = ({
           display: true,
           text: xText,
           padding: {
-            top: -16,
+            top: -24,
             bottom: 0,
           },
         },
