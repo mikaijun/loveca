@@ -42,7 +42,7 @@ export const BottomNavigation: React.FC = () => {
                   pathname === tab.path ? colors.blue[8] : colors.slate[11]
                 }
                 data-testid={tab.value}
-                size={16}
+                size={20}
               />
               <span
                 style={{

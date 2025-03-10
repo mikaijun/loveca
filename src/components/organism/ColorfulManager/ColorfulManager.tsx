@@ -69,7 +69,7 @@ export const ColorfulManager: React.FC = () => {
           icon={<Heart size="20px" style={{ transform: 'rotate(-90deg)' }} />}
           label={requiredBladeHeartMessage}
         />
-        <Flex {...HEART_COUNTER_STYLE} gap="0px 32px" mb="16px">
+        <Flex {...HEART_COUNTER_STYLE} gap="0px 32px" mb="4px">
           {REQUIRED_LIVE_HEART_COLORS.map((color) => (
             <Flex align="center" key={color} width="64px">
               <HeartIcon color={color} />
@@ -93,7 +93,7 @@ export const ColorfulManager: React.FC = () => {
           marginBottom: '4px',
         }}
       />
-      <Flex {...HEART_COUNTER_STYLE} mb="16px">
+      <Flex {...HEART_COUNTER_STYLE} mb="4px">
         {REQUIRED_LIVE_HEART_COLORS.map((color) => (
           <HeartCounter
             color={color}

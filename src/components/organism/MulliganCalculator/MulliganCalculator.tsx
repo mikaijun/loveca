@@ -45,7 +45,6 @@ export const MulliganCalculator: React.FC = () => {
       <ResetButton
         onReset={handleReset}
         style={{
-          marginBottom: '4px',
           marginLeft: 'auto',
           display: 'flex',
           alignItems: 'center',
@@ -74,7 +73,7 @@ export const MulliganCalculator: React.FC = () => {
             icon={<GiCardPick size="24px" />}
             label="手札に来て欲しいカードの枚数"
             style={{
-              marginTop: '16px',
+              marginTop: '8px',
               marginBottom: '4px',
             }}
           />

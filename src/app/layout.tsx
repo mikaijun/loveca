@@ -34,7 +34,7 @@ export default function RootLayout({
               ラブカリキュレーター
             </Text>
           </Box>
-          <Container p="8px" pb="40px" size="2">
+          <Container p="8px" pb="44px" size="2">
             {children}
           </Container>
           <BottomNavigation />

@@ -36,7 +36,6 @@ export const LiveSuccessCalculator: React.FC = () => {
         style={{
           backgroundColor: colors.blue[5],
           padding: '8px',
-          marginBottom: '4px',
         }}
       >
         {deckCount < deckBladeHeartCount ? (

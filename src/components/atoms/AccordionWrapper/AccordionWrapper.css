@@ -43,7 +43,7 @@ h3 {
   font-family: inherit;
   background-color: transparent;
   padding: 0 20px;
-  height: 36px;
+  height: 32px;
   flex: 1;
   display: flex;
   align-items: center;
@@ -61,7 +61,7 @@ h3 {
 
 .AccordionContent {
   overflow: hidden;
-  font-size: 15px;
+  font-size: 12px;
   color: var(--mauve-11);
   background-color: var(--mauve-2);
 }
@@ -75,7 +75,7 @@ h3 {
 }
 
 .AccordionContentText {
-  padding: 15px 20px;
+  padding: 8px 12px;
 }
 
 .AccordionChevron {
