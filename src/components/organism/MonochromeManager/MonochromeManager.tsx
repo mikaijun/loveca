@@ -1,13 +1,14 @@
 'use client'
 
 import React from 'react'
-import { Box, Button, Flex, Text } from '@radix-ui/themes'
-import { Heart, RotateCcw, Theater, UsersRound } from 'lucide-react'
+import { Box, Flex, Text } from '@radix-ui/themes'
+import { Heart, Theater, UsersRound } from 'lucide-react'
 
 import { Summary } from '@atoms/Summary'
 import { NumberSelect } from '@molecules/NumberSelect'
 import { useMonochromeManager } from '@organism/MonochromeManager/MonochromeManager.hooks'
 import { colors } from '@constants/colors'
+import { ResetButton } from '@atoms/ResetButton'
 
 export const MonochromeManager: React.FC = () => {
   const {
@@ -25,20 +26,15 @@ export const MonochromeManager: React.FC = () => {
   } = useMonochromeManager()
   return (
     <Flex direction="column" gap="8px">
-      <Button
-        color="red"
-        onClick={handleResetHeart}
-        radius="large"
+      <ResetButton
+        onReset={handleResetHeart}
         style={{
+          marginBottom: '4px',
           marginLeft: 'auto',
           display: 'flex',
           alignItems: 'center',
-          marginBottom: '16px',
         }}
-      >
-        <RotateCcw size="16px" />
-        リセット
-      </Button>
+      />
       <Flex direction="column" gap="16px">
         <Summary
           icon={<Heart size="20px" style={{ transform: 'rotate(-90deg)' }} />}

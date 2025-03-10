@@ -1,8 +1,7 @@
 'use client'
 
 import React from 'react'
-import { Box, Button, Flex, Text } from '@radix-ui/themes'
-import { RotateCcw } from 'lucide-react'
+import { Box, Flex, Text } from '@radix-ui/themes'
 import { Accordion } from 'radix-ui'
 
 import { GiCardPick, GiCardPlay } from 'react-icons/gi'
@@ -20,6 +19,7 @@ import {
   AccordionTrigger,
   AccordionWrapper,
 } from '@atoms/AccordionWrapper'
+import { ResetButton } from '@atoms/ResetButton'
 
 const labels = [
   'マリガン直後',
@@ -42,20 +42,15 @@ export const MulliganCalculator: React.FC = () => {
 
   return (
     <Flex direction="column" gap="8px">
-      <Button
-        color="red"
-        onClick={handleReset}
-        radius="large"
+      <ResetButton
+        onReset={handleReset}
         style={{
+          marginBottom: '4px',
           marginLeft: 'auto',
           display: 'flex',
           alignItems: 'center',
-          marginBottom: '4px',
         }}
-      >
-        <RotateCcw size="16px" />
-        リセット
-      </Button>
+      />
       <Flex direction="column" gap="16px">
         <Box
           style={{
@@ -109,18 +104,24 @@ export const MulliganCalculator: React.FC = () => {
             </Text>
             <Text as="p" size="1">
               -
-              「ドローx枚」とは、マリガン後にx枚ドローした後の手札に来るカードの枚数を指します。
+              「ドローx枚」とは、マリガン後にx枚ドローした後の手札に欲しいカードが1枚以上来る確率を指します。
+            </Text>
+            <Text as="p" size="1">
+              -
+              マリガンで「手札に来て欲しいカード」を戻すことは考慮していません。
             </Text>
           </AccordionContent>
         </Accordion.Item>
       </AccordionWrapper>
-      <LineChart
-        labels={labels}
-        lineData={probabilities}
-        xText="ドロー枚数"
-        yMin={Math.max(Math.floor(probabilities[0] - 5), 0)}
-        yText="1枚以上引く確率 (%)"
-      />
+      <Box maxWidth="440px" width="100%">
+        <LineChart
+          labels={labels}
+          lineData={probabilities}
+          xText="ドロー枚数"
+          yMin={Math.max(Math.floor(probabilities[0] - 5), 0)}
+          yText="1枚以上引く確率 (%)"
+        />
+      </Box>
     </Flex>
   )
 }

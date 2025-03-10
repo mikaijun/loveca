@@ -1,8 +1,8 @@
 'use client'
 
 import React from 'react'
-import { Box, Button, Flex, Text } from '@radix-ui/themes'
-import { Heart, RotateCcw } from 'lucide-react'
+import { Box, Flex, Text } from '@radix-ui/themes'
+import { Heart } from 'lucide-react'
 
 import { GiCardDraw } from 'react-icons/gi'
 import { VscWand } from 'react-icons/vsc'
@@ -12,6 +12,7 @@ import { NumberSelect } from '@molecules/NumberSelect'
 
 import { colors } from '@constants/colors'
 import { useLiveSuccessCalculator } from '@organism/LiveSuccessCalculator/LiveSuccessCalculator.hooks'
+import { ResetButton } from '@atoms/ResetButton'
 
 export const LiveSuccessCalculator: React.FC = () => {
   const {
@@ -58,20 +59,15 @@ export const LiveSuccessCalculator: React.FC = () => {
           </>
         )}
       </Flex>
-      <Button
-        color="red"
-        onClick={handleResetHeart}
-        radius="large"
+      <ResetButton
+        onReset={handleResetHeart}
         style={{
+          marginBottom: '4px',
           marginLeft: 'auto',
           display: 'flex',
           alignItems: 'center',
-          marginBottom: '4px',
         }}
-      >
-        <RotateCcw size="16px" />
-        リセット
-      </Button>
+      />
       <Flex direction="column" gap="16px">
         <Box
           style={{

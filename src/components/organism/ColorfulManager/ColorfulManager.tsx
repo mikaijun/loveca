@@ -1,8 +1,8 @@
 'use client'
 
 import React from 'react'
-import { Box, Button, Flex, Text } from '@radix-ui/themes'
-import { Heart, RotateCcw, Theater, UsersRound } from 'lucide-react'
+import { Box, Flex, Text } from '@radix-ui/themes'
+import { Heart, Theater, UsersRound } from 'lucide-react'
 import { HeartIcon } from '@atoms/HeartIcon'
 import { HeartCounter } from '@molecules/HeartCounter'
 import {
@@ -13,6 +13,7 @@ import {
 } from '@organism/ColorfulManager/ColorfulManager.hooks'
 import { colors } from '@constants/colors'
 import { Summary } from '@atoms/Summary'
+import { ResetButton } from '@atoms/ResetButton'
 
 const HEART_COUNTER_STYLE = {
   gap: '0px 16px',
@@ -56,19 +57,15 @@ export const ColorfulManager: React.FC = () => {
   return (
     <Flex direction="column" gap="8px">
       <Box>
-        <Button
-          color="red"
-          onClick={handleResetHeart}
-          radius="large"
+        <ResetButton
+          onReset={handleResetHeart}
           style={{
+            marginBottom: '4px',
             marginLeft: 'auto',
             display: 'flex',
             alignItems: 'center',
           }}
-        >
-          <RotateCcw size="16px" />
-          リセット
-        </Button>
+        />
         <Summary
           icon={<Heart size="20px" style={{ transform: 'rotate(-90deg)' }} />}
           label={requiredBladeHeartMessage}
