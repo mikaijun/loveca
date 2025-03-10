@@ -3,6 +3,7 @@
 import React from 'react'
 import { Box, Button, Flex, Text } from '@radix-ui/themes'
 import { RotateCcw } from 'lucide-react'
+import { Accordion } from 'radix-ui'
 
 import { GiCardPick, GiCardPlay } from 'react-icons/gi'
 import {
@@ -14,6 +15,11 @@ import { NumberSelect } from '@molecules/NumberSelect'
 
 import { colors } from '@constants/colors'
 import { LineChart } from '@atoms/LineChart'
+import {
+  AccordionContent,
+  AccordionTrigger,
+  AccordionWrapper,
+} from '@atoms/AccordionWrapper'
 
 const labels = [
   'マリガン直後',
@@ -92,6 +98,22 @@ export const MulliganCalculator: React.FC = () => {
           </Text>
         </Box>
       </Flex>
+      <AccordionWrapper>
+        <Accordion.Item className="AccordionItem" value="item-1">
+          <AccordionTrigger>
+            <Text size="2">※ 計算方法について</Text>
+          </AccordionTrigger>
+          <AccordionContent>
+            <Text as="p" mb="2px" size="1">
+              - 「マリガン直後」とは、マリガン後の初手6枚を指します。
+            </Text>
+            <Text as="p" size="1">
+              -
+              「ドローx枚」とは、マリガン後にx枚ドローした後の手札に来るカードの枚数を指します。
+            </Text>
+          </AccordionContent>
+        </Accordion.Item>
+      </AccordionWrapper>
       <LineChart
         labels={labels}
         lineData={probabilities}

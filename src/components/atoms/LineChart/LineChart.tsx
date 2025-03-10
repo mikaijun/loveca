@@ -46,7 +46,7 @@ export const LineChart: React.FC<LineChartProps> = ({
     labels,
     datasets: [
       {
-        label: yText || '',
+        label: yText,
         data: lineData,
         borderColor: '#5EB1EF',
         backgroundColor: 'rgba(94, 177, 239, 0.2)',
@@ -58,25 +58,25 @@ export const LineChart: React.FC<LineChartProps> = ({
 
   const options: ChartOptions<'line'> = {
     responsive: true,
-    plugins: {
-      tooltip: {
-        enabled: true,
-      },
-    },
     scales: {
       y: {
         beginAtZero: false,
         min: yMin,
         suggestedMax: 100,
-        title: {
-          display: !!yText,
-          text: yText,
+        ticks: {
+          callback: function (value) {
+            return value + '%'
+          },
         },
       },
       x: {
         title: {
           display: true,
           text: xText,
+          padding: {
+            top: -16,
+            bottom: 0,
+          },
         },
       },
     },

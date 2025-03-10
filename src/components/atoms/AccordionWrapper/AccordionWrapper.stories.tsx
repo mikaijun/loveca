@@ -1,8 +1,11 @@
 import * as React from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
 import { Accordion } from 'radix-ui'
-import { ChevronDownIcon } from '@radix-ui/react-icons'
-import { AccordionWrapper } from './AccordionWrapper'
+import {
+  AccordionContent,
+  AccordionTrigger,
+  AccordionWrapper,
+} from './AccordionWrapper'
 
 const meta: Meta<typeof AccordionWrapper> = {
   title: 'Atoms/Accordion',
@@ -11,25 +14,6 @@ const meta: Meta<typeof AccordionWrapper> = {
 
 export default meta
 type Story = StoryObj<typeof AccordionWrapper>
-
-const AccordionTrigger: React.FC<{
-  children: React.ReactNode
-}> = ({ children }) => (
-  <Accordion.Header className="AccordionHeader">
-    <Accordion.Trigger className="AccordionTrigger">
-      {children}
-      <ChevronDownIcon aria-hidden className="AccordionChevron" />
-    </Accordion.Trigger>
-  </Accordion.Header>
-)
-
-const AccordionContent: React.FC<{
-  children: React.ReactNode
-}> = ({ children }) => (
-  <Accordion.Content className="AccordionContent">
-    <div className="AccordionContentText">{children}</div>
-  </Accordion.Content>
-)
 
 export const Default: Story = {
   args: {
