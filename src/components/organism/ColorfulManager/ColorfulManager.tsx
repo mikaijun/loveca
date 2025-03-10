@@ -2,7 +2,9 @@
 
 import React from 'react'
 import { Box, Flex, Text } from '@radix-ui/themes'
-import { Heart, Theater, UsersRound } from 'lucide-react'
+import { Heart } from 'lucide-react'
+import { BsPersonHearts } from 'react-icons/bs'
+import { VscWand } from 'react-icons/vsc'
 import { HeartIcon } from '@atoms/HeartIcon'
 import { HeartCounter } from '@molecules/HeartCounter'
 import {
@@ -87,7 +89,7 @@ export const ColorfulManager: React.FC = () => {
         </Flex>
       </Box>
       <Summary
-        icon={<Theater size="20px" />}
+        icon={<VscWand size="20px" />}
         label={`ライブ成功必要ハート数: ${requiredLiveHeartCount}`}
         style={{
           marginBottom: '4px',
@@ -105,7 +107,7 @@ export const ColorfulManager: React.FC = () => {
         ))}
       </Flex>
       <Summary
-        icon={<UsersRound size="20px" />}
+        icon={<BsPersonHearts size="20px" />}
         label={`メンバーのハート合計数: ${memberHeartCount}`}
         style={{
           marginBottom: '4px',

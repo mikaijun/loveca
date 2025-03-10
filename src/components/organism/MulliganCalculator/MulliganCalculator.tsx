@@ -22,7 +22,7 @@ import {
 import { ResetButton } from '@atoms/ResetButton'
 
 const labels = [
-  'マリガン直後',
+  'マリガン後',
   ...Array.from({ length: 10 }, (_, i) => `${i + 1}`),
 ]
 
@@ -99,7 +99,7 @@ export const MulliganCalculator: React.FC = () => {
           </AccordionTrigger>
           <AccordionContent>
             <Text as="p" mb="2px" size="1">
-              - 「マリガン直後」とは、マリガン後の初手6枚を指します。
+              - 「マリガン後」とは、マリガン後の初手6枚を指します。
             </Text>
             <Text as="p" size="1">
               -
