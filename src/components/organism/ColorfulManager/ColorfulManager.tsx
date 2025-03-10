@@ -55,12 +55,11 @@ export const ColorfulManager: React.FC = () => {
       : `必要ブレードハート数: ${requiredBladeHeartCount}`
 
   return (
-    <Flex direction="column" gap="4px">
+    <Flex direction="column">
       <Box>
         <ResetButton
           onReset={handleResetHeart}
           style={{
-            marginBottom: '4px',
             marginLeft: 'auto',
             display: 'flex',
             alignItems: 'center',
