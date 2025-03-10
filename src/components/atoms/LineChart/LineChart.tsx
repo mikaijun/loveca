@@ -39,7 +39,7 @@ export const LineChart: React.FC<LineChartProps> = ({
   lineData,
   xText,
   yText,
-  height = 360,
+  height = 300,
   yMin,
 }) => {
   const data: ChartData<'line'> = {

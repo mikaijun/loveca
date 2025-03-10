@@ -18,10 +18,22 @@ export const ManagerTabs = () => {
           ハート色別計算
         </Tabs.Trigger>
       </Tabs.List>
-      <Tabs.Content className="TabsContent" value="tab1">
+      <Tabs.Content
+        className="TabsContent"
+        style={{
+          padding: '8px',
+        }}
+        value="tab1"
+      >
         <ColorfulManager />
       </Tabs.Content>
-      <Tabs.Content className="TabsContent" value="tab2">
+      <Tabs.Content
+        className="TabsContent"
+        style={{
+          padding: '8px',
+        }}
+        value="tab2"
+      >
         <MonochromeManager />
       </Tabs.Content>
     </Tabs.Root>

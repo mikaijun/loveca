@@ -9,7 +9,7 @@ export const Summary: React.FC<SummaryProps> = ({ icon, label, ...props }) => (
   <Flex align="center" gap="8px" {...props}>
     {icon}
     <Flex align="center" gap="8px">
-      <Text size="4" weight="bold">
+      <Text size="3" weight="bold">
         {label}
       </Text>
     </Flex>

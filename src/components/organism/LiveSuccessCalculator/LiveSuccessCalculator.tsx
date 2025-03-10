@@ -34,8 +34,8 @@ export const LiveSuccessCalculator: React.FC = () => {
       <Flex
         gap="16px"
         style={{
-          backgroundColor: colors.blue[2],
-          padding: '16px',
+          backgroundColor: colors.blue[5],
+          padding: '8px',
           marginBottom: '4px',
         }}
       >
@@ -45,7 +45,7 @@ export const LiveSuccessCalculator: React.FC = () => {
           </Text>
         ) : (
           <>
-            <Text size="6" weight="bold">
+            <Text size="5" weight="bold">
               ライブ成功確率
             </Text>
             <Flex gap="4px">
@@ -68,7 +68,7 @@ export const LiveSuccessCalculator: React.FC = () => {
           alignItems: 'center',
         }}
       />
-      <Flex direction="column" gap="16px">
+      <Flex direction="column" gap="8px">
         <Box
           style={{
             border: `1px solid ${colors.blue[5]}`,

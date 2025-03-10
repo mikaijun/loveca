@@ -30,7 +30,7 @@ export const MonochromeManager: React.FC = () => {
           alignItems: 'center',
         }}
       />
-      <Flex direction="column" gap="16px">
+      <Flex direction="column" gap="24px">
         <Summary
           icon={<Heart size="20px" style={{ transform: 'rotate(-90deg)' }} />}
           label={`必要ブレードハート数: ${requiredBladeHeartCount}`}
