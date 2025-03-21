@@ -9,6 +9,18 @@ export const metadata: Metadata = {
   title: 'ラブカリキュレーター',
   description:
     'ラブカのカードゲームにおけるハート管理、ライブ成功率、マリガン計算を行うためのツールです。',
+  openGraph: {
+    title: 'ラブカリキュレーター',
+    description:
+      'ラブカのカードゲームにおけるハート管理、ライブ成功率、マリガン計算を行うためのツールです。',
+    images: [
+      {
+        url: '/ogp.png',
+        width: 1200,
+        height: 630,
+      },
+    ],
+  },
 }
 
 export default function RootLayout({
