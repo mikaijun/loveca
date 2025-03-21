@@ -12,10 +12,10 @@ export const ManagerTabs = () => {
     >
       <Tabs.List aria-label="Manage your account" className="TabsList">
         <Tabs.Trigger className="TabsTrigger" value="tab1">
-          ハート合計数のみ
+          ハート色別計算
         </Tabs.Trigger>
         <Tabs.Trigger className="TabsTrigger" value="tab2">
-          ハート色別計算
+          ハート合計数のみ
         </Tabs.Trigger>
       </Tabs.List>
       <Tabs.Content
