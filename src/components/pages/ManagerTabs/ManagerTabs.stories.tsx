@@ -3,7 +3,7 @@ import { Meta, StoryObj } from '@storybook/react'
 import { ManagerTabs } from './ManagerTabs'
 
 export default {
-  title: 'Templates/ManagerTabs',
+  title: 'Pages/ManagerTabs',
   component: ManagerTabs,
 } as Meta<typeof ManagerTabs>
 

@@ -1,4 +1,4 @@
-import { LiveSuccessCalculator } from '@organism/LiveSuccessCalculator'
+import { LiveSuccessCalculator } from '@pages/LiveSuccessCalculator'
 
 export default function LivePage() {
   return <LiveSuccessCalculator />
