@@ -4,7 +4,7 @@ import {
   useColorfulManager,
   calculateHeartCount,
   calculateRequiredGreyBladeHeart,
-} from '@organism/ColorfulManager/ColorfulManager.hooks'
+} from './ColorfulManager.hooks'
 
 const requiredLiveHearts = {
   pink: 1,

@@ -5,14 +5,14 @@ import { Box, Flex, Text } from '@radix-ui/themes'
 import { Heart } from 'lucide-react'
 import { BsPersonHearts } from 'react-icons/bs'
 import { VscWand } from 'react-icons/vsc'
-import { HeartIcon } from '@atoms/HeartIcon'
-import { HeartCounter } from '@molecules/HeartCounter'
 import {
   calculateHeartCount,
   REQUIRED_LIVE_HEART_COLORS,
   MEMBER_HEART_COLORS,
   useColorfulManager,
-} from '@organism/ColorfulManager/ColorfulManager.hooks'
+} from './ColorfulManager.hooks'
+import { HeartIcon } from '@atoms/HeartIcon'
+import { HeartCounter } from '@molecules/HeartCounter'
 import { colors } from '@constants/colors'
 import { Summary } from '@atoms/Summary'
 import { ResetButton } from '@atoms/ResetButton'
