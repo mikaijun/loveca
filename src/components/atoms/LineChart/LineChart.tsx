@@ -32,6 +32,10 @@ type LineChartProps = {
   yText?: string
   height?: number
   yMin?: number
+  padding?: {
+    top: number
+    bottom: number
+  }
 }
 
 export const LineChart: React.FC<LineChartProps> = ({
@@ -41,6 +45,10 @@ export const LineChart: React.FC<LineChartProps> = ({
   yText,
   height = 300,
   yMin,
+  padding = {
+    top: -24,
+    bottom: 0,
+  },
 }) => {
   const data: ChartData<'line'> = {
     labels,
@@ -74,10 +82,7 @@ export const LineChart: React.FC<LineChartProps> = ({
         title: {
           display: true,
           text: xText,
-          padding: {
-            top: -24,
-            bottom: 0,
-          },
+          padding,
         },
       },
     },
