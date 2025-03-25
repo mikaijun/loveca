@@ -1,10 +1,10 @@
 import React from 'react'
 import { Meta, StoryObj } from '@storybook/react'
 import { Container } from '@radix-ui/themes'
-import { ColorfulManager } from '@organism/ColorfulManager'
+import { ColorfulManager } from '@templates/ColorfulManager'
 
 export default {
-  title: 'Organisms/ColorfulManager',
+  title: 'Templates/ColorfulManager',
   component: ColorfulManager,
 } as Meta<typeof ColorfulManager>
 

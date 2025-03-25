@@ -1,5 +1,5 @@
-import { ManagerTabs } from '@pages/ManagerTabs/ManagerTabs'
+import { HeartManagerPage } from '@pages/HeartManagerPage/HeartManagerPage'
 
 export default function Home() {
-  return <ManagerTabs />
+  return <HeartManagerPage />
 }

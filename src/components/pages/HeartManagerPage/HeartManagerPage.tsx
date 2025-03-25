@@ -1,9 +1,10 @@
 import { Tabs } from 'radix-ui'
-import './ManagerTabs.css'
-import { MonochromeManager } from '@organism/MonochromeManager'
-import { ColorfulManager } from '@organism/ColorfulManager'
 
-export const ManagerTabs = () => {
+import { MonochromeManager } from '@organism/MonochromeManager'
+import { ColorfulManager } from '@templates/ColorfulManager'
+import './HeartManagerPage.css'
+
+export const HeartManagerPage = () => {
   return (
     <Tabs.Root
       className="TabsRoot"
