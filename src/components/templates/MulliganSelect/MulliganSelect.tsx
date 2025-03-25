@@ -2,43 +2,31 @@
 
 import React from 'react'
 import { Box, Flex, Text } from '@radix-ui/themes'
-import { Accordion } from 'radix-ui'
 
 import { GiCardPick, GiCardPlay } from 'react-icons/gi'
-import {
-  calculateMulliganProbability,
-  useMulliganCalculator,
-} from './MulliganCalculator.hooks'
+import { Accordion } from 'radix-ui'
+import { useMulliganSelect } from './MulliganSelect.hooks'
 import { Summary } from '@atoms/Summary'
 import { NumberSelect } from '@molecules/NumberSelect'
 
 import { colors } from '@constants/colors'
-import { LineChart } from '@atoms/LineChart'
+
+import { ResetButton } from '@atoms/ResetButton'
 import {
   AccordionContent,
   AccordionTrigger,
   AccordionWrapper,
 } from '@atoms/AccordionWrapper'
-import { ResetButton } from '@atoms/ResetButton'
+import { MulliganLineChart } from '@organism/MulliganLineChart'
 
-const labels = [
-  'マリガン後',
-  ...Array.from({ length: 10 }, (_, i) => `${i + 1}`),
-]
-
-export const MulliganCalculator: React.FC = () => {
+export const MulliganSelect: React.FC = () => {
   const {
     mulliganCount,
     wantCardCount,
     handleChangeMulliganCount,
     handleChangeWantCardCount,
     handleReset,
-  } = useMulliganCalculator()
-
-  const probabilities = calculateMulliganProbability(
-    wantCardCount,
-    mulliganCount
-  )
+  } = useMulliganSelect()
 
   return (
     <Flex direction="column" gap="8px">
@@ -113,12 +101,9 @@ export const MulliganCalculator: React.FC = () => {
         </Accordion.Item>
       </AccordionWrapper>
       <Flex justify="center">
-        <LineChart
-          labels={labels}
-          lineData={probabilities}
-          xText="ドロー枚数"
-          yMin={Math.max(Math.floor(probabilities[0] - 5), 0)}
-          yText="1枚以上引く確率 (%)"
+        <MulliganLineChart
+          mulliganCount={mulliganCount}
+          wantCardCount={wantCardCount}
         />
       </Flex>
     </Flex>

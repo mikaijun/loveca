@@ -1,5 +1,5 @@
-import { MulliganCalculator } from '@pages/MulliganCalculator'
+import { MulliganCalculatorPage } from '@pages/MulliganCalculatorPage'
 
 export default function MulliganPage() {
-  return <MulliganCalculator />
+  return <MulliganCalculatorPage />
 }

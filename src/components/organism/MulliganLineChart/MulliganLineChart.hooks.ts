@@ -1,4 +1,3 @@
-import { useCallback, useState } from 'react'
 import { chanceOfPicking } from '@utils'
 
 /**
@@ -10,35 +9,6 @@ const successProbability = (N: number, K: number, n: number): number => {
     probability += chanceOfPicking(N, K, n, k)
   }
   return 1 - probability
-}
-
-/**
- * MulliganCalculator のロジック
- */
-export const useMulliganCalculator = () => {
-  const [mulliganCount, setMulliganCount] = useState<number>(0)
-  const [wantCardCount, setWantCardCount] = useState<number>(0)
-
-  const handleChangeMulliganCount = useCallback((count: number) => {
-    setMulliganCount(count)
-  }, [])
-
-  const handleChangeWantCardCount = useCallback((count: number) => {
-    setWantCardCount(count)
-  }, [])
-
-  const handleReset = useCallback(() => {
-    setMulliganCount(0)
-    setWantCardCount(0)
-  }, [])
-
-  return {
-    mulliganCount,
-    wantCardCount,
-    handleChangeMulliganCount,
-    handleChangeWantCardCount,
-    handleReset,
-  }
 }
 
 /**
