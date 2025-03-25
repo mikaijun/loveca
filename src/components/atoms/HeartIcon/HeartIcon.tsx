@@ -2,10 +2,7 @@ import React from 'react'
 import { Flex } from '@radix-ui/themes'
 import { Heart, Plus, Asterisk, Minus, Sparkle, Diamond } from 'lucide-react'
 import { colors } from '@constants/colors'
-
-export type HeartIconProps = {
-  color: 'pink' | 'green' | 'blue' | 'red' | 'yellow' | 'purple' | 'gray'
-}
+import { HeartIconProps } from '@constants/hearts'
 
 const iconMap = {
   pink: Plus,

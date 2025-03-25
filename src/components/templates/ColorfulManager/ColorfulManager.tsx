@@ -7,8 +7,6 @@ import { BsPersonHearts } from 'react-icons/bs'
 import { VscWand } from 'react-icons/vsc'
 import {
   calculateHeartCount,
-  REQUIRED_LIVE_HEART_COLORS,
-  MEMBER_HEART_COLORS,
   useColorfulManager,
 } from './ColorfulManager.hooks'
 import { HeartIcon } from '@atoms/HeartIcon'
@@ -16,6 +14,7 @@ import { HeartCounter } from '@molecules/HeartCounter'
 import { colors } from '@constants/colors'
 import { Summary } from '@atoms/Summary'
 import { ResetButton } from '@atoms/ResetButton'
+import { memberHeartColors, requiredLiveHeartColors } from '@constants/hearts'
 
 const HEART_COUNTER_STYLE = {
   gap: '0px 16px',
@@ -72,7 +71,7 @@ export const ColorfulManager: React.FC = () => {
           label={requiredBladeHeartMessage}
         />
         <Flex {...HEART_COUNTER_STYLE} gap="0px 32px" mb="4px">
-          {REQUIRED_LIVE_HEART_COLORS.map((color) => (
+          {requiredLiveHeartColors.map((color) => (
             <Flex align="center" key={color} width="64px">
               <HeartIcon color={color} />
               <Text size="3" weight="bold">
@@ -96,7 +95,7 @@ export const ColorfulManager: React.FC = () => {
         }}
       />
       <Flex {...HEART_COUNTER_STYLE} mb="4px">
-        {REQUIRED_LIVE_HEART_COLORS.map((color) => (
+        {requiredLiveHeartColors.map((color) => (
           <HeartCounter
             color={color}
             count={requiredLiveHearts[color]}
@@ -114,7 +113,7 @@ export const ColorfulManager: React.FC = () => {
         }}
       />
       <Flex {...HEART_COUNTER_STYLE}>
-        {MEMBER_HEART_COLORS.map((color) => (
+        {memberHeartColors.map((color) => (
           <HeartCounter
             color={color}
             count={memberHearts[color]}

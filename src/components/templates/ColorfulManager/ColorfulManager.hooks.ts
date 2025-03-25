@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react'
-import { HeartIconProps } from '@atoms/HeartIcon'
+import { HeartIconProps, memberHeartColors } from '@constants/hearts'
 
 type RequiredLiveHeartState = Record<HeartIconProps['color'], number>
 type MemberHeartState = Omit<RequiredLiveHeartState, 'gray'>
@@ -7,22 +7,6 @@ type CalculateHeartCount = {
   requiredLiveHearts: RequiredLiveHeartState
   memberHearts: MemberHeartState
 }
-type MemberHeartColor = Exclude<HeartIconProps['color'], 'gray'>
-
-export const REQUIRED_LIVE_HEART_COLORS: HeartIconProps['color'][] = [
-  'pink',
-  'green',
-  'blue',
-  'red',
-  'yellow',
-  'purple',
-  'gray',
-]
-
-export const MEMBER_HEART_COLORS: MemberHeartColor[] =
-  REQUIRED_LIVE_HEART_COLORS.filter(
-    (color): color is MemberHeartColor => color !== 'gray'
-  )
 
 /**
  * ハートの状態を管理するカスタムフックを返す
@@ -68,7 +52,7 @@ export const calculateRequiredGreyBladeHeart = ({
   requiredLiveHearts,
   memberHearts,
 }: CalculateHeartCount): number => {
-  const memberOverHeartCounts = MEMBER_HEART_COLORS.map((color) =>
+  const memberOverHeartCounts = memberHeartColors.map((color) =>
     Math.max(memberHearts[color] - requiredLiveHearts[color], 0)
   )
 

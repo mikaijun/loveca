@@ -1,8 +1,9 @@
 import React, { useCallback } from 'react'
 import { Flex, Text } from '@radix-ui/themes'
 import { CircleMinus, CirclePlus } from 'lucide-react'
-import { HeartIcon, HeartIconProps } from '@atoms/HeartIcon'
+import { HeartIcon } from '@atoms/HeartIcon'
 import { colors } from '@constants/colors'
+import { HeartIconProps } from '@constants/hearts'
 
 type HeartCounterProps = HeartIconProps & {
   count: number
