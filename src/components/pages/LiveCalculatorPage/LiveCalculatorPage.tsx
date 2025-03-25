@@ -1,5 +1,6 @@
+import React from 'react'
 import { LiveSuccessCalculator } from '@organism/LiveSuccessCalculator'
 
-export default function LivePage() {
+export const LiveCalculatorPage: React.FC = () => {
   return <LiveSuccessCalculator />
 }
