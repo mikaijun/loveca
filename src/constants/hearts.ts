@@ -5,7 +5,10 @@ export type HeartIconProps = {
   color: 'pink' | 'green' | 'blue' | 'red' | 'yellow' | 'purple' | 'gray'
 }
 
-type MemberHeartColor = Exclude<HeartIconProps['color'], 'gray'>
+/**
+ * メンバーが持っているハートの色
+ */
+export type MemberHeartColor = Exclude<HeartIconProps['color'], 'gray'>
 
 /**
  * ライブに必要なハートの色の配列
