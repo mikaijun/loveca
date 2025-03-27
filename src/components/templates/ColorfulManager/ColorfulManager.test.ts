@@ -4,60 +4,85 @@ import {
   useColorfulManager,
   calculateHeartCount,
   calculateRequiredGreyBladeHeart,
+  INITIAL_VALUE,
 } from './ColorfulManager.hooks'
 
 const requiredLiveHearts = {
-  pink: 1,
-  green: 2,
-  blue: 3,
-  red: 0,
-  yellow: 1,
-  purple: 1,
-  gray: 5,
+  pink: {
+    count: 1,
+    isVisible: true,
+  },
+  green: {
+    count: 2,
+    isVisible: true,
+  },
+  blue: {
+    count: 3,
+    isVisible: true,
+  },
+  red: {
+    count: 0,
+    isVisible: true,
+  },
+  yellow: {
+    count: 1,
+    isVisible: true,
+  },
+  purple: {
+    count: 1,
+    isVisible: true,
+  },
+  gray: {
+    count: 5,
+    isVisible: true,
+  },
 }
 
 const memberHearts = {
-  pink: 1,
-  green: 2,
-  blue: 2,
-  red: 0,
-  yellow: 2,
-  purple: 1,
+  pink: {
+    count: 1,
+    isVisible: true,
+  },
+  green: {
+    count: 2,
+    isVisible: true,
+  },
+  blue: {
+    count: 2,
+    isVisible: true,
+  },
+  red: {
+    count: 0,
+    isVisible: true,
+  },
+  yellow: {
+    count: 2,
+    isVisible: true,
+  },
+  purple: {
+    count: 1,
+    isVisible: true,
+  },
 }
 
 describe('useColorfulManager hook', () => {
   it('ハート追加・減少した時、数が適切か確認', () => {
     const { result } = renderHook(() => useColorfulManager())
 
-    expect(result.current.requiredLiveHearts).toEqual({
-      pink: 0,
-      green: 0,
-      blue: 0,
-      red: 0,
-      yellow: 0,
-      purple: 0,
-      gray: 0,
-    })
-    expect(result.current.memberHearts).toEqual({
-      pink: 0,
-      green: 0,
-      blue: 0,
-      red: 0,
-      yellow: 0,
-      purple: 0,
-    })
+    expect(result.current.requiredLiveHearts).toEqual(INITIAL_VALUE)
+    expect(result.current.memberHearts).toEqual(INITIAL_VALUE)
 
     act(() => {
       result.current.handleIncrementRequiredLiveHeart('pink')
     })
 
-    expect(result.current.requiredLiveHearts.pink).toBe(1)
+    expect(result.current.requiredLiveHearts.pink.count).toBe(1)
 
     act(() => {
       result.current.handleDecrementRequiredLiveHeart('pink')
     })
 
-    expect(result.current.requiredLiveHearts.pink).toBe(0)
+    expect(result.current.requiredLiveHearts.pink.count).toBe(0)
   })
 
   it('メンバーの灰色のハートを増減しようとするとエラーが発生するか確認', () => {
@@ -105,7 +130,7 @@ describe('calculateHeartCount function', () => {
     // メンバーの黄色ハート: 2個
     // 余剰: 1個(他の色は余剰がない)
     // 必要な灰色ハート: 5個 - 1個 = 4個
-    expect(calculated.requiredBladeHeart.gray).toBe(4)
+    expect(calculated.requiredBladeHeart.gray.count).toBe(4)
 
     // 青色ハートが1個必要
     // 灰色ハートが4個必要(理由は上記)

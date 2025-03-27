@@ -78,10 +78,10 @@ export const ColorfulManager: React.FC = () => {
                 {/* NOTE: 以下の2つを出しわけたいため条件式を記述している
                 ・ライブに必要のないハート色(0と表示)
                 ・ライブに必要なハート色が存在していて、メンバーのハートで足りている場合(達成と表示)*/}
-                {requiredLiveHearts[color] > 0 &&
-                requiredBladeHeart[color] === 0
+                {requiredLiveHearts[color].count > 0 &&
+                requiredBladeHeart[color].count === 0
                   ? '達成'
-                  : requiredBladeHeart[color]}
+                  : requiredBladeHeart[color].count}
               </Text>
             </Flex>
           ))}
@@ -98,7 +98,7 @@ export const ColorfulManager: React.FC = () => {
         {requiredLiveHeartColors.map((color) => (
           <HeartCounter
             color={color}
-            count={requiredLiveHearts[color]}
+            count={requiredLiveHearts[color].count}
             key={color}
             onDecrement={handleDecrementRequiredLiveHeart}
             onIncrement={handleIncrementRequiredLiveHeart}
@@ -116,7 +116,7 @@ export const ColorfulManager: React.FC = () => {
         {memberHeartColors.map((color) => (
           <HeartCounter
             color={color}
-            count={memberHearts[color]}
+            count={memberHearts[color].count}
             key={color}
             onDecrement={handleDecrementMemberHeart}
             onIncrement={handleIncrementMemberHeart}

@@ -1,24 +1,64 @@
 import { useState, useCallback } from 'react'
 import { HeartIconProps, memberHeartColors } from '@constants/hearts'
 
-type RequiredLiveHeartState = Record<HeartIconProps['color'], number>
+type HeartState = {
+  count: number
+  isVisible: boolean
+}
+type RequiredLiveHeartState = Record<HeartIconProps['color'], HeartState>
 type MemberHeartState = Omit<RequiredLiveHeartState, 'gray'>
 type CalculateHeartCount = {
   requiredLiveHearts: RequiredLiveHeartState
   memberHearts: MemberHeartState
 }
 
+export const INITIAL_VALUE = {
+  pink: {
+    count: 0,
+    isVisible: true,
+  },
+  green: {
+    count: 0,
+    isVisible: true,
+  },
+  blue: {
+    count: 0,
+    isVisible: true,
+  },
+  red: {
+    count: 0,
+    isVisible: true,
+  },
+  yellow: {
+    count: 0,
+    isVisible: true,
+  },
+  purple: {
+    count: 0,
+    isVisible: true,
+  },
+  gray: {
+    count: 0,
+    isVisible: true,
+  },
+}
+
 /**
  * ハートの状態を管理するカスタムフックを返す
  */
-const useHeartState = <T extends Record<string, number>>(initialState: T) => {
+const useHeartState = <T extends Record<string, HeartState>>(
+  initialState: T
+) => {
   const [state, setState] = useState<T>(initialState)
 
   const increment = useCallback(
     (color: keyof T) => {
       setState((prev) => ({
         ...prev,
-        [color]: (prev[color] || 0) + 1,
+        [color]: {
+          ...prev[color],
+          count: (prev[color].count || 0) + 1,
+        },
       }))
     },
     [setState]
@@ -28,7 +68,10 @@ const useHeartState = <T extends Record<string, number>>(initialState: T) => {
     (color: keyof T) => {
       setState((prev) => ({
         ...prev,
-        [color]: Math.max((prev[color] || 0) - 1, 0),
+        [color]: {
+          ...prev[color],
+          count: (prev[color].count || 0) - 1,
+        },
       }))
     },
     [setState]
@@ -53,7 +96,7 @@ export const calculateRequiredGreyBladeHeart = ({
   memberHearts,
 }: CalculateHeartCount): number => {
   const memberOverHeartCounts = memberHeartColors.map((color) =>
-    Math.max(memberHearts[color] - requiredLiveHearts[color], 0)
+    Math.max(memberHearts[color].count - requiredLiveHearts[color].count, 0)
   )
 
   const totalMemberOverHeartCount = memberOverHeartCounts.reduce(
@@ -61,7 +104,7 @@ export const calculateRequiredGreyBladeHeart = ({
     0
   )
 
-  return Math.max(requiredLiveHearts.gray - totalMemberOverHeartCount, 0)
+  return Math.max(requiredLiveHearts.gray.count - totalMemberOverHeartCount, 0)
 }
 
 /**
@@ -74,29 +117,14 @@ export const useColorfulManager = () => {
     increment: handleIncrementRequiredLiveHeart,
     decrement: handleDecrementRequiredLiveHeart,
     reset: resetRequiredLiveHeart,
-  } = useHeartState<RequiredLiveHeartState>({
-    pink: 0,
-    green: 0,
-    blue: 0,
-    red: 0,
-    yellow: 0,
-    purple: 0,
-    gray: 0,
-  })
+  } = useHeartState<RequiredLiveHeartState>(INITIAL_VALUE)
 
   const {
     state: memberHearts,
     increment: incrementMemberHeart,
     decrement: decrementMemberHeart,
     reset: resetMemberHeart,
-  } = useHeartState<MemberHeartState>({
-    pink: 0,
-    green: 0,
-    blue: 0,
-    red: 0,
-    yellow: 0,
-    purple: 0,
-  })
+  } = useHeartState<MemberHeartState>(INITIAL_VALUE)
 
   const handleIncrementMemberHeart = useCallback(
     (color: HeartIconProps['color']) => {
@@ -142,26 +170,68 @@ export const calculateHeartCount = ({
   memberHearts,
 }: CalculateHeartCount) => {
   const requiredLiveHeartCount = Object.values(requiredLiveHearts).reduce(
-    (acc, cur) => acc + cur,
+    (acc, cur) => acc + cur.count,
     0
   )
   const memberHeartCount = Object.values(memberHearts).reduce(
-    (acc, cur) => acc + cur,
+    (acc, cur) => acc + cur.count,
     0
   )
 
   const requiredBladeHeart: RequiredLiveHeartState = {
-    pink: Math.max(requiredLiveHearts.pink - memberHearts.pink, 0),
-    green: Math.max(requiredLiveHearts.green - memberHearts.green, 0),
-    blue: Math.max(requiredLiveHearts.blue - memberHearts.blue, 0),
-    red: Math.max(requiredLiveHearts.red - memberHearts.red, 0),
-    yellow: Math.max(requiredLiveHearts.yellow - memberHearts.yellow, 0),
-    purple: Math.max(requiredLiveHearts.purple - memberHearts.purple, 0),
-    gray: calculateRequiredGreyBladeHeart({ requiredLiveHearts, memberHearts }),
+    pink: {
+      count: Math.max(
+        requiredLiveHearts.pink.count - memberHearts.pink.count,
+        0
+      ),
+      isVisible: true,
+    },
+
+    green: {
+      count: Math.max(
+        requiredLiveHearts.green.count - memberHearts.green.count,
+        0
+      ),
+      isVisible: true,
+    },
+    blue: {
+      count: Math.max(
+        requiredLiveHearts.blue.count - memberHearts.blue.count,
+        0
+      ),
+      isVisible: true,
+    },
+    red: {
+      count: Math.max(requiredLiveHearts.red.count - memberHearts.red.count, 0),
+      isVisible: true,
+    },
+    yellow: {
+      count: Math.max(
+        requiredLiveHearts.yellow.count - memberHearts.yellow.count,
+        0
+      ),
+      isVisible: true,
+    },
+
+    purple: {
+      count: Math.max(
+        requiredLiveHearts.purple.count - memberHearts.purple.count,
+        0
+      ),
+      isVisible: true,
+    },
+
+    gray: {
+      count: calculateRequiredGreyBladeHeart({
+        requiredLiveHearts,
+        memberHearts,
+      }),
+      isVisible: true,
+    },
   }
 
   const requiredBladeHeartCount = Object.values(requiredBladeHeart).reduce(
-    (acc, cur) => acc + cur,
+    (acc, cur) => acc + cur.count,
     0
   )
   return {
