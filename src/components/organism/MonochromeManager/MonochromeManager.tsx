@@ -48,7 +48,7 @@ export const MonochromeManager: React.FC = () => {
         >
           <Summary
             icon={<VscWand size="20px" />}
-            label={`ライブ成功必要ハート数: ${requiredLiveHeartCount}`}
+            label={`ライブに必要なハート数: ${requiredLiveHeartCount}`}
             style={{
               marginBottom: '4px',
             }}

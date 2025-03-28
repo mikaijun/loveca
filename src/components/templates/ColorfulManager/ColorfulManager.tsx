@@ -15,6 +15,7 @@ import { colors } from '@constants/colors'
 import { Summary } from '@atoms/Summary'
 import { ResetButton } from '@atoms/ResetButton'
 import { memberHeartColors, requiredLiveHeartColors } from '@constants/hearts'
+import { HeartColorSettingsModal } from '@organism/HeartColorSettingsModal'
 
 const HEART_COUNTER_STYLE = {
   gap: '0px 16px',
@@ -30,11 +31,15 @@ export const ColorfulManager: React.FC = () => {
   const {
     requiredLiveHearts,
     memberHearts,
+    requiredLiveHeartColorList,
+    memberHeartColorList,
     handleIncrementRequiredLiveHeart,
     handleDecrementRequiredLiveHeart,
     handleIncrementMemberHeart,
     handleDecrementMemberHeart,
-    handleResetHeart,
+    handleResetCount,
+    handleChangeVisibilityRequiredLiveHeart,
+    handleChangeVisibilityMemberHeart,
   } = useColorfulManager()
 
   const {
@@ -58,51 +63,66 @@ export const ColorfulManager: React.FC = () => {
   return (
     <Flex direction="column">
       <Box>
-        <ResetButton
-          onReset={handleResetHeart}
-          style={{
-            marginLeft: 'auto',
-            display: 'flex',
-            alignItems: 'center',
-          }}
-        />
+        <Flex justify="between" mb="8px" mt="8px">
+          <HeartColorSettingsModal
+            memberHeartColorList={memberHeartColorList}
+            onChangeMemberHeartColor={handleChangeVisibilityMemberHeart}
+            onChangeRequiredLiveHeartColor={
+              handleChangeVisibilityRequiredLiveHeart
+            }
+            requiredLiveHeartColorList={requiredLiveHeartColorList}
+          />
+          <ResetButton
+            onReset={handleResetCount}
+            style={{ fontSize: '12px' }}
+            text="カウントリセット"
+          />
+        </Flex>
         <Summary
           icon={<Heart size="20px" style={{ transform: 'rotate(-90deg)' }} />}
           label={requiredBladeHeartMessage}
         />
         <Flex {...HEART_COUNTER_STYLE} gap="0px 32px" mb="4px">
           {requiredLiveHeartColors.map((color) => (
-            <Flex align="center" key={color} width="64px">
-              <HeartIcon color={color} />
-              <Text size="3" weight="bold">
-                {/* NOTE: 以下の2つを出しわけたいため条件式を記述している
+            <React.Fragment key={color}>
+              {requiredLiveHearts[color].isVisible && (
+                <Flex align="center" key={color} width="64px">
+                  <HeartIcon color={color} />
+                  <Text size="3" weight="bold">
+                    {/* NOTE: 以下の2つを出しわけたいため条件式を記述している
                 ・ライブに必要のないハート色(0と表示)
                 ・ライブに必要なハート色が存在していて、メンバーのハートで足りている場合(達成と表示)*/}
-                {requiredLiveHearts[color].count > 0 &&
-                requiredBladeHeart[color].count === 0
-                  ? '達成'
-                  : requiredBladeHeart[color].count}
-              </Text>
-            </Flex>
+                    {requiredLiveHearts[color].count > 0 &&
+                    requiredBladeHeart[color].count === 0
+                      ? '達成'
+                      : requiredBladeHeart[color].count}
+                  </Text>
+                </Flex>
+              )}
+            </React.Fragment>
           ))}
         </Flex>
       </Box>
       <Summary
         icon={<VscWand size="20px" />}
-        label={`ライブ成功必要ハート数: ${requiredLiveHeartCount}`}
+        label={`ライブに必要なハート数: ${requiredLiveHeartCount}`}
         style={{
           marginBottom: '4px',
         }}
       />
       <Flex {...HEART_COUNTER_STYLE} mb="4px">
         {requiredLiveHeartColors.map((color) => (
-          <HeartCounter
-            color={color}
-            count={requiredLiveHearts[color].count}
-            key={color}
-            onDecrement={handleDecrementRequiredLiveHeart}
-            onIncrement={handleIncrementRequiredLiveHeart}
-          />
+          <React.Fragment key={color}>
+            {requiredLiveHearts[color].isVisible && (
+              <HeartCounter
+                color={color}
+                count={requiredLiveHearts[color].count}
+                key={color}
+                onDecrement={handleDecrementRequiredLiveHeart}
+                onIncrement={handleIncrementRequiredLiveHeart}
+              />
+            )}
+          </React.Fragment>
         ))}
       </Flex>
       <Summary
@@ -114,13 +134,17 @@ export const ColorfulManager: React.FC = () => {
       />
       <Flex {...HEART_COUNTER_STYLE}>
         {memberHeartColors.map((color) => (
-          <HeartCounter
-            color={color}
-            count={memberHearts[color].count}
-            key={color}
-            onDecrement={handleDecrementMemberHeart}
-            onIncrement={handleIncrementMemberHeart}
-          />
+          <React.Fragment key={color}>
+            {memberHearts[color].isVisible && (
+              <HeartCounter
+                color={color}
+                count={memberHearts[color].count}
+                key={color}
+                onDecrement={handleDecrementMemberHeart}
+                onIncrement={handleIncrementMemberHeart}
+              />
+            )}
+          </React.Fragment>
         ))}
       </Flex>
       <Text as="p" color="gray" mt="8px" size="1">

@@ -31,6 +31,7 @@ export const HeartColorSettingsModal: React.FC<
       onChangeRequiredLiveHeartColor,
       onChangeMemberHeartColor,
     })
+  const isSingleMemberHeart = memberHeartColorList.length <= 1
 
   return (
     <Modal
@@ -52,11 +53,11 @@ export const HeartColorSettingsModal: React.FC<
       >
         チェックを入れたハートの色のみが表示されます
       </DialogDescription>
-      <Summary icon={<VscWand size="20px" />} label="ライブ成功必要ハート" />
+      <Summary icon={<VscWand size="20px" />} label="ライブに必要なハート" />
       <Flex
         asChild
         direction="row"
-        gap="16px"
+        gap="8px"
         justify="between"
         style={{ marginBottom: '32px' }}
         wrap="wrap"
@@ -78,7 +79,7 @@ export const HeartColorSettingsModal: React.FC<
         </CheckboxGroup.Root>
       </Flex>
       <Summary icon={<BsPersonHearts size="20px" />} label="メンバーのハート" />
-      <Flex asChild direction="row" gap="16px" justify="between" wrap="wrap">
+      <Flex asChild direction="row" gap="8px" justify="between" wrap="wrap">
         <CheckboxGroup.Root
           aria-label="Heart colors"
           defaultValue={memberHeartColorList}
@@ -86,6 +87,9 @@ export const HeartColorSettingsModal: React.FC<
         >
           {memberHeartColors.map((color) => (
             <CheckboxGroup.Item
+              disabled={
+                isSingleMemberHeart && memberHeartColorList.includes(color)
+              }
               key={color}
               style={{ alignItems: 'center', gap: 0 }}
               value={color}
@@ -97,7 +101,9 @@ export const HeartColorSettingsModal: React.FC<
       </Flex>
       <Flex justify="end" style={{ marginTop: '16px' }}>
         <Dialog.Close asChild>
-          <Button color="red">閉じる</Button>
+          <Button color="red" size="3" variant="outline">
+            閉じる
+          </Button>
         </Dialog.Close>
       </Flex>
     </Modal>
