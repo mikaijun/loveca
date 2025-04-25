@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { act, renderHook } from '@testing-library/react'
-import { useMonochromeManager } from './MonochromeManager.hooks'
+import { useMonochromeManager } from './MonochromeHeartManager.hooks'
 
 describe('useMonochromeManager hook', () => {
   it('ハート数の変更が正しく反映されること', () => {

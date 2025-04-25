@@ -8,7 +8,7 @@ import { VscWand } from 'react-icons/vsc'
 import {
   calculateHeartCount,
   useColorfulManager,
-} from './ColorfulManager.hooks'
+} from './ColorfulHeartManager.hooks'
 import { Summary } from '@components/commons/Summary'
 import { ResetButton } from '@components/commons/ResetButton'
 import { HeartIcon } from '@components/features/heartCounter/HeartIcon'
@@ -27,7 +27,7 @@ const HEART_COUNTER_STYLE = {
   wrap: 'wrap' as const,
 }
 
-export const ColorfulManager: React.FC = () => {
+export const ColorfulHeartManager: React.FC = () => {
   const {
     requiredLiveHearts,
     memberHearts,

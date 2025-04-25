@@ -1,7 +1,7 @@
 import React from 'react'
 import { Meta, StoryObj } from '@storybook/react'
 import { Container } from '@radix-ui/themes'
-import { MonochromeManager } from './MonochromeManager'
+import { MonochromeManager } from './MonochromeHeartManager'
 
 export default {
   title: 'Organisms/MonochromeManager',

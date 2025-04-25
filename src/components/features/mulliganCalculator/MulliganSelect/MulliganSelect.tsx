@@ -15,7 +15,7 @@ import {
   AccordionWrapper,
 } from '@components/commons/AccordionWrapper'
 import { NumberSelect } from '@components/features/common/NumberSelect'
-import { MulliganLineChart } from '@components/features/liveCalculator/MulliganLineChart'
+import { MulliganLineChart } from '@components/features/mulliganCalculator/MulliganLineChart'
 import { colors } from '@constants/colors'
 
 export const MulliganSelect: React.FC = () => {

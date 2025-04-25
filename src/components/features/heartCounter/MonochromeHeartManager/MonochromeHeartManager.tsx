@@ -6,7 +6,7 @@ import { Heart } from 'lucide-react'
 
 import { VscWand } from 'react-icons/vsc'
 import { BsPersonHearts } from 'react-icons/bs'
-import { useMonochromeManager } from './MonochromeManager.hooks'
+import { useMonochromeManager } from './MonochromeHeartManager.hooks'
 import { Summary } from '@components/commons/Summary'
 import { ResetButton } from '@components/commons/ResetButton'
 import { NumberSelect } from '@components/features/common/NumberSelect'
