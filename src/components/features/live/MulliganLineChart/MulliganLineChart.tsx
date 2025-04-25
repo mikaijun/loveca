@@ -1,6 +1,6 @@
 import React from 'react'
 import { calculateMulliganProbability } from './MulliganLineChart.hooks'
-import { LineChart } from '@atoms/LineChart'
+import { LineChart } from '@features/common/LineChart'
 
 const labels = [
   'マリガン後',

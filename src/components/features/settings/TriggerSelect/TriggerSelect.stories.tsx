@@ -3,7 +3,7 @@ import { Meta, StoryObj } from '@storybook/react'
 import { Select } from 'radix-ui'
 import classnames from 'classnames'
 import { CheckIcon } from 'lucide-react'
-import { TriggerSelect } from '@atoms/TriggerSelect'
+import { TriggerSelect } from '@features/settings/TriggerSelect'
 
 export default {
   title: 'Atoms/TriggerSelect',

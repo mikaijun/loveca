@@ -7,10 +7,10 @@ import { BsPersonHearts } from 'react-icons/bs'
 import { Dialog } from 'radix-ui'
 import { TbSettingsHeart } from 'react-icons/tb'
 import { useHeartColorSettingsModal } from './HeartColorSettingsModal.hooks'
-import { Summary } from '@atoms/Summary'
-import { HeartIcon } from '@atoms/HeartIcon'
+import { Summary } from '@features/common/Summary'
+import { HeartIcon } from '@features/heart/HeartIcon'
+import { Modal } from '@features/common/Modal'
 import { MemberHeartColor, memberHeartColors } from '@constants/hearts'
-import { Modal } from '@atoms/Modal'
 
 export type HeartColorSettingsModalProps = {
   requiredLiveHeartColorList: MemberHeartColor[]

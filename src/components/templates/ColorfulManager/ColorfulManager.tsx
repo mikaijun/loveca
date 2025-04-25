@@ -9,13 +9,13 @@ import {
   calculateHeartCount,
   useColorfulManager,
 } from './ColorfulManager.hooks'
-import { HeartIcon } from '@atoms/HeartIcon'
-import { HeartCounter } from '@molecules/HeartCounter'
-import { colors } from '@constants/colors'
-import { Summary } from '@atoms/Summary'
-import { ResetButton } from '@atoms/ResetButton'
+import { HeartIcon } from '@features/heart/HeartIcon'
+import { HeartCounter } from '@features/heart/HeartCounter'
+import { Summary } from '@features/common/Summary'
+import { ResetButton } from '@features/common/ResetButton'
+import { HeartColorSettingsModal } from '@features/heart/HeartColorSettingsModal'
 import { memberHeartColors, requiredLiveHeartColors } from '@constants/hearts'
-import { HeartColorSettingsModal } from '@organism/HeartColorSettingsModal'
+import { colors } from '@constants/colors'
 
 const HEART_COUNTER_STYLE = {
   gap: '0px 16px',

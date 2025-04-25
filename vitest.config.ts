@@ -8,12 +8,10 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@atoms/': path.join(__dirname, 'src/components/atoms/'),
-      '@molecules/': path.join(__dirname, 'src/components/molecules/'),
-      '@organism/': path.join(__dirname, 'src/components/organism/'),
       '@templates/': path.join(__dirname, 'src/components/templates/'),
       '@pages/': path.join(__dirname, 'src/components/pages/'),
       '@constants/': path.join(__dirname, 'src/constants/'),
+      '@features/': path.join(__dirname, 'src/components/features/'),
     },
   },
 })

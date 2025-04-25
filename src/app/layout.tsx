@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import { Box, Theme, Text, Container } from '@radix-ui/themes'
 import { Analytics } from '@vercel/analytics/next'
 import '@radix-ui/themes/styles.css'
+import { BottomNavigation } from '@features/navigation/BottomNavigation'
 import { colors } from '@constants/colors'
-import { BottomNavigation } from '@atoms/BottomNavigation'
 
 export const metadata: Metadata = {
   title: 'ラブカリキュレーター',

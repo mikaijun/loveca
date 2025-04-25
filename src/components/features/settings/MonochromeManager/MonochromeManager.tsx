@@ -7,10 +7,10 @@ import { Heart } from 'lucide-react'
 import { VscWand } from 'react-icons/vsc'
 import { BsPersonHearts } from 'react-icons/bs'
 import { useMonochromeManager } from './MonochromeManager.hooks'
-import { Summary } from '@atoms/Summary'
-import { NumberSelect } from '@molecules/NumberSelect'
+import { Summary } from '@features/common/Summary'
+import { NumberSelect } from '@features/settings/NumberSelect'
+import { ResetButton } from '@features/common/ResetButton'
 import { colors } from '@constants/colors'
-import { ResetButton } from '@atoms/ResetButton'
 
 export const MonochromeManager: React.FC = () => {
   const {
