@@ -19,7 +19,6 @@
       }
     ],
     "paths": {
-      "@templates/*": ["./src/components/templates/*"],
       "@constants/*": ["./src/constants/*"],
       "@utils": ["./src/utils.ts"],
       "@components/*": ["./src/components/*"]

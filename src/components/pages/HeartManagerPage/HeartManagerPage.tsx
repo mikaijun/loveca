@@ -1,7 +1,7 @@
 import { Tabs } from 'radix-ui'
 
 import { MonochromeManager } from '@components/features/settings/MonochromeManager'
-import { ColorfulManager } from '@templates/ColorfulManager'
+import { ColorfulManager } from '@components/features/ColorfulManager'
 import './HeartManagerPage.css'
 
 export const HeartManagerPage = () => {

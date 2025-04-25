@@ -8,7 +8,6 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@templates/': path.join(__dirname, 'src/components/templates/'),
       '@constants/': path.join(__dirname, 'src/constants/'),
       '@components/': path.join(__dirname, 'src/components/'),
     },
