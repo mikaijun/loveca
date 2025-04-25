@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Box, Theme, Text, Container } from '@radix-ui/themes'
 import { Analytics } from '@vercel/analytics/next'
 import '@radix-ui/themes/styles.css'
-import { BottomNavigation } from '@features/navigation/BottomNavigation'
+import { BottomNavigation } from '@components/features/navigation/BottomNavigation'
 import { colors } from '@constants/colors'
 
 export const metadata: Metadata = {

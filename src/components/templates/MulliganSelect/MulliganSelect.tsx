@@ -6,16 +6,16 @@ import { Box, Flex, Text } from '@radix-ui/themes'
 import { GiCardPick, GiCardPlay } from 'react-icons/gi'
 import { Accordion } from 'radix-ui'
 import { useMulliganSelect } from './MulliganSelect.hooks'
-import { Summary } from '@components/Summary'
-import { NumberSelect } from '@features/settings/NumberSelect'
+import { Summary } from '@components/commons/Summary'
+import { NumberSelect } from '@components/features/settings/NumberSelect'
 
-import { ResetButton } from '@components/ResetButton'
+import { ResetButton } from '@components/commons/ResetButton'
 import {
   AccordionContent,
   AccordionTrigger,
   AccordionWrapper,
-} from '@components/AccordionWrapper'
-import { MulliganLineChart } from '@features/live/MulliganLineChart'
+} from '@components/commons/AccordionWrapper'
+import { MulliganLineChart } from '@components/features/live/MulliganLineChart'
 import { colors } from '@constants/colors'
 
 export const MulliganSelect: React.FC = () => {

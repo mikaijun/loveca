@@ -1,4 +1,4 @@
-import { MulliganCalculatorPage } from '@pages/MulliganCalculatorPage'
+import { MulliganCalculatorPage } from '@components/pages/MulliganCalculatorPage'
 
 export default function MulliganPage() {
   return <MulliganCalculatorPage />

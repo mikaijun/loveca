@@ -9,9 +9,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@templates/': path.join(__dirname, 'src/components/templates/'),
-      '@pages/': path.join(__dirname, 'src/components/pages/'),
       '@constants/': path.join(__dirname, 'src/constants/'),
-      '@features/': path.join(__dirname, 'src/features/'),
       '@components/': path.join(__dirname, 'src/components/'),
     },
   },

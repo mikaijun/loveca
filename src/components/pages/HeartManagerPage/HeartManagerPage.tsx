@@ -1,6 +1,6 @@
 import { Tabs } from 'radix-ui'
 
-import { MonochromeManager } from '@features/settings/MonochromeManager'
+import { MonochromeManager } from '@components/features/settings/MonochromeManager'
 import { ColorfulManager } from '@templates/ColorfulManager'
 import './HeartManagerPage.css'
 

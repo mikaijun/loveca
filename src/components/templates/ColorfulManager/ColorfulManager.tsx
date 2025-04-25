@@ -9,11 +9,11 @@ import {
   calculateHeartCount,
   useColorfulManager,
 } from './ColorfulManager.hooks'
-import { HeartIcon } from '@features/heart/HeartIcon'
-import { HeartCounter } from '@features/heart/HeartCounter'
-import { Summary } from '@components/Summary'
-import { ResetButton } from '@components/ResetButton'
-import { HeartColorSettingsModal } from '@features/heart/HeartColorSettingsModal'
+import { HeartIcon } from '@components/features/heart/HeartIcon'
+import { HeartCounter } from '@components/features/heart/HeartCounter'
+import { Summary } from '@components/commons/Summary'
+import { ResetButton } from '@components/commons/ResetButton'
+import { HeartColorSettingsModal } from '@components/features/heart/HeartColorSettingsModal'
 import { memberHeartColors, requiredLiveHeartColors } from '@constants/hearts'
 import { colors } from '@constants/colors'
 

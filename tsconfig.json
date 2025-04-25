@@ -20,10 +20,8 @@
     ],
     "paths": {
       "@templates/*": ["./src/components/templates/*"],
-      "@pages/*": ["./src/components/pages/*"],
       "@constants/*": ["./src/constants/*"],
       "@utils": ["./src/utils.ts"],
-      "@features/*": ["./src/features/*"],
       "@components/*": ["./src/components/*"]
     }
   },

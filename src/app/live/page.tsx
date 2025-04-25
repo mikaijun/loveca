@@ -1,4 +1,4 @@
-import { LiveSuccessCalculator } from '@features/live/LiveSuccessCalculator'
+import { LiveSuccessCalculator } from '@components/features/live/LiveSuccessCalculator'
 
 export default function LivePage() {
   return <LiveSuccessCalculator />
