@@ -8,7 +8,6 @@ import {
 } from './AccordionWrapper'
 
 const meta: Meta<typeof AccordionWrapper> = {
-  title: 'Atoms/Accordion',
   component: AccordionWrapper,
 }
 

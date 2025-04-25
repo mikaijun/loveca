@@ -4,7 +4,6 @@ import { useCallback } from 'react'
 import { HeartCounter } from './HeartCounter'
 
 const meta: Meta<typeof HeartCounter> = {
-  title: 'Molecules/HeartCounter',
   component: HeartCounter,
   args: {
     color: 'red',

@@ -4,7 +4,6 @@ import { Container } from '@radix-ui/themes'
 import { MulliganLineChart } from './MulliganLineChart'
 
 export default {
-  title: 'Organisms/MulliganLineChart',
   component: MulliganLineChart,
 } as Meta<typeof MulliganLineChart>
 

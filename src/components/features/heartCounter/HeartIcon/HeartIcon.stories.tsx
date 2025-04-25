@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { HeartIcon } from './HeartIcon'
 
 const meta: Meta<typeof HeartIcon> = {
-  title: 'Atoms/HeartIcon',
   component: HeartIcon,
   argTypes: {
     color: {

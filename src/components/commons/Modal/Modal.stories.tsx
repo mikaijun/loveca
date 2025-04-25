@@ -4,7 +4,6 @@ import { Button } from '@radix-ui/themes'
 import { Modal } from './Modal'
 
 const meta: Meta<typeof Modal> = {
-  title: 'Atoms/Modal',
   component: Modal,
 }
 

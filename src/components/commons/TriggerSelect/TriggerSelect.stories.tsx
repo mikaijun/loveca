@@ -6,7 +6,6 @@ import { CheckIcon } from 'lucide-react'
 import { TriggerSelect } from '@components/commons/TriggerSelect'
 
 export default {
-  title: 'Atoms/TriggerSelect',
   component: TriggerSelect,
 } as Meta<typeof TriggerSelect>
 

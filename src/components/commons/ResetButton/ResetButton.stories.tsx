@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { ResetButton } from './ResetButton'
 
 const meta: Meta<typeof ResetButton> = {
-  title: 'Atoms/ResetButton',
   component: ResetButton,
 }
 

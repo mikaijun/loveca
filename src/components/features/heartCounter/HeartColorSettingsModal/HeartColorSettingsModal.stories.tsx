@@ -4,7 +4,6 @@ import { HeartColorSettingsModal } from './HeartColorSettingsModal'
 import { MemberHeartColor } from '@constants/hearts'
 
 export default {
-  title: 'Organisms/HeartColorSettingsModal',
   component: HeartColorSettingsModal,
 } as Meta<typeof HeartColorSettingsModal>
 

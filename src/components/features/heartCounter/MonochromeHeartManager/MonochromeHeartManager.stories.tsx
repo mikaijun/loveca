@@ -4,7 +4,6 @@ import { Container } from '@radix-ui/themes'
 import { MonochromeManager } from './MonochromeHeartManager'
 
 export default {
-  title: 'Organisms/MonochromeManager',
   component: MonochromeManager,
 } as Meta<typeof MonochromeManager>
 

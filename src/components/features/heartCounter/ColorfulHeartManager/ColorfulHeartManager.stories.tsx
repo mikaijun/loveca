@@ -4,7 +4,6 @@ import { Container } from '@radix-ui/themes'
 import { ColorfulHeartManager } from '@components/features/heartCounter/ColorfulHeartManager'
 
 export default {
-  title: 'Templates/ColorfulHeartManager',
   component: ColorfulHeartManager,
 } as Meta<typeof ColorfulHeartManager>
 

@@ -4,7 +4,6 @@ import { Container } from '@radix-ui/themes'
 import { MulliganCalculatorPage } from '.'
 
 export default {
-  title: 'Pages/MulliganCalculatorPage',
   component: MulliganCalculatorPage,
 } as Meta<typeof MulliganCalculatorPage>
 

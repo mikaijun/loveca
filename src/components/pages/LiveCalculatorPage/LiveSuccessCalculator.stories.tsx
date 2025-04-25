@@ -1,10 +1,9 @@
 import React from 'react'
 import { Meta, StoryObj } from '@storybook/react'
 import { Container } from '@radix-ui/themes'
-import { LiveCalculatorPage } from './LiveCalculatorPage'
+import { LiveCalculatorPage } from '.'
 
 export default {
-  title: 'Pages/LiveCalculatorPage',
   component: LiveCalculatorPage,
 } as Meta<typeof LiveCalculatorPage>
 

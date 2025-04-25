@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { LineChart } from './LineChart'
 
 const meta: Meta<typeof LineChart> = {
-  title: 'Atoms/LineChart',
   component: LineChart,
   decorators: [
     (Story) => (

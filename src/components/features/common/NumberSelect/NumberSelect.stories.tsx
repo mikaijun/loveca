@@ -3,7 +3,6 @@ import { useState } from 'react'
 import { NumberSelect } from './NumberSelect'
 
 const meta: Meta<typeof NumberSelect> = {
-  title: 'Molecules/NumberSelect',
   component: NumberSelect,
 }
 

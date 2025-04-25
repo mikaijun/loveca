@@ -4,7 +4,6 @@ import { Container } from '@radix-ui/themes'
 import { LiveSuccessCalculator } from './LiveSuccessCalculator'
 
 export default {
-  title: 'Organisms/LiveSuccessCalculator',
   component: LiveSuccessCalculator,
 } as Meta<typeof LiveSuccessCalculator>
 

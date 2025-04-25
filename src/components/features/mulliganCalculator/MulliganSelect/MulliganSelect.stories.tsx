@@ -4,7 +4,6 @@ import { Container } from '@radix-ui/themes'
 import { MulliganSelect } from './MulliganSelect'
 
 export default {
-  title: 'Templates/MulliganSelect',
   component: MulliganSelect,
 } as Meta<typeof MulliganSelect>
 

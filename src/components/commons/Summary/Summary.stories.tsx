@@ -3,7 +3,6 @@ import { Megaphone } from 'lucide-react'
 import { Summary } from './Summary'
 
 const meta: Meta<typeof Summary> = {
-  title: 'Atoms/Summary',
   component: Summary,
   argTypes: {
     icon: {
