@@ -11,7 +11,8 @@ export default defineConfig({
       '@templates/': path.join(__dirname, 'src/components/templates/'),
       '@pages/': path.join(__dirname, 'src/components/pages/'),
       '@constants/': path.join(__dirname, 'src/constants/'),
-      '@features/': path.join(__dirname, 'src/components/features/'),
+      '@features/': path.join(__dirname, 'src/features/'),
+      '@components/': path.join(__dirname, 'src/components/'),
     },
   },
 })

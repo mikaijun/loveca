@@ -7,9 +7,9 @@ import { BsPersonHearts } from 'react-icons/bs'
 import { Dialog } from 'radix-ui'
 import { TbSettingsHeart } from 'react-icons/tb'
 import { useHeartColorSettingsModal } from './HeartColorSettingsModal.hooks'
-import { Summary } from '@features/common/Summary'
+import { Summary } from '@components/Summary'
 import { HeartIcon } from '@features/heart/HeartIcon'
-import { Modal } from '@features/common/Modal'
+import { Modal } from '@components/Modal'
 import { MemberHeartColor, memberHeartColors } from '@constants/hearts'
 
 export type HeartColorSettingsModalProps = {

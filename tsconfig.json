@@ -23,7 +23,8 @@
       "@pages/*": ["./src/components/pages/*"],
       "@constants/*": ["./src/constants/*"],
       "@utils": ["./src/utils.ts"],
-      "@features/*": ["./src/components/features/*"],
+      "@features/*": ["./src/features/*"],
+      "@components/*": ["./src/components/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "**/*.stories.tsx", "**/*.test.tsx"],

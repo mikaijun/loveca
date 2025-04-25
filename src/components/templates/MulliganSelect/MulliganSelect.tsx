@@ -6,15 +6,15 @@ import { Box, Flex, Text } from '@radix-ui/themes'
 import { GiCardPick, GiCardPlay } from 'react-icons/gi'
 import { Accordion } from 'radix-ui'
 import { useMulliganSelect } from './MulliganSelect.hooks'
-import { Summary } from '@features/common/Summary'
+import { Summary } from '@components/Summary'
 import { NumberSelect } from '@features/settings/NumberSelect'
 
-import { ResetButton } from '@features/common/ResetButton'
+import { ResetButton } from '@components/ResetButton'
 import {
   AccordionContent,
   AccordionTrigger,
   AccordionWrapper,
-} from '@features/common/AccordionWrapper'
+} from '@components/AccordionWrapper'
 import { MulliganLineChart } from '@features/live/MulliganLineChart'
 import { colors } from '@constants/colors'
 
