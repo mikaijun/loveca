@@ -9,7 +9,7 @@ import { TbSettingsHeart } from 'react-icons/tb'
 import { useHeartColorSettingsModal } from './HeartColorSettingsModal.hooks'
 import { Summary } from '@components/commons/Summary'
 import { Modal } from '@components/commons/Modal'
-import { HeartIcon } from '@components/features/heart/HeartIcon'
+import { HeartIcon } from '@components/features/heartCounter/HeartIcon'
 import { MemberHeartColor, memberHeartColors } from '@constants/hearts'
 
 export type HeartColorSettingsModalProps = {

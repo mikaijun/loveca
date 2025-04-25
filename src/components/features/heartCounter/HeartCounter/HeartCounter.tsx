@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react'
 import { Flex, Text } from '@radix-ui/themes'
 import { CircleMinus, CirclePlus } from 'lucide-react'
-import { HeartIcon } from '@components/features/heart/HeartIcon'
+import { HeartIcon } from '@components/features/heartCounter/HeartIcon'
 import { colors } from '@constants/colors'
 import { HeartIconProps } from '@constants/hearts'
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Meta, StoryObj } from '@storybook/react'
 import { Container } from '@radix-ui/themes'
-import { ColorfulManager } from '@components/features/heart/ColorfulManager'
+import { ColorfulManager } from '@components/features/heartCounter/ColorfulManager'
 
 export default {
   title: 'Templates/ColorfulManager',
