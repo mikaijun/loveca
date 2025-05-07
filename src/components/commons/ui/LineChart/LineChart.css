@@ -1,0 +1,106 @@
+@import "@radix-ui/colors/black-alpha.css";
+@import "@radix-ui/colors/mauve.css";
+
+:root {
+  --primary: #6366f1;
+  --primary-light: #818cf8;
+  --primary-dark: #4f46e5;
+  --accent: #f43f5e;
+  --accent-light: #fb7185;
+  --accent-dark: #e11d48;
+  --surface: #f8fafc;
+  --surface-dark: #f1f5f9;
+  --text: #1e293b;
+  --text-light: #64748b;
+}
+
+.LineChart {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(145deg, var(--surface), var(--surface-dark));
+  border-radius: 32px;
+  padding: 32px;
+  box-shadow: 
+    0 25px 50px -12px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.ChartTitle {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 24px;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.ChartContainer {
+  position: relative;
+  width: 100%;
+  height: calc(100% - 48px);
+}
+
+.Tooltip {
+  background: linear-gradient(145deg, var(--surface), var(--surface-dark));
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 
+    0 8px 16px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.TooltipLabel {
+  color: var(--text-light);
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+.TooltipValue {
+  color: var(--primary);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.Axis {
+  color: var(--text-light);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.Grid {
+  stroke: rgba(99, 102, 241, 0.1);
+  stroke-width: 1;
+}
+
+.Line {
+  stroke: var(--primary);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+  filter: drop-shadow(0 4px 8px rgba(99, 102, 241, 0.3));
+}
+
+.Area {
+  fill: url(#gradient);
+  opacity: 0.2;
+}
+
+.Gradient {
+  --gradient-start: var(--primary-light);
+  --gradient-end: var(--primary);
+}
+
+.Dot {
+  fill: white;
+  stroke: var(--primary);
+  stroke-width: 2;
+  filter: drop-shadow(0 4px 8px rgba(99, 102, 241, 0.3));
+} 

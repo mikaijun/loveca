@@ -1,54 +1,40 @@
-import React, { useCallback } from 'react'
-import { Flex, Text } from '@radix-ui/themes'
-import { CircleMinus, CirclePlus } from 'lucide-react'
+import React from 'react'
 import { HeartIcon } from '@components/features/heartCounter/HeartIcon'
-import { colors } from '@constants/colors'
 import { HeartIconProps } from '@constants/hearts'
+import './HeartCounter.css'
 
-type HeartCounterProps = HeartIconProps & {
+type HeartCounterProps = {
+  color: HeartIconProps['color']
   count: number
-  onDecrement: (color: HeartIconProps['color']) => void
   onIncrement: (color: HeartIconProps['color']) => void
+  onDecrement: (color: HeartIconProps['color']) => void
 }
 
 export const HeartCounter: React.FC<HeartCounterProps> = ({
-  count,
   color,
-  onDecrement,
+  count,
   onIncrement,
+  onDecrement,
 }) => {
-  const handleDecrement = useCallback(() => {
-    if (count > 0) {
-      onDecrement(color)
-    }
-  }, [count, color, onDecrement])
-
-  const handleIncrement = useCallback(() => {
-    if (count < 99) {
-      onIncrement(color)
-    }
-  }, [count, color, onIncrement])
-
   return (
-    <Flex align="center" direction="column" justify="center">
-      <Text as="p" size="5" weight="bold">
-        {count}
-      </Text>
-      <Flex align="center">
-        <CircleMinus
-          color={count === 0 ? colors.sage[5] : colors.black}
-          data-testid="circle-minus"
-          onClick={handleDecrement}
-          size="32px"
-        />
-        <HeartIcon color={color} />
-        <CirclePlus
-          color={count >= 99 ? colors.sage[5] : colors.black}
-          data-testid="circle-plus"
-          onClick={handleIncrement}
-          size="32px"
-        />
-      </Flex>
-    </Flex>
+    <div className="HeartCounter">
+      <button
+        aria-label={`${color}のハートを減らす`}
+        className="HeartCounterButton"
+        disabled={count <= 0}
+        onClick={() => onDecrement(color)}
+      >
+        -
+      </button>
+      <HeartIcon color={color} />
+      <span className="HeartCounterValue">{count}</span>
+      <button
+        aria-label={`${color}のハートを増やす`}
+        className="HeartCounterButton"
+        onClick={() => onIncrement(color)}
+      >
+        +
+      </button>
+    </div>
   )
 }

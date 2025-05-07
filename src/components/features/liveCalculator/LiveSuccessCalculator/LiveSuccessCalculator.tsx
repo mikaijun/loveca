@@ -65,6 +65,7 @@ export const LiveSuccessCalculator: React.FC = () => {
           marginLeft: 'auto',
           display: 'flex',
           alignItems: 'center',
+          width: 'max-content',
         }}
       />
       <Flex direction="column" gap="8px">

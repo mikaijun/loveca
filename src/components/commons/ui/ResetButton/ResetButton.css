@@ -1,0 +1,51 @@
+@import '@radix-ui/colors/black-alpha.css';
+@import '@radix-ui/colors/mauve.css';
+
+:root {
+  /* colors.tsから色を参照 */
+  --color-red-2: #FFF1F1;
+  --color-red-5: #FFC2C2;
+  --color-red-8: #EF5E5E;
+  --color-red-9: #FF0000;
+  --color-slate-11: #60646C;
+  --color-white: #FFFFFF;
+  --color-black: #000000;
+
+  /* コンポーネント固有の変数 */
+  --reset-button-bg: var(--color-white);
+  --reset-button-border: var(--color-red-9);
+  --reset-button-active: var(--color-red-5);
+  --reset-button-text: var(--color-red-9);
+  --reset-button-shadow: 0 4px 12px rgba(255, 0, 0, 0.15);
+  --reset-button-radius: 12px;
+  --reset-button-padding: 8px 16px;
+  --reset-button-transition: all 0.2s ease;
+}
+
+.ResetButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: var(--reset-button-padding);
+  background: var(--reset-button-bg);
+  border: 1px solid var(--reset-button-border);
+  border-radius: var(--reset-button-radius);
+  color: var(--reset-button-text);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--reset-button-transition);
+  user-select: none;
+}
+
+.ResetButton:active {
+  background: var(--reset-button-active);
+  transform: translateY(0);
+}
+
+.ResetButtonIcon {
+  width: 16px;
+  height: 16px;
+  color: var(--reset-button-text);
+  transform-origin: center;
+}

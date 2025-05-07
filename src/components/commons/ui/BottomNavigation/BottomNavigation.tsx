@@ -8,7 +8,6 @@ import { Box } from '@radix-ui/themes'
 import { usePathname } from 'next/navigation'
 import { BsCalculator } from 'react-icons/bs'
 import { VscWand } from 'react-icons/vsc'
-import { colors } from '@constants/colors'
 
 const tabs = [
   {
@@ -34,31 +33,17 @@ const tabs = [
 export const BottomNavigation: React.FC = () => {
   const pathname = usePathname()
   return (
-    <Box className="bottom-navigation">
-      <Box className="tabs-list">
-        {tabs.map((tab) => (
-          <Box className="tab-item" key={tab.value}>
-            <Link className="tab-link" href={tab.path}>
-              <tab.icon
-                color={
-                  pathname === tab.path ? colors.blue[8] : colors.slate[11]
-                }
-                data-testid={tab.value}
-                size={20}
-              />
-              <span
-                style={{
-                  fontWeight: pathname === tab.path ? 'bold' : 'normal',
-                  color:
-                    pathname === tab.path ? colors.blue[8] : colors.slate[11],
-                }}
-              >
-                {tab.label}
-              </span>
-            </Link>
-          </Box>
-        ))}
-      </Box>
+    <Box className="BottomNavigation">
+      {tabs.map((tab) => (
+        <Link
+          className={`NavigationItem ${pathname === tab.path ? 'active' : ''}`}
+          href={tab.path}
+          key={tab.value}
+        >
+          <tab.icon className="NavigationIcon" size={24} />
+          <span>{tab.label}</span>
+        </Link>
+      ))}
     </Box>
   )
 }

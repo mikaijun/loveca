@@ -34,21 +34,21 @@ export const HeartIcon: React.FC<HeartIconProps> = ({ color }) => {
     <Flex
       align="center"
       data-testid="heart-icon"
-      height="32px"
+      height="24px"
       justify="center"
       position="relative"
-      width="32px"
+      width="24px"
     >
       <Heart
         color={colors.white}
         fill={colors.white}
-        size="28px"
+        size="20px"
         style={{ position: 'absolute' }}
       />
       <Heart
         color={iconColor}
         fill={iconColor}
-        size="24px"
+        size="20px"
         style={{ position: 'absolute' }}
       />
       {Icon && (

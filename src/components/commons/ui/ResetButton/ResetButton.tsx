@@ -1,6 +1,7 @@
 import React from 'react'
-import { Button, ButtonProps, Text } from '@radix-ui/themes'
+import { ButtonProps } from '@radix-ui/themes'
 import { RotateCcw } from 'lucide-react'
+import './ResetButton.css'
 
 type ResetButtonProps = ButtonProps & {
   onReset: () => void
@@ -13,15 +14,9 @@ export const ResetButton: React.FC<ResetButtonProps> = ({
   ...props
 }) => {
   return (
-    <Button
-      color="red"
-      onClick={onReset}
-      radius="large"
-      variant="outline"
-      {...props}
-    >
-      <RotateCcw size="16px" />
-      <Text weight="bold">{text}</Text>
-    </Button>
+    <button className="ResetButton" onClick={onReset} {...props}>
+      <RotateCcw className="ResetButtonIcon" />
+      {text}
+    </button>
   )
 }

@@ -27,7 +27,6 @@ export const MonochromeManager: React.FC = () => {
         onReset={handleResetHeart}
         style={{
           marginLeft: 'auto',
-          display: 'flex',
           alignItems: 'center',
         }}
       />

@@ -1,0 +1,118 @@
+@import '@radix-ui/colors/black-alpha.css';
+@import '@radix-ui/colors/mauve.css';
+
+:root {
+  /* colors.tsから色を参照 */
+  --color-blue-2: #F4FAFF;
+  --color-blue-5: #C2E5FF;
+  --color-blue-8: #5EB1EF;
+  --color-blue-9: #0090FF;
+  --color-slate-11: #60646C;
+  --color-white: #FFFFFF;
+  --color-black: #000000;
+
+  /* コンポーネント固有の変数 */
+  --settings-modal-bg: var(--color-white);
+  --settings-modal-border: var(--color-slate-11);
+  --settings-modal-active: var(--color-blue-8);
+  --settings-modal-text: var(--color-slate-11);
+  --settings-modal-shadow: 0 4px 12px rgba(0, 144, 255, 0.15);
+  --settings-modal-radius: 12px;
+  --settings-modal-padding: 8px 16px;
+  --settings-modal-transition: all 0.2s ease;
+}
+
+.SettingsButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: var(--settings-modal-padding);
+  background: var(--settings-modal-bg);
+  border-radius: var(--settings-modal-radius);
+  color: var(--settings-modal-text);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--settings-modal-transition);
+  user-select: none;
+  height: 38px;
+}
+
+.SettingsButton:active {
+  background: var(--settings-modal-active);
+  transform: translateY(0);
+}
+
+.SettingsButtonIcon {
+  width: 16px;
+  height: 16px;
+  color: var(--settings-modal-text);
+  transform-origin: center;
+}
+
+.SettingsTitle {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--settings-modal-text);
+  margin-bottom: 8px;
+}
+
+.SettingsDescription {
+  font-size: 14px;
+  color: var(--settings-modal-text);
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+
+.SettingsSection {
+  margin-bottom: 24px;
+}
+
+.SettingsCheckboxGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 4px;
+  margin-top: 16px;
+}
+
+.SettingsCheckboxItem {
+  display: flex;
+  align-items: center;
+  padding: 4px;
+  border-radius: 8px;
+  background: var(--color-blue-2);
+  border: 1px solid var(--color-blue-5);
+  transition: var(--settings-modal-transition);
+}
+
+.SettingsCheckboxItem:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.SettingsFooter {
+  margin-top: 32px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.CloseButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: var(--settings-modal-padding);
+  background: var(--settings-modal-bg);
+  border: 2px solid var(--color-red-9);
+  border-radius: var(--settings-modal-radius);
+  color: var(--color-red-9);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--settings-modal-transition);
+  user-select: none;
+}
+
+.CloseButton:active {
+  background: var(--color-red-2);
+  transform: translateY(0);
+}

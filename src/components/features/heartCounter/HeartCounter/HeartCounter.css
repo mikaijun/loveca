@@ -1,0 +1,66 @@
+@import '@radix-ui/colors/black-alpha.css';
+@import '@radix-ui/colors/mauve.css';
+
+:root {
+  /* colors.tsから色を参照 */
+  --color-blue-2: #F4FAFF;
+  --color-blue-5: #C2E5FF;
+  --color-blue-8: #5EB1EF;
+  --color-slate-11: #60646C;
+  --color-white: #FFFFFF;
+
+  /* コンポーネント固有の変数 */
+  --heart-counter-bg: var(--color-blue-2);
+  --heart-counter-border: var(--color-blue-5);
+  --heart-counter-active: var(--color-blue-8);
+  --heart-counter-text: var(--color-slate-11);
+  --heart-counter-shadow: 0 4px 12px rgba(0, 144, 255, 0.15);
+  --heart-counter-radius: 12px;
+  --heart-counter-padding: 2px;
+  --heart-counter-transition: all 0.2s ease;
+}
+
+.HeartCounter {
+  display: flex;
+  align-items: center;
+  padding: var(--heart-counter-padding);
+  border: 2px solid var(--heart-counter-border);
+  border-radius: var(--heart-counter-radius);
+  transition: var(--heart-counter-transition);
+}
+
+.HeartCounterButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--color-white);
+  color: var(--heart-counter-text);
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--heart-counter-transition);
+  padding: 0;
+  line-height: 1;
+}
+
+.HeartCounterButton:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.HeartCounterButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: var(--color-white);
+  color: var(--color-slate-11);
+}
+
+.HeartCounterValue {
+  min-width: 24px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--heart-counter-text);
+}

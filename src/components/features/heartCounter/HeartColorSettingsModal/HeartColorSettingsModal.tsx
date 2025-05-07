@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Button, CheckboxGroup, Flex, Text } from '@radix-ui/themes'
+import { Button, CheckboxGroup, Text, Flex } from '@radix-ui/themes'
 import { DialogDescription, DialogTitle } from '@radix-ui/react-dialog'
 import { VscWand } from 'react-icons/vsc'
 import { BsPersonHearts } from 'react-icons/bs'
@@ -11,6 +11,7 @@ import { Summary } from '@components/commons/ui/Summary'
 import { Modal } from '@components/commons/ui/Modal'
 import { HeartIcon } from '@components/features/heartCounter/HeartIcon'
 import { MemberHeartColor, memberHeartColors } from '@constants/hearts'
+import './HeartColorSettingsModal.css'
 
 export type HeartColorSettingsModalProps = {
   requiredLiveHeartColorList: MemberHeartColor[]
@@ -18,6 +19,7 @@ export type HeartColorSettingsModalProps = {
   onChangeRequiredLiveHeartColor: (value: MemberHeartColor[]) => void
   onChangeMemberHeartColor: (value: MemberHeartColor[]) => void
 }
+
 export const HeartColorSettingsModal: React.FC<
   HeartColorSettingsModalProps
 > = ({
@@ -36,8 +38,8 @@ export const HeartColorSettingsModal: React.FC<
   return (
     <Modal
       trigger={
-        <Button color="gray" variant="outline">
-          <TbSettingsHeart size="24px" />
+        <Button className="SettingsButton" color="gray" variant="outline">
+          <TbSettingsHeart className="SettingsButtonIcon" />
           <Text weight="bold">ハート表示設定</Text>
         </Button>
       }

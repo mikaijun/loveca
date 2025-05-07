@@ -16,7 +16,7 @@ export const HeartManagerPage = () => {
           ハート色別計算
         </Tabs.Trigger>
         <Tabs.Trigger className="TabsTrigger" value="tab2">
-          ハート合計数のみ
+          ハート合計数
         </Tabs.Trigger>
       </Tabs.List>
       <Tabs.Content
