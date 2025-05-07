@@ -12,7 +12,7 @@ import { Summary } from '@components/commons/ui/Summary'
 
 import { ResetButton } from '@components/commons/ui/ResetButton'
 import { NumberSelect } from '@components/commons/function/NumberSelect'
-import { colors } from '@constants/colors'
+import './LiveSuccessCalculator.css'
 
 export const LiveSuccessCalculator: React.FC = () => {
   const {
@@ -30,24 +30,18 @@ export const LiveSuccessCalculator: React.FC = () => {
     handleResetHeart,
   } = useLiveSuccessCalculator()
   return (
-    <Flex direction="column" gap="8px">
-      <Flex
-        gap="16px"
-        style={{
-          backgroundColor: colors.blue[5],
-          padding: '8px',
-        }}
-      >
+    <Flex className="LiveCalculator" direction="column" gap="4">
+      <Flex className="LiveCalculatorHeader" gap="4">
         {deckCount < deckBladeHeartCount ? (
-          <Text as="p" color="red" size="3">
+          <Text as="p" className="LiveCalculatorError" color="red" size="3">
             ブレードハート枚数がデッキ枚数を超えてます
           </Text>
         ) : (
           <>
-            <Text size="5" weight="bold">
+            <Text className="LiveCalculatorTitle" size="5" weight="bold">
               ライブ成功確率
             </Text>
-            <Flex gap="4px">
+            <Flex className="LiveCalculatorProbability" gap="1">
               <Text size="5" weight="bold">
                 {liveSuccessProbability}
               </Text>
@@ -61,24 +55,18 @@ export const LiveSuccessCalculator: React.FC = () => {
       <ResetButton
         onReset={handleResetHeart}
         style={{
-          marginBottom: '4px',
           marginLeft: 'auto',
           display: 'flex',
           alignItems: 'center',
           width: 'max-content',
         }}
       />
-      <Flex direction="column" gap="8px">
-        <Box
-          style={{
-            border: `1px solid ${colors.blue[5]}`,
-            padding: '16px',
-          }}
-        >
+      <Flex className="LiveCalculatorContent" direction="column" gap="4">
+        <Box className="LiveCalculatorSection">
           <Summary
+            className="LiveCalculatorSummary"
             icon={<Heart size="24px" />}
             label="ライブ成功に必要なハート総数"
-            style={{ marginBottom: '4px' }}
           />
           <NumberSelect
             ariaLabel="Required Yell Heart"
@@ -88,12 +76,9 @@ export const LiveSuccessCalculator: React.FC = () => {
             value={requiredLiveHeartCount}
           />
           <Summary
+            className="LiveCalculatorSummary"
             icon={<BsPersonHearts size="24px" />}
             label="ステージのハート総数"
-            style={{
-              marginTop: '16px',
-              marginBottom: '4px',
-            }}
           />
           <NumberSelect
             ariaLabel="Required Yell Heart"
@@ -103,12 +88,9 @@ export const LiveSuccessCalculator: React.FC = () => {
             value={memberHeartCount}
           />
           <Summary
+            className="LiveCalculatorSummary"
             icon={<VscWand size="24px" />}
             label="エール回数"
-            style={{
-              marginTop: '16px',
-              marginBottom: '4px',
-            }}
           />
           <NumberSelect
             ariaLabel="Yell Count"
@@ -118,18 +100,11 @@ export const LiveSuccessCalculator: React.FC = () => {
             value={yellCount}
           />
         </Box>
-        <Box
-          style={{
-            border: `1px solid ${colors.blue[5]}`,
-            padding: '16px',
-          }}
-        >
+        <Box className="LiveCalculatorSection">
           <Summary
-            icon={<Heart size="24px" style={{ transform: 'rotate(-90deg)' }} />}
+            className="LiveCalculatorSummary"
+            icon={<Heart className="LiveCalculatorBladeHeart" size="24px" />}
             label="デッキ内のブレードハート枚数"
-            style={{
-              marginBottom: '4px',
-            }}
           />
           <NumberSelect
             ariaLabel="Deck Blade Heart"
@@ -139,12 +114,9 @@ export const LiveSuccessCalculator: React.FC = () => {
             value={deckBladeHeartCount}
           />
           <Summary
+            className="LiveCalculatorSummary"
             icon={<GiCardDraw size="24px" />}
             label="現在のデッキ枚数"
-            style={{
-              marginTop: '16px',
-              marginBottom: '4px',
-            }}
           />
           <NumberSelect
             ariaLabel="Deck Count"
@@ -154,7 +126,7 @@ export const LiveSuccessCalculator: React.FC = () => {
             value={deckCount}
           />
         </Box>
-        <Text as="p" color="gray" size="1">
+        <Text as="p" className="LiveCalculatorNote" color="gray" size="1">
           ※ハート合計数のみの計算です(ハート色別計算はしていません)
         </Text>
       </Flex>

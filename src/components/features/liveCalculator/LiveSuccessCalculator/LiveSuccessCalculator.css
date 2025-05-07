@@ -1,0 +1,103 @@
+@import '@radix-ui/colors/black-alpha.css';
+@import '@radix-ui/colors/mauve.css';
+
+:root {
+  /* colors.tsから色を参照 */
+  --color-blue-2: #F4FAFF;
+  --color-blue-5: #C2E5FF;
+  --color-blue-8: #5EB1EF;
+  --color-blue-9: #0090FF;
+  --color-slate-11: #60646C;
+  --color-slate-12: #1C2024;
+  --color-white: #FFFFFF;
+  --color-black: #000000;
+
+  /* コンポーネント固有の変数 */
+  --live-calculator-bg: var(--color-blue-5);
+  --live-calculator-border: var(--color-blue-5);
+  --live-calculator-text: var(--color-slate-12);
+  --live-calculator-radius: 12px;
+  --live-calculator-padding: 16px;
+  --live-calculator-gap: 16px;
+  --live-calculator-shadow: 0 2px 8px rgba(0, 144, 255, 0.1);
+  --live-calculator-transition: all 0.2s ease;
+}
+
+.LiveCalculator {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.LiveCalculatorHeader {
+  background: var(--live-calculator-bg);
+  padding: 12px 20px;
+  border-radius: var(--live-calculator-radius);
+  align-items: center;
+  box-shadow: var(--live-calculator-shadow);
+  transition: var(--live-calculator-transition);
+}
+
+.LiveCalculatorHeader:hover {
+  box-shadow: 0 4px 12px rgba(0, 144, 255, 0.15);
+}
+
+.LiveCalculatorTitle {
+  color: var(--live-calculator-text);
+  font-size: 20px;
+  letter-spacing: -0.5px;
+}
+
+.LiveCalculatorProbability {
+  color: var(--live-calculator-text);
+  padding: 4px 12px;
+  border-radius: 8px;
+}
+
+.LiveCalculatorError {
+  color: var(--color-red-9);
+  font-weight: 500;
+  padding: 4px 12px;
+  font-size: 12px;
+}
+
+.LiveCalculatorContent {
+  width: 100%;
+}
+
+.LiveCalculatorSection {
+  border: 1px solid var(--live-calculator-border);
+  border-radius: var(--live-calculator-radius);
+  padding: var(--live-calculator-padding);
+  background: var(--color-white);
+  box-shadow: var(--live-calculator-shadow);
+  transition: var(--live-calculator-transition);
+}
+
+.LiveCalculatorSection:hover {
+  box-shadow: 0 4px 12px rgba(0, 144, 255, 0.15);
+  border-color: var(--color-blue-8);
+}
+
+.LiveCalculatorSummary {
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.LiveCalculatorSummary:not(:first-child) {
+  margin-top: 24px;
+}
+
+.LiveCalculatorBladeHeart {
+  transform: rotate(-90deg);
+}
+
+.LiveCalculatorNote {
+  color: var(--live-calculator-text);
+  text-align: center;
+  font-size: 10px;
+  opacity: 0.8;
+} 
