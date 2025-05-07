@@ -1,17 +1,15 @@
 'use client'
 
 import React from 'react'
-import { Box, Flex, Text } from '@radix-ui/themes'
-
+import { Box, Flex } from '@radix-ui/themes'
 import { GiCardPick, GiCardPlay } from 'react-icons/gi'
 import { useMulliganCalculatorPage } from './MulliganCalculatorPage.hooks'
 import { Summary } from '@components/commons/ui/Summary'
-
 import { ResetButton } from '@components/commons/ui/ResetButton'
 import { NumberSelect } from '@components/commons/function/NumberSelect'
 import { MulliganLineChart } from '@components/features/mulliganCalculator/MulliganLineChart'
 import { CalculationMethodModal } from '@components/features/mulliganCalculator/CalculationMethodModal'
-import { colors } from '@constants/colors'
+import './MulliganCalculatorPage.css'
 
 export const MulliganCalculatorPage: React.FC = () => {
   const {
@@ -23,8 +21,8 @@ export const MulliganCalculatorPage: React.FC = () => {
   } = useMulliganCalculatorPage()
 
   return (
-    <Flex direction="column" gap="8px">
-      <Flex align="center">
+    <Flex className="MulliganCalculator" direction="column" gap="4">
+      <Flex align="center" className="MulliganCalculatorHeader">
         <CalculationMethodModal />
         <ResetButton
           onReset={handleReset}
@@ -35,17 +33,13 @@ export const MulliganCalculatorPage: React.FC = () => {
           }}
         />
       </Flex>
-      <Flex direction="column" gap="16px">
-        <Box
-          style={{
-            border: `1px solid ${colors.blue[5]}`,
-            padding: '16px',
-          }}
-        >
+
+      <Flex className="MulliganCalculatorContent" direction="column" gap="4">
+        <Box className="MulliganCalculatorSection">
           <Summary
+            className="MulliganCalculatorSummary"
             icon={<GiCardPlay size="24px" />}
             label="マリガンで戻す枚数"
-            style={{ marginBottom: '4px' }}
           />
           <NumberSelect
             ariaLabel="マリガンで戻す枚数"
@@ -54,7 +48,9 @@ export const MulliganCalculatorPage: React.FC = () => {
             startNumber={0}
             value={mulliganCount}
           />
+
           <Summary
+            className="MulliganCalculatorSummary"
             icon={<GiCardPick size="24px" />}
             label="手札に来て欲しいカードの枚数"
             style={{
@@ -69,19 +65,19 @@ export const MulliganCalculatorPage: React.FC = () => {
             startNumber={0}
             value={wantCardCount}
           />
-          <Text as="p" color="gray" mt="8px" size="1">
-            例) 8枚採用されているコストxのメンバーを引きたい場合は、
-          </Text>
-          <Text as="p" color="gray" size="1">
-            「8」を選択してください。
-          </Text>
+
+          <div className="MulliganCalculatorExample">
+            例)
+            8枚採用されているコストxのメンバーを引きたい場合は、「8」を選択してください。
+          </div>
         </Box>
-      </Flex>
-      <Flex justify="center">
-        <MulliganLineChart
-          mulliganCount={mulliganCount}
-          wantCardCount={wantCardCount}
-        />
+
+        <Box className="MulliganCalculatorChart">
+          <MulliganLineChart
+            mulliganCount={mulliganCount}
+            wantCardCount={wantCardCount}
+          />
+        </Box>
       </Flex>
     </Flex>
   )

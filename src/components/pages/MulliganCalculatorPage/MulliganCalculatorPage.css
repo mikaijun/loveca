@@ -1,0 +1,72 @@
+@import '@radix-ui/colors/blue.css';
+@import '@radix-ui/colors/slate.css';
+
+:root {
+  /* カラー変数 */
+  --color-blue-2: var(--blue-2);
+  --color-blue-5: var(--blue-5);
+  --color-blue-8: var(--blue-8);
+  --color-slate-11: var(--slate-11);
+  --color-slate-12: var(--slate-12);
+  --color-white: #FFFFFF;
+
+  /* マリガン計算機の変数 */
+  --mulligan-calculator-bg: var(--color-white);
+  --mulligan-calculator-border: var(--color-blue-5);
+  --mulligan-calculator-text: var(--color-slate-12);
+  --mulligan-calculator-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  --mulligan-calculator-radius: 8px;
+  --mulligan-calculator-padding: 24px;
+  --mulligan-calculator-gap: 16px;
+}
+
+.MulliganCalculator {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: var(--mulligan-calculator-padding);
+  background: var(--mulligan-calculator-bg);
+  border-radius: var(--mulligan-calculator-radius);
+  box-shadow: var(--mulligan-calculator-shadow);
+}
+
+.MulliganCalculatorHeader {
+  margin-bottom: var(--mulligan-calculator-gap);
+}
+
+.MulliganCalculatorContent {
+  gap: var(--mulligan-calculator-gap);
+}
+
+.MulliganCalculatorSection {
+  background: var(--mulligan-calculator-bg);
+  border: 1px solid var(--mulligan-calculator-border);
+  border-radius: var(--mulligan-calculator-radius);
+  padding: var(--mulligan-calculator-padding);
+  box-shadow: var(--mulligan-calculator-shadow);
+}
+
+.MulliganCalculatorSummary {
+  margin-bottom: 8px;
+}
+
+.MulliganCalculatorSummary + .MulliganCalculatorSummary {
+  margin-top: 16px;
+}
+
+.MulliganCalculatorExample {
+  margin-top: 8px;
+  padding: 8px;
+  font-size: 10px;
+  color: var(--mulligan-calculator-text);
+  background: var(--color-blue-2);
+  border-radius: var(--mulligan-calculator-radius);
+  border: 1px solid var(--mulligan-calculator-border);
+}
+
+.MulliganCalculatorChart {
+  background: var(--mulligan-calculator-bg);
+  border: 1px solid var(--mulligan-calculator-border);
+  border-radius: var(--mulligan-calculator-radius);
+  padding: var(--mulligan-calculator-padding);
+  box-shadow: var(--mulligan-calculator-shadow);
+}
