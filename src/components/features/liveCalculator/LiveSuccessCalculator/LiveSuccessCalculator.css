@@ -17,8 +17,8 @@
   --live-calculator-border: var(--color-blue-5);
   --live-calculator-text: var(--color-slate-12);
   --live-calculator-radius: 12px;
-  --live-calculator-padding: 16px;
-  --live-calculator-gap: 16px;
+  --live-calculator-padding: 8px;
+  --live-calculator-gap: 8px;
   --live-calculator-shadow: 0 2px 8px rgba(0, 144, 255, 0.1);
   --live-calculator-transition: all 0.2s ease;
 }
@@ -27,20 +27,16 @@
   width: 100%;
   max-width: 600px;
   margin: 0 auto;
-  padding: 16px;
+  padding: 8px;
 }
 
 .LiveCalculatorHeader {
   background: var(--live-calculator-bg);
-  padding: 12px 20px;
+  padding: 8px;
   border-radius: var(--live-calculator-radius);
   align-items: center;
   box-shadow: var(--live-calculator-shadow);
   transition: var(--live-calculator-transition);
-}
-
-.LiveCalculatorHeader:hover {
-  box-shadow: 0 4px 12px rgba(0, 144, 255, 0.15);
 }
 
 .LiveCalculatorTitle {
@@ -51,7 +47,6 @@
 
 .LiveCalculatorProbability {
   color: var(--live-calculator-text);
-  padding: 4px 12px;
   border-radius: 8px;
 }
 
@@ -88,7 +83,7 @@
 }
 
 .LiveCalculatorSummary:not(:first-child) {
-  margin-top: 24px;
+  margin-top: 12px;
 }
 
 .LiveCalculatorBladeHeart {

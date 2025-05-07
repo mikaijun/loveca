@@ -16,7 +16,7 @@
   --mulligan-calculator-text: var(--color-slate-12);
   --mulligan-calculator-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   --mulligan-calculator-radius: 8px;
-  --mulligan-calculator-padding: 24px;
+  --mulligan-calculator-padding: 8px;
   --mulligan-calculator-gap: 16px;
 }
 
