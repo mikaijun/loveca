@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Button, CheckboxGroup, Flex } from '@radix-ui/themes'
+import { Button, CheckboxGroup, Flex, Text } from '@radix-ui/themes'
 import { DialogDescription, DialogTitle } from '@radix-ui/react-dialog'
 import { VscWand } from 'react-icons/vsc'
 import { BsPersonHearts } from 'react-icons/bs'
@@ -36,9 +36,9 @@ export const HeartColorSettingsModal: React.FC<
   return (
     <Modal
       trigger={
-        <Button color="blue">
+        <Button color="gray" variant="outline">
           <TbSettingsHeart size="24px" />
-          ハート表示設定
+          <Text weight="bold">ハート表示設定</Text>
         </Button>
       }
     >
