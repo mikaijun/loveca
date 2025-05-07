@@ -21,8 +21,8 @@ export const MulliganCalculatorPage: React.FC = () => {
   } = useMulliganCalculatorPage()
 
   return (
-    <Flex className="MulliganCalculator" direction="column" gap="4">
-      <Flex align="center" className="MulliganCalculatorHeader">
+    <Flex className="MulliganCalculator" direction="column" gap="2">
+      <Flex align="center">
         <CalculationMethodModal />
         <ResetButton
           onReset={handleReset}

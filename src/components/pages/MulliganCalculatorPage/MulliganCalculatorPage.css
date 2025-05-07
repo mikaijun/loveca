@@ -29,10 +29,6 @@
   box-shadow: var(--mulligan-calculator-shadow);
 }
 
-.MulliganCalculatorHeader {
-  margin-bottom: var(--mulligan-calculator-gap);
-}
-
 .MulliganCalculatorContent {
   gap: var(--mulligan-calculator-gap);
 }
