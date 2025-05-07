@@ -2,7 +2,7 @@ import React from 'react'
 import { Text, IconButton } from '@radix-ui/themes'
 import { DialogTitle, DialogDescription } from '@radix-ui/react-dialog'
 import { InfoCircledIcon } from '@radix-ui/react-icons'
-import { Modal } from '@components/commons/Modal'
+import { Modal } from '@components/commons/ui/Modal'
 
 export const CalculationMethodModal: React.FC = () => {
   return (
@@ -20,8 +20,8 @@ export const CalculationMethodModal: React.FC = () => {
       }
     >
       <DialogTitle>計算方法について</DialogTitle>
-      <DialogDescription>
-        <span style={{ display: 'block' }}>
+      <DialogDescription asChild>
+        <div>
           <ul style={{ margin: 0, paddingLeft: '16px' }}>
             <li>
               <Text size="1">
@@ -39,7 +39,7 @@ export const CalculationMethodModal: React.FC = () => {
               </Text>
             </li>
           </ul>
-        </span>
+        </div>
       </DialogDescription>
     </Modal>
   )

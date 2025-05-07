@@ -2,7 +2,7 @@ import React, { useCallback } from 'react'
 import classnames from 'classnames'
 import { CheckIcon } from 'lucide-react'
 import { Select } from 'radix-ui'
-import { TriggerSelect } from '@components/commons/TriggerSelect'
+import { TriggerSelect } from '@components/commons/ui/TriggerSelect'
 
 type NumberSelectProps = {
   startNumber: number

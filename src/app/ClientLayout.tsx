@@ -1,7 +1,7 @@
 'use client'
 
 import { Box, Theme, Text, Container } from '@radix-ui/themes'
-import { BottomNavigation } from '@components/features/common/BottomNavigation'
+import { BottomNavigation } from '@components/commons/ui/BottomNavigation'
 import { colors } from '@constants/colors'
 
 export function ClientLayout({ children }: { children: React.ReactNode }) {

@@ -8,10 +8,10 @@ import { GiCardDraw } from 'react-icons/gi'
 import { VscWand } from 'react-icons/vsc'
 import { BsPersonHearts } from 'react-icons/bs'
 import { useLiveSuccessCalculator } from './LiveSuccessCalculator.hooks'
-import { Summary } from '@components/commons/Summary'
+import { Summary } from '@components/commons/ui/Summary'
 
-import { ResetButton } from '@components/commons/ResetButton'
-import { NumberSelect } from '@components/features/common/NumberSelect'
+import { ResetButton } from '@components/commons/ui/ResetButton'
+import { NumberSelect } from '@components/commons/function/NumberSelect'
 import { colors } from '@constants/colors'
 
 export const LiveSuccessCalculator: React.FC = () => {

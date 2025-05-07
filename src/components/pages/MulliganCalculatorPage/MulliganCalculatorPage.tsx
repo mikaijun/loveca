@@ -5,10 +5,10 @@ import { Box, Flex, Text } from '@radix-ui/themes'
 
 import { GiCardPick, GiCardPlay } from 'react-icons/gi'
 import { useMulliganCalculatorPage } from './MulliganCalculatorPage.hooks'
-import { Summary } from '@components/commons/Summary'
+import { Summary } from '@components/commons/ui/Summary'
 
-import { ResetButton } from '@components/commons/ResetButton'
-import { NumberSelect } from '@components/features/common/NumberSelect'
+import { ResetButton } from '@components/commons/ui/ResetButton'
+import { NumberSelect } from '@components/commons/function/NumberSelect'
 import { MulliganLineChart } from '@components/features/mulliganCalculator/MulliganLineChart'
 import { CalculationMethodModal } from '@components/features/mulliganCalculator/CalculationMethodModal'
 import { colors } from '@constants/colors'

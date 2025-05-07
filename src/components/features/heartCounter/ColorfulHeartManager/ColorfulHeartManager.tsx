@@ -9,8 +9,8 @@ import {
   calculateHeartCount,
   useColorfulManager,
 } from './ColorfulHeartManager.hooks'
-import { Summary } from '@components/commons/Summary'
-import { ResetButton } from '@components/commons/ResetButton'
+import { Summary } from '@components/commons/ui/Summary'
+import { ResetButton } from '@components/commons/ui/ResetButton'
 import { HeartIcon } from '@components/features/heartCounter/HeartIcon'
 import { HeartCounter } from '@components/features/heartCounter/HeartCounter'
 import { HeartColorSettingsModal } from '@components/features/heartCounter/HeartColorSettingsModal'

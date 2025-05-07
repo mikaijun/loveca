@@ -7,9 +7,9 @@ import { Heart } from 'lucide-react'
 import { VscWand } from 'react-icons/vsc'
 import { BsPersonHearts } from 'react-icons/bs'
 import { useMonochromeManager } from './MonochromeHeartManager.hooks'
-import { Summary } from '@components/commons/Summary'
-import { ResetButton } from '@components/commons/ResetButton'
-import { NumberSelect } from '@components/features/common/NumberSelect'
+import { Summary } from '@components/commons/ui/Summary'
+import { ResetButton } from '@components/commons/ui/ResetButton'
+import { NumberSelect } from '@components/commons/function/NumberSelect'
 import { colors } from '@constants/colors'
 
 export const MonochromeManager: React.FC = () => {
