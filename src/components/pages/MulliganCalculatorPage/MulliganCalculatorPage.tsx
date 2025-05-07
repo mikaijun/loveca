@@ -4,18 +4,13 @@ import React from 'react'
 import { Box, Flex, Text } from '@radix-ui/themes'
 
 import { GiCardPick, GiCardPlay } from 'react-icons/gi'
-import { Accordion } from 'radix-ui'
 import { useMulliganCalculatorPage } from './MulliganCalculatorPage.hooks'
 import { Summary } from '@components/commons/Summary'
 
 import { ResetButton } from '@components/commons/ResetButton'
-import {
-  AccordionContent,
-  AccordionTrigger,
-  AccordionWrapper,
-} from '@components/commons/AccordionWrapper'
 import { NumberSelect } from '@components/features/common/NumberSelect'
 import { MulliganLineChart } from '@components/features/mulliganCalculator/MulliganLineChart'
+import { CalculationMethodModal } from '@components/features/mulliganCalculator/CalculationMethodModal'
 import { colors } from '@constants/colors'
 
 export const MulliganCalculatorPage: React.FC = () => {
@@ -29,14 +24,17 @@ export const MulliganCalculatorPage: React.FC = () => {
 
   return (
     <Flex direction="column" gap="8px">
-      <ResetButton
-        onReset={handleReset}
-        style={{
-          marginLeft: 'auto',
-          display: 'flex',
-          alignItems: 'center',
-        }}
-      />
+      <Flex align="center">
+        <CalculationMethodModal />
+        <ResetButton
+          onReset={handleReset}
+          style={{
+            marginLeft: 'auto',
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        />
+      </Flex>
       <Flex direction="column" gap="16px">
         <Box
           style={{
@@ -79,26 +77,6 @@ export const MulliganCalculatorPage: React.FC = () => {
           </Text>
         </Box>
       </Flex>
-      <AccordionWrapper>
-        <Accordion.Item className="AccordionItem" value="item-1">
-          <AccordionTrigger>
-            <Text size="1">※ 計算方法について</Text>
-          </AccordionTrigger>
-          <AccordionContent>
-            <Text as="p" mb="2px" size="1">
-              - 「マリガン後」とは、マリガン後の初手6枚を指します。
-            </Text>
-            <Text as="p" size="1">
-              -
-              「ドローx枚」とは、マリガン後にx枚ドローした後の手札に欲しいカードが1枚以上来る確率を指します。
-            </Text>
-            <Text as="p" size="1">
-              -
-              マリガンで「手札に来て欲しいカード」を戻すことは考慮していません。
-            </Text>
-          </AccordionContent>
-        </Accordion.Item>
-      </AccordionWrapper>
       <Flex justify="center">
         <MulliganLineChart
           mulliganCount={mulliganCount}
