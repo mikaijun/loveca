@@ -10,7 +10,12 @@ export default {
 export const Default: StoryObj<typeof MulliganLineChart> = {
   render: () => (
     <Container p="8px" size="2">
-      <MulliganLineChart deckSize={60} mulliganCount={3} wantCardCount={8} />
+      <MulliganLineChart
+        deckSize={60}
+        kasumiCount={0}
+        mulliganCount={3}
+        wantCardCount={8}
+      />
     </Container>
   ),
 }
