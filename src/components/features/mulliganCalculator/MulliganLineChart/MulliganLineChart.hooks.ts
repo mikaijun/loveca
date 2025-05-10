@@ -30,7 +30,7 @@ export const calculateMulliganProbability = (
 
   // Bの確率（マリガン後の6枚で引ける確率）
   const pB = successProbability(
-    adjustedDeckSize - initialDraw,
+    adjustedDeckSize - mulliganCount,
     wantCardCount,
     mulliganCount
   )
