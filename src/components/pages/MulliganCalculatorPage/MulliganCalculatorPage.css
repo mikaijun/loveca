@@ -49,14 +49,11 @@
   margin-top: 16px;
 }
 
-.MulliganCalculatorExample {
-  margin-top: 8px;
-  padding: 8px;
-  font-size: 10px;
-  color: var(--mulligan-calculator-text);
-  background: var(--color-blue-2);
-  border-radius: var(--mulligan-calculator-radius);
-  border: 1px solid var(--mulligan-calculator-border);
+.MulliganCalculatorSettingCards {
+  margin-top: 16px;
+  padding: 12px;
+  border-radius: 8px;
+  background-color: var(--gray-2);
 }
 
 .MulliganCalculatorChart {

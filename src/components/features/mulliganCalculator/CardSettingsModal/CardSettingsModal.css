@@ -1,21 +1,10 @@
-.KasumiSettings {
-  margin-top: 16px;
-  padding: 12px;
-  border-radius: 8px;
-  background-color: var(--gray-2);
-}
-
-.KasumiSettings > * + * {
-  margin-top: 4px;
-}
-
-.KasumiSettingsModal {
+.CardSettingsModal {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
-.KasumiSettingsModalButton {
+.CardSettingsModalButton {
   display: flex;
   align-items: center;
   gap: 4px;
@@ -30,17 +19,17 @@
   margin-top: 8px;
 }
 
-.KasumiSettingsModalButton:hover {
+.CardSettingsModalButton:hover {
   background-color: var(--yellow-4);
   border-color: var(--yellow-7);
 }
 
-.KasumiSettingsModalButton:active {
+.CardSettingsModalButton:active {
   background-color: var(--yellow-5);
   border-color: var(--yellow-8);
 }
 
-.KasumiSettingsModalContent {
+.CardSettingsModalContent {
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -48,20 +37,50 @@
   min-height: 200px;
 }
 
-.KasumiSettingsModalDescription {
+.CardSettingsModalDescription {
   color: var(--gray-11);
   font-size: 14px;
   line-height: 1.5;
 }
 
-.KasumiSettingsModalTitle {
+.CardSettingsModalTitle {
   font-weight: bold;
   font-size: 16px;
   color: var(--gray-12);
 }
 
-.KasumiSettingsModalCloseButton {
+.CardSettingsModalSection {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.CardSettingsModalCardTitle {
+  font-weight: bold;
+  font-size: 14px;
+  color: var(--gray-12);
+}
+
+.CardSettingsModalCloseButton {
   position: absolute;
   bottom: 0;
   right: 0;
-} 
+}
+
+.SettingsButton {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.SettingsButtonIcon {
+  font-size: 16px;
+}
+
+.CrownIcon {
+  color: var(--yellow-10);
+}
+
+.CupIcon {
+  color: var(--blue-12);
+}

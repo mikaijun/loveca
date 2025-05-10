@@ -4,7 +4,7 @@ import React from 'react'
 import { Box, Flex, Text } from '@radix-ui/themes'
 import { GiCardPick, GiCardPlay } from 'react-icons/gi'
 import { useMulliganCalculatorPage } from './MulliganCalculatorPage.hooks'
-import { KasumiSettingsModal } from '@components/features/mulliganCalculator/KasumiSettingsModal/KasumiSettingsModal'
+import { CardSettingsModal } from '@components/features/mulliganCalculator/CardSettingsModal'
 import { Summary } from '@components/commons/ui/Summary'
 import { ResetButton } from '@components/commons/ui/ResetButton'
 import { NumberSelect } from '@components/commons/function/NumberSelect'
@@ -19,11 +19,13 @@ export const MulliganCalculatorPage: React.FC = () => {
     wantCardCount,
     deckSize,
     kasumiCount,
+    renCount,
     handleChangeMulliganCount,
     handleChangeWantCardCount,
     handleChangeDeckSize,
     handleReset,
     handleChangeKasumiCount,
+    handleChangeRenCount,
   } = useMulliganCalculatorPage()
 
   const deckSizeOptions = [
@@ -85,19 +87,35 @@ export const MulliganCalculatorPage: React.FC = () => {
               startNumber={0}
               value={wantCardCount}
             />
-            <KasumiSettingsModal
+            <CardSettingsModal
               kasumiCount={kasumiCount}
               onChangeKasumiCount={handleChangeKasumiCount}
+              onChangeRenCount={handleChangeRenCount}
+              renCount={renCount}
             />
           </Flex>
-          {kasumiCount > 0 && (
-            <Box className="KasumiSettings">
-              <Text as="p" size="2" weight="bold">
+          {(kasumiCount > 0 || renCount > 0) && (
+            <Box className="MulliganCalculatorSettingCards">
+              <Text as="p" mb="2" size="2" weight="bold">
                 特定カードの採用枚数
               </Text>
-              <Text size="2">
-                かすみ(コスト2): <Text weight="bold">{kasumiCount}枚</Text>
-              </Text>
+              <ul style={{ listStyle: 'inside', padding: 0, margin: 0 }}>
+                {kasumiCount > 0 && (
+                  <li>
+                    <Text size="2">
+                      中須 かすみ(コスト2):
+                      <Text weight="bold">{kasumiCount}枚</Text>
+                    </Text>
+                  </li>
+                )}
+                {renCount > 0 && (
+                  <li>
+                    <Text size="2">
+                      葉月 恋(コスト2): <Text weight="bold">{renCount}枚</Text>
+                    </Text>
+                  </li>
+                )}
+              </ul>
             </Box>
           )}
         </Box>
@@ -106,6 +124,7 @@ export const MulliganCalculatorPage: React.FC = () => {
             deckSize={deckSize}
             kasumiCount={kasumiCount}
             mulliganCount={mulliganCount}
+            renCount={renCount}
             wantCardCount={wantCardCount}
           />
         </Box>

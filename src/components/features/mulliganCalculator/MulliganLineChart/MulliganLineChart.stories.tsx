@@ -14,6 +14,7 @@ export const Default: StoryObj<typeof MulliganLineChart> = {
         deckSize={60}
         kasumiCount={0}
         mulliganCount={3}
+        renCount={0}
         wantCardCount={8}
       />
     </Container>

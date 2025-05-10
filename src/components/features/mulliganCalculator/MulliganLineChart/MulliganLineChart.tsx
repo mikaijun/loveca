@@ -7,24 +7,27 @@ const labels = [
   ...Array.from({ length: 10 }, (_, i) => `${i + 1}`),
 ]
 
-type MulliganLineChartProps = {
-  wantCardCount: number
-  mulliganCount: number
+interface MulliganLineChartProps {
   deckSize: number
   kasumiCount: number
+  renCount: number
+  mulliganCount: number
+  wantCardCount: number
 }
 
 export const MulliganLineChart: React.FC<MulliganLineChartProps> = ({
-  wantCardCount,
-  mulliganCount,
   deckSize,
   kasumiCount,
+  renCount,
+  mulliganCount,
+  wantCardCount,
 }) => {
   const probabilities = calculateMulliganProbability({
-    wantCardCount,
-    mulliganCount,
     deckSize,
     kasumiCount,
+    renCount,
+    wantCardCount,
+    mulliganCount,
   })
 
   return (

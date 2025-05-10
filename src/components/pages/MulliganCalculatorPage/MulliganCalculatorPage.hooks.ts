@@ -8,6 +8,7 @@ export const useMulliganCalculatorPage = () => {
   const [wantCardCount, setWantCardCount] = useState<number>(0)
   const [deckSize, setDeckSize] = useState<number>(60)
   const [kasumiCount, setKasumiCount] = useState<number>(0)
+  const [renCount, setRenCount] = useState<number>(0)
 
   const handleChangeMulliganCount = (value: number) => {
     setMulliganCount(value)
@@ -25,11 +26,16 @@ export const useMulliganCalculatorPage = () => {
     setKasumiCount(value)
   }
 
+  const handleChangeRenCount = (value: number) => {
+    setRenCount(value)
+  }
+
   const handleReset = () => {
     setMulliganCount(0)
     setWantCardCount(0)
     setDeckSize(60)
     setKasumiCount(0)
+    setRenCount(0)
   }
 
   return {
@@ -37,10 +43,12 @@ export const useMulliganCalculatorPage = () => {
     wantCardCount,
     deckSize,
     kasumiCount,
+    renCount,
     handleChangeMulliganCount,
     handleChangeWantCardCount,
     handleChangeDeckSize,
-    handleReset,
     handleChangeKasumiCount,
+    handleChangeRenCount,
+    handleReset,
   }
 }
