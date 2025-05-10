@@ -10,15 +10,18 @@ const labels = [
 type MulliganLineChartProps = {
   wantCardCount: number
   mulliganCount: number
+  deckSize: number
 }
 
 export const MulliganLineChart: React.FC<MulliganLineChartProps> = ({
   wantCardCount,
   mulliganCount,
+  deckSize,
 }) => {
   const probabilities = calculateMulliganProbability(
     wantCardCount,
-    mulliganCount
+    mulliganCount,
+    deckSize
   )
 
   return (

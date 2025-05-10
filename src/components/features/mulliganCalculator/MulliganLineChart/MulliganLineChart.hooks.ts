@@ -16,10 +16,10 @@ const successProbability = (N: number, K: number, n: number): number => {
  */
 export const calculateMulliganProbability = (
   wantCardCount: number,
-  mulliganCount: number
+  mulliganCount: number,
+  deckSize: number
 ): number[] => {
   const initialDraw = 6
-  const deckSize = 60
   const adjustedDeckSize = deckSize - initialDraw // 初期6枚引いた後のデッキサイズ
 
   if (wantCardCount <= 0 || wantCardCount > deckSize) return [0]

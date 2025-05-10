@@ -3,7 +3,6 @@ import { useState } from 'react'
 import { SegmentedControl } from './SegmentedControl'
 
 const meta: Meta<typeof SegmentedControl> = {
-  title: 'UI/SegmentedControl',
   component: SegmentedControl,
   parameters: {
     layout: 'centered',
