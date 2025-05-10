@@ -69,6 +69,13 @@ export const CardSettingsModal: React.FC<CardSettingsModalProps> = ({
         icon={<BsCupFill className="CupIcon" size="20px" />}
         label="葉月 恋(コスト2)"
       />
+      <Text
+        as="p"
+        color="gray"
+        style={{ marginBottom: '8px', fontSize: '10px' }}
+      >
+        ※手札に来て欲しいカードは、Liella!メンバーカードであることを前提としています
+      </Text>
       <Flex asChild direction="row" gap="8px" justify="between">
         <NumberSelect
           ariaLabel="デッキ内の葉月 恋(コスト2)の枚数"
