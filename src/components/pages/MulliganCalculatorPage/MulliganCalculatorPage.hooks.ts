@@ -4,7 +4,7 @@ import { useState } from 'react'
  * MulliganCalculatorPage のロジック
  */
 export const useMulliganCalculatorPage = () => {
-  const [mulliganCount, setMulliganCount] = useState<number>(0)
+  const [mulliganCount, setMulliganCount] = useState<number>(6)
   const [wantCardCount, setWantCardCount] = useState<number>(0)
   const [deckSize, setDeckSize] = useState<number>(60)
   const [kasumiCount, setKasumiCount] = useState<number>(0)

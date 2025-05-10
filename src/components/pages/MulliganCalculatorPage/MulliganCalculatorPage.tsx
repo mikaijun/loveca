@@ -58,9 +58,9 @@ export const MulliganCalculatorPage: React.FC = () => {
               />
               <NumberSelect
                 ariaLabel="マリガンで戻す枚数"
-                endNumber={6}
+                endNumber={0}
                 onChangeValue={handleChangeMulliganCount}
-                startNumber={0}
+                startNumber={6}
                 value={mulliganCount}
               />
             </Box>
