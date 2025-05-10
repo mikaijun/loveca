@@ -11,18 +11,21 @@ type MulliganLineChartProps = {
   wantCardCount: number
   mulliganCount: number
   deckSize: number
+  kasumiCount: number
 }
 
 export const MulliganLineChart: React.FC<MulliganLineChartProps> = ({
   wantCardCount,
   mulliganCount,
   deckSize,
+  kasumiCount,
 }) => {
-  const probabilities = calculateMulliganProbability(
+  const probabilities = calculateMulliganProbability({
     wantCardCount,
     mulliganCount,
-    deckSize
-  )
+    deckSize,
+    kasumiCount,
+  })
 
   return (
     <LineChart

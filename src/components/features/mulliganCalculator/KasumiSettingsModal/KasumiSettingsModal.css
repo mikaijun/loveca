@@ -1,0 +1,67 @@
+.KasumiSettings {
+  margin-top: 16px;
+  padding: 12px;
+  border-radius: 8px;
+  background-color: var(--gray-2);
+}
+
+.KasumiSettings > * + * {
+  margin-top: 4px;
+}
+
+.KasumiSettingsModal {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.KasumiSettingsModalButton {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background-color: var(--yellow-3);
+  color: var(--yellow-11);
+  border: 2px solid var(--yellow-6);
+  padding: 4px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 10px;
+  margin-top: 8px;
+}
+
+.KasumiSettingsModalButton:hover {
+  background-color: var(--yellow-4);
+  border-color: var(--yellow-7);
+}
+
+.KasumiSettingsModalButton:active {
+  background-color: var(--yellow-5);
+  border-color: var(--yellow-8);
+}
+
+.KasumiSettingsModalContent {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: relative;
+  min-height: 200px;
+}
+
+.KasumiSettingsModalDescription {
+  color: var(--gray-11);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.KasumiSettingsModalTitle {
+  font-weight: bold;
+  font-size: 16px;
+  color: var(--gray-12);
+}
+
+.KasumiSettingsModalCloseButton {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+} 
