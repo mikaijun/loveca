@@ -21,8 +21,19 @@ export const CalculationMethodModal: React.FC = () => {
     >
       <DialogTitle>計算方法について</DialogTitle>
       <DialogDescription asChild>
-        <div>
+        <div style={{ marginTop: '16px' }}>
           <ul style={{ margin: 0, paddingLeft: '16px' }}>
+            <li>
+              <Text size="1">
+                マリガン枚数を6枚に設定しても初手に欲しいカードが来る可能性があります。
+              </Text>
+            </li>
+            <li>
+              <Text size="1">
+                コスト2の中須 かすみ or 葉月
+                恋を設定した場合、それらを引いたら必ず登場させるものとします(1ターン目2-2進行)
+              </Text>
+            </li>
             <li>
               <Text size="1">
                 「マリガン後」とは、マリガン後の初手6枚を指します。

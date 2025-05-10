@@ -5,6 +5,8 @@ import { FaCrown } from 'react-icons/fa'
 import { GrUserSettings } from 'react-icons/gr'
 import { Dialog } from 'radix-ui'
 import { BsCupFill } from 'react-icons/bs'
+import { HiExternalLink } from 'react-icons/hi'
+import Link from 'next/link'
 import { Modal } from '@components/commons/ui/Modal'
 import { NumberSelect } from '@components/commons/function/NumberSelect'
 import { Summary } from '@components/commons/ui/Summary'
@@ -75,6 +77,35 @@ export const CardSettingsModal: React.FC<CardSettingsModalProps> = ({
           startNumber={0}
           value={renCount}
         />
+      </Flex>
+      <Flex direction="column" gap="2" style={{ marginTop: '16px' }}>
+        <Text color="gray" size="1">
+          カード紹介(外部サイト)
+        </Text>
+        <Flex gap="2">
+          <Link
+            href="https://llofficial-cardgame.com/cardlist/searchresults/?cardno=PL!N-bp1-002-R%EF%BC%8B"
+            rel="noopener noreferrer"
+            style={{ color: 'var(--yellow-8)', textDecoration: 'underline' }}
+            target="_blank"
+          >
+            <Flex align="center" gap="1">
+              <Text size="1">中須 かすみ(コスト2)</Text>
+              <HiExternalLink size="14px" />
+            </Flex>
+          </Link>
+          <Link
+            href="https://llofficial-cardgame.com/cardlist/searchresults/?cardno=PL!SP-bp1-005-R"
+            rel="noopener noreferrer"
+            style={{ color: 'var(--blue-11)', textDecoration: 'underline' }}
+            target="_blank"
+          >
+            <Flex align="center" gap="1">
+              <Text size="1">葉月 恋(コスト2)</Text>
+              <HiExternalLink size="14px" />
+            </Flex>
+          </Link>
+        </Flex>
       </Flex>
       <Flex justify="end" style={{ marginTop: '16px' }}>
         <Dialog.Close asChild>
