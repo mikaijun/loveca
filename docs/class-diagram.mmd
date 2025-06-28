@@ -1,0 +1,117 @@
+classDiagram
+    class BottomNavigation
+    class CardSettingsModal {
+        +kasumiCount: number
+        +renCount: number
+        +onChangeKasumiCount: (value: number) => void
+        +onChangeRenCount: (value: number) => void
+    }
+    class ColorfulHeartManager
+    class HeartColorSettingsModal {
+        +requiredLiveHeartColorList: MemberHeartColor[]
+        +memberHeartColorList: MemberHeartColor[]
+        +onChangeRequiredLiveHeartColor(value: MemberHeartColor[]): void
+        +onChangeMemberHeartColor(value: MemberHeartColor[]): void
+    }
+    class HeartCounter {
+        +color: 'pink'|'green'|'blue'|'red'|'yellow'|'purple'|'gray'
+        +count: number
+        +onIncrement(color: HeartIconProps['color']): void
+        +onDecrement(color: HeartIconProps['color']): void
+    }
+    class HeartIcon {
+        +color: 'pink'|'green'|'blue'|'red'|'yellow'|'purple'|'gray'
+    }
+    class HeartManagerPage
+    class LineChart {
+        +labels: string[]
+        +lineData: number[]
+        +xText: string
+        +yText?: string
+        +height?: number
+        +yMin?: number
+        +padding?: object
+    }
+    class LiveCalculatorPage
+    class LiveSuccessCalculator
+    class Modal {
+        +children: React.ReactNode
+        +trigger: React.ReactNode
+    }
+    class MonochromeHeartManager
+    class MulliganCalculatorPage
+    class MulliganLineChart {
+        +deckSize: number
+        +kasumiCount: number
+        +renCount: number
+        +mulliganCount: number
+        +wantCardCount: number
+    }
+    class NumberSelect {
+        +startNumber: number
+        +endNumber: number
+        +ariaLabel: string
+        +value?: number
+        +className?: string
+        +onChangeValue(value: number): void
+    }
+    class ResetButton {
+        +onReset: () => void
+        +text?: string
+    }
+    class SegmentedControl {
+        +value: string
+        +onChange: (value: string) => void
+        +options: Option[]
+        +disabled?: boolean
+    }
+    class Summary {
+        +icon: React.ReactNode
+        +label: string
+    }
+    class TriggerSelect {
+        +ariaLabel: string
+        +children: React.ReactNode
+        +id?: string
+        +placeholder?: string
+        +selectWidth?: string
+    }
+    class CalculationMethodModal
+
+    %% --- 関連（import, 多重度はprops型で表現） ---
+    HeartManagerPage --> ColorfulHeartManager
+    HeartManagerPage --> MonochromeHeartManager
+    LiveCalculatorPage --> LiveSuccessCalculator
+    MulliganCalculatorPage --> CalculationMethodModal
+    MulliganCalculatorPage --> CardSettingsModal
+    MulliganCalculatorPage --> MulliganLineChart
+    MulliganCalculatorPage --> NumberSelect
+    MulliganCalculatorPage --> Summary
+    MulliganCalculatorPage --> ResetButton
+    MulliganCalculatorPage --> SegmentedControl
+
+    ColorfulHeartManager --> HeartCounter
+    ColorfulHeartManager --> HeartIcon
+    ColorfulHeartManager --> HeartColorSettingsModal
+    ColorfulHeartManager --> ResetButton
+    ColorfulHeartManager --> Summary
+
+    MonochromeHeartManager --> Summary
+    MonochromeHeartManager --> NumberSelect
+    MonochromeHeartManager --> ResetButton
+
+    LiveSuccessCalculator --> Summary
+    LiveSuccessCalculator --> NumberSelect
+    LiveSuccessCalculator --> ResetButton
+
+    CardSettingsModal --> Modal
+    CardSettingsModal --> NumberSelect
+    CardSettingsModal --> Summary
+
+    MulliganLineChart --> LineChart
+    CalculationMethodModal --> Modal
+
+    NumberSelect --> TriggerSelect
+    HeartCounter --> HeartIcon
+    HeartColorSettingsModal --> HeartIcon
+    HeartColorSettingsModal --> Modal
