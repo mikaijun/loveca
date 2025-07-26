@@ -10,28 +10,20 @@ import { ResetButton } from '@components/commons/ui/ResetButton'
 import { NumberSelect } from '@components/commons/function/NumberSelect'
 import { MulliganLineChart } from '@components/features/mulliganCalculator/MulliganLineChart'
 import { CalculationMethodModal } from '@components/features/mulliganCalculator/CalculationMethodModal'
-import { SegmentedControl } from '@components/commons/ui/SegmentedControl'
 import './MulliganCalculatorPage.css'
 
 export const MulliganCalculatorPage: React.FC = () => {
   const {
     mulliganCount,
     wantCardCount,
-    deckSize,
     kasumiCount,
     renCount,
     handleChangeMulliganCount,
     handleChangeWantCardCount,
-    handleChangeDeckSize,
     handleReset,
     handleChangeKasumiCount,
     handleChangeRenCount,
   } = useMulliganCalculatorPage()
-
-  const deckSizeOptions = [
-    { label: 'スタンダード', value: '60' },
-    { label: 'ハーフデッキ', value: '30' },
-  ]
 
   return (
     <Flex className="MulliganCalculator" direction="column" gap="2">
@@ -64,11 +56,6 @@ export const MulliganCalculatorPage: React.FC = () => {
                 value={mulliganCount}
               />
             </Box>
-            <SegmentedControl
-              onChange={(value) => handleChangeDeckSize(parseInt(value, 10))}
-              options={deckSizeOptions}
-              value={deckSize.toString()}
-            />
           </Flex>
           <Summary
             className="MulliganCalculatorSummary"
@@ -82,7 +69,7 @@ export const MulliganCalculatorPage: React.FC = () => {
           <Flex align="end" justify="between">
             <NumberSelect
               ariaLabel="手札に来て欲しいカードの枚数"
-              endNumber={deckSize}
+              endNumber={60}
               onChangeValue={handleChangeWantCardCount}
               startNumber={0}
               value={wantCardCount}
@@ -121,7 +108,7 @@ export const MulliganCalculatorPage: React.FC = () => {
         </Box>
         <Box className="MulliganCalculatorChart">
           <MulliganLineChart
-            deckSize={deckSize}
+            deckSize={60}
             kasumiCount={kasumiCount}
             mulliganCount={mulliganCount}
             renCount={renCount}
