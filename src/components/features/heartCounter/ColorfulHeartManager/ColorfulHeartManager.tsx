@@ -1,12 +1,17 @@
 'use client'
 
-import React from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { Heart } from 'lucide-react'
 import { BsPersonHearts } from 'react-icons/bs'
 import { VscWand } from 'react-icons/vsc'
 import {
-  calculateHeartCount,
-  useColorfulManager,
+  useRequiredLiveHeartState,
+  useMemberHeartState,
+  calculateRequiredBladeHeart,
+  calculateMemberHeartCount,
+  calculateRequiredLiveHeartCount,
+  getRequiredLiveHeartColorList,
+  getMemberHeartColorList,
 } from './ColorfulHeartManager.hooks'
 import { Summary } from '@components/commons/ui/Summary'
 import { ResetButton } from '@components/commons/ui/ResetButton'
@@ -19,27 +24,49 @@ import './ColorfulHeartManager.css'
 export const ColorfulHeartManager: React.FC = () => {
   const {
     requiredLiveHearts,
-    memberHearts,
-    requiredLiveHeartColorList,
-    memberHeartColorList,
     handleIncrementRequiredLiveHeart,
     handleDecrementRequiredLiveHeart,
-    handleIncrementMemberHeart,
-    handleDecrementMemberHeart,
-    handleResetCount,
+    resetRequiredLiveHeart,
     handleChangeVisibilityRequiredLiveHeart,
-    handleChangeVisibilityMemberHeart,
-  } = useColorfulManager()
+  } = useRequiredLiveHeartState()
 
   const {
-    requiredLiveHeartCount,
-    memberHeartCount,
-    requiredBladeHeart,
-    requiredBladeHeartCount,
-  } = calculateHeartCount({
+    memberHearts,
+    handleIncrementMemberHeart,
+    handleDecrementMemberHeart,
+    resetMemberHeart,
+    handleChangeVisibilityMemberHeart,
+  } = useMemberHeartState()
+
+  const requiredLiveHeartColorList = useMemo(
+    () => getRequiredLiveHeartColorList(requiredLiveHearts),
+    [requiredLiveHearts]
+  )
+
+  const memberHeartColorList = useMemo(
+    () => getMemberHeartColorList(memberHearts),
+    [memberHearts]
+  )
+
+  const handleResetCount = useCallback(() => {
+    resetRequiredLiveHeart()
+    resetMemberHeart()
+  }, [resetRequiredLiveHeart, resetMemberHeart])
+
+  const requiredLiveHeartCount =
+    calculateRequiredLiveHeartCount(requiredLiveHearts)
+
+  const memberHeartCount = calculateMemberHeartCount(memberHearts)
+
+  const requiredBladeHeart = calculateRequiredBladeHeart({
     requiredLiveHearts,
     memberHearts,
   })
+
+  const requiredBladeHeartCount = Object.values(requiredBladeHeart).reduce(
+    (acc, cur) => acc + cur.count,
+    0
+  )
 
   const requiredBladeHeartMessage =
     requiredLiveHeartCount > 0 && requiredBladeHeartCount === 0

@@ -1,261 +1,157 @@
 import { describe, it, expect } from 'vitest'
 import { act, renderHook } from '@testing-library/react'
 import {
-  useColorfulManager,
-  calculateHeartCount,
+  getObjectKeys,
+  incrementHeartCount,
+  decrementHeartCount,
+  resetHeartCounts,
+  updateHeartVisibility,
+  useMemberHeartState,
+  calculateMemberOverHeartCounts,
+  getRequiredLiveHeartColorList,
+  getMemberHeartColorList,
+  calculateRequiredLiveHeartCount,
+  calculateMemberHeartCount,
+  calculateRequiredBladeHeartForColor,
+  calculateRequiredBladeHeart,
+  RequiredLiveHeartState,
   calculateRequiredGreyBladeHeart,
+  MemberHeartState,
 } from './ColorfulHeartManager.hooks'
-import {
-  MemberHeartColor,
-  memberHeartColors,
-  requiredLiveHeartColors,
-} from '@constants/hearts'
+import { MemberHeartColor } from '@constants/hearts'
 
-const requiredLiveHearts = {
-  pink: {
-    count: 1,
-    isVisible: true,
-  },
-  green: {
-    count: 2,
-    isVisible: true,
-  },
-  blue: {
-    count: 3,
-    isVisible: true,
-  },
-  red: {
-    count: 0,
-    isVisible: true,
-  },
-  yellow: {
-    count: 1,
-    isVisible: true,
-  },
-  purple: {
-    count: 1,
-    isVisible: true,
-  },
-  gray: {
-    count: 5,
-    isVisible: true,
-  },
-}
-
-const memberHearts = {
-  pink: {
-    count: 1,
-    isVisible: true,
-  },
-  green: {
-    count: 2,
-    isVisible: true,
-  },
-  blue: {
-    count: 2,
-    isVisible: true,
-  },
-  red: {
-    count: 0,
-    isVisible: true,
-  },
-  yellow: {
-    count: 2,
-    isVisible: true,
-  },
-  purple: {
-    count: 1,
-    isVisible: true,
-  },
-}
-
-describe('useColorfulManager function', () => {
-  it('ハート追加・減少した時、数が適切か確認', () => {
-    const { result } = renderHook(() => useColorfulManager())
-
-    act(() => {
-      result.current.handleIncrementRequiredLiveHeart('pink')
-    })
-
-    expect(result.current.requiredLiveHearts.pink.count).toBe(1)
-
-    act(() => {
-      result.current.handleDecrementRequiredLiveHeart('pink')
-    })
-
-    expect(result.current.requiredLiveHearts.pink.count).toBe(0)
+describe('getObjectKeys', () => {
+  it('空のオブジェクトのキーを正しく取得できるか確認', () => {
+    const emptyObj = {}
+    const keys = getObjectKeys(emptyObj)
+    expect(keys).toEqual([])
   })
 
-  it('メンバーの灰色のハートを増減しようとするとエラーが発生するか確認', () => {
-    const { result } = renderHook(() => useColorfulManager())
-
-    expect(() => {
-      act(() => {
-        result.current.handleIncrementMemberHeart('gray')
-      })
-    }).toThrowError('メンバーに灰色ハートはありません')
-
-    expect(() => {
-      act(() => {
-        result.current.handleDecrementMemberHeart('gray')
-      })
-    }).toThrowError('メンバーに灰色ハートはありません')
+  it('valueがプリミティブなオブジェクトのキーを正しく取得できるか確認', () => {
+    const testObj = {
+      a: 1,
+      b: 'test',
+      c: true,
+    }
+    const keys = getObjectKeys(testObj)
+    expect(keys).toEqual(['a', 'b', 'c'])
   })
 
-  it('カウントリセットすると、全てのハートが0になるか確認', () => {
-    const { result } = renderHook(() => useColorfulManager())
-
-    act(() => {
-      requiredLiveHeartColors.forEach((color) => {
-        result.current.handleIncrementRequiredLiveHeart(color)
-      })
-      memberHeartColors.forEach((color) => {
-        result.current.handleIncrementMemberHeart(color)
-      })
-    })
-
-    act(() => {
-      result.current.handleResetCount()
-    })
-
-    requiredLiveHeartColors.forEach((color) => {
-      expect(result.current.requiredLiveHearts[color].count).toBe(0)
-    })
-
-    memberHeartColors.forEach((color) => {
-      expect(result.current.memberHearts[color].count).toBe(0)
-    })
-  })
-
-  it('表示/非表示が適切か確認', () => {
-    const { result } = renderHook(() => useColorfulManager())
-
-    // NOTE: Liella!のライブに必要なハートの色を設定
-    const requiredLiveHeartColors: MemberHeartColor[] = [
-      'purple',
-      'red',
-      'yellow',
-    ]
-    // NOTE: 紫アグロデッキのメンバーのハートの色を設定(桜坂しずく採用を想定)
-    const memberHeartColors: MemberHeartColor[] = [
-      'purple',
-      'red',
-      'yellow',
-      'blue',
-    ]
-    act(() => {
-      result.current.handleChangeVisibilityRequiredLiveHeart(
-        requiredLiveHeartColors
-      )
-      result.current.handleChangeVisibilityMemberHeart(memberHeartColors)
-    })
-
-    requiredLiveHeartColors.forEach((color) => {
-      expect(result.current.requiredLiveHearts[color].isVisible).toBe(
-        requiredLiveHeartColors.includes(color)
-      )
-    })
-    memberHeartColors.forEach((color) => {
-      expect(result.current.memberHearts[color].isVisible).toBe(
-        memberHeartColors.includes(color)
-      )
-    })
-  })
-
-  it('表示/非表示を切り替えた後、カウントリセットしても表示/非表示状態は維持されているか確認', () => {
-    const { result } = renderHook(() => useColorfulManager())
-
-    // NOTE: Liella!のライブに必要なハートの色を設定
-    const requiredLiveHeartColors: MemberHeartColor[] = [
-      'purple',
-      'red',
-      'yellow',
-    ]
-    // NOTE: 紫アグロデッキのメンバーのハートの色を設定(桜坂しずく採用を想定)
-    const memberHeartColors: MemberHeartColor[] = [
-      'purple',
-      'red',
-      'yellow',
-      'blue',
-    ]
-    act(() => {
-      result.current.handleChangeVisibilityRequiredLiveHeart(
-        requiredLiveHeartColors
-      )
-      result.current.handleChangeVisibilityMemberHeart(memberHeartColors)
-    })
-
-    act(() => {
-      result.current.handleResetCount()
-    })
-
-    requiredLiveHeartColors.forEach((color) => {
-      expect(result.current.requiredLiveHearts[color].isVisible).toBe(
-        requiredLiveHeartColors.includes(color)
-      )
-    })
-    memberHeartColors.forEach((color) => {
-      expect(result.current.memberHearts[color].isVisible).toBe(
-        memberHeartColors.includes(color)
-      )
-    })
+  it('valueがオブジェクトのキーを正しく取得できるか確認', () => {
+    const heartState = {
+      pink: { count: 1, isVisible: true },
+      blue: { count: 2, isVisible: false },
+    }
+    const keys = getObjectKeys(heartState)
+    expect(keys).toEqual(['pink', 'blue'])
   })
 })
 
-describe('calculateRequiredGreyBladeHeart function', () => {
-  it('必要な灰色ブレードハートの数を正しく計算できているか確認', () => {
-    const calculated = calculateRequiredGreyBladeHeart({
-      requiredLiveHearts: requiredLiveHearts,
-      memberHearts: memberHearts,
-    })
-
-    // ライブに必要な灰色ハート: 5個
-    // ライブに必要な黄色ハート: 1個
-    // メンバーの黄色ハート: 2個
-    // メンバーの余剰ハート: 1個(他の色は余剰がない)
-    // 必要な灰色ハート: 5個 - 1個 = 4個
-    expect(calculated).toBe(4)
-  })
-
-  it('余剰ハートがない場合、必要な灰色ハートを正しく計算できているか確認', () => {
-    const noSurplusMemberHearts = {
-      ...memberHearts,
-      // NOTE: ライブに必要なハートの数と同じにする
-      yellow: { count: 1, isVisible: true },
+describe('incrementHeartCount', () => {
+  it('指定した色のハートカウントが1増えることを確認', () => {
+    const initialState: RequiredLiveHeartState = {
+      pink: { count: 0, isVisible: true },
+      green: { count: 5, isVisible: true },
+      blue: { count: 0, isVisible: false },
+      red: { count: 0, isVisible: true },
+      yellow: { count: 0, isVisible: true },
+      purple: { count: 0, isVisible: true },
+      gray: { count: 0, isVisible: true },
     }
 
-    const calculated = calculateRequiredGreyBladeHeart({
-      requiredLiveHearts: requiredLiveHearts,
-      memberHearts: noSurplusMemberHearts,
-    })
+    const result = incrementHeartCount(initialState, 'pink')
 
-    // 必要な灰色ハート: 5個 (余剰ハートがないためそのまま)
-    expect(calculated).toBe(5)
+    expect(result.pink.count).toBe(initialState.pink.count + 1)
+    // 他の色は変更されない
+    expect(result.green.count).toBe(initialState.green.count)
+    expect(result.blue.count).toBe(initialState.blue.count)
+    expect(result.red.count).toBe(initialState.red.count)
+    expect(result.yellow.count).toBe(initialState.yellow.count)
+    expect(result.purple.count).toBe(initialState.purple.count)
+    expect(result.gray.count).toBe(initialState.gray.count)
+  })
+
+  it('isVisibleは変更されないことを確認', () => {
+    const initialState: RequiredLiveHeartState = {
+      pink: { count: 0, isVisible: true },
+      green: { count: 5, isVisible: true },
+      blue: { count: 0, isVisible: false },
+      red: { count: 0, isVisible: true },
+      yellow: { count: 0, isVisible: true },
+      purple: { count: 0, isVisible: true },
+      gray: { count: 0, isVisible: true },
+    }
+
+    const result = incrementHeartCount(initialState, 'pink')
+
+    expect(result.pink.isVisible).toBe(initialState.pink.isVisible)
+    expect(result.green.isVisible).toBe(initialState.green.isVisible)
+    expect(result.blue.isVisible).toBe(initialState.blue.isVisible)
+    expect(result.red.isVisible).toBe(initialState.red.isVisible)
+    expect(result.yellow.isVisible).toBe(initialState.yellow.isVisible)
+    expect(result.purple.isVisible).toBe(initialState.purple.isVisible)
+    expect(result.gray.isVisible).toBe(initialState.gray.isVisible)
   })
 })
 
-describe('calculateHeartCount function', () => {
-  it('必要なブレードハートを正しく計算できているか確認', () => {
-    const calculated = calculateHeartCount({
-      requiredLiveHearts: requiredLiveHearts,
-      memberHearts: memberHearts,
-    })
+describe('decrementHeartCount', () => {
+  it('指定した色のハートカウントが1減ることを確認', () => {
+    const initialState: RequiredLiveHeartState = {
+      pink: { count: 3, isVisible: true },
+      green: { count: 5, isVisible: true },
+      blue: { count: 0, isVisible: false },
+      red: { count: 0, isVisible: true },
+      yellow: { count: 0, isVisible: true },
+      purple: { count: 0, isVisible: true },
+      gray: { count: 0, isVisible: true },
+    }
 
-    // ライブに必要な灰色ハート: 5個
-    // ライブに必要な黄色ハート: 1個
-    // メンバーの黄色ハート: 2個
-    // メンバーの余剰ハート: 1個(他の色は余剰がない)
-    // 必要な灰色ハート: 5個 - 1個 = 4個
-    expect(calculated.requiredBladeHeart.gray.count).toBe(4)
+    const result = decrementHeartCount(initialState, 'pink')
 
-    // 青色ハートが1個必要
-    // 灰色ハートが4個必要(理由は上記)
-    // 必要なブレードハート: 5個
-    expect(calculated.requiredBladeHeartCount).toBe(5)
+    expect(result.pink.count).toBe(initialState.pink.count - 1)
+
+    // 他の色は変更されない
+    expect(result.green.count).toBe(initialState.green.count)
+    expect(result.blue.count).toBe(initialState.blue.count)
+    expect(result.red.count).toBe(initialState.red.count)
+    expect(result.yellow.count).toBe(initialState.yellow.count)
+    expect(result.purple.count).toBe(initialState.purple.count)
+    expect(result.gray.count).toBe(initialState.gray.count)
+
+    // isVisibleは変更されない
+    expect(result.pink.isVisible).toBe(initialState.pink.isVisible)
+    expect(result.green.isVisible).toBe(initialState.green.isVisible)
+    expect(result.blue.isVisible).toBe(initialState.blue.isVisible)
+    expect(result.red.isVisible).toBe(initialState.red.isVisible)
+    expect(result.yellow.isVisible).toBe(initialState.yellow.isVisible)
+    expect(result.purple.isVisible).toBe(initialState.purple.isVisible)
+    expect(result.gray.isVisible).toBe(initialState.gray.isVisible)
   })
 
-  it('全ての色のハートが不足している場合、正しく計算できているか確認', () => {
-    const insufficientMemberHearts = {
+  it('isVisibleは変更されないことを確認', () => {
+    const initialState: RequiredLiveHeartState = {
+      pink: { count: 3, isVisible: true },
+      green: { count: 5, isVisible: true },
+      blue: { count: 0, isVisible: false },
+      red: { count: 0, isVisible: true },
+      yellow: { count: 0, isVisible: true },
+      purple: { count: 0, isVisible: true },
+      gray: { count: 0, isVisible: true },
+    }
+
+    const result = decrementHeartCount(initialState, 'pink')
+
+    expect(result.pink.isVisible).toBe(initialState.pink.isVisible)
+    expect(result.green.isVisible).toBe(initialState.green.isVisible)
+    expect(result.blue.isVisible).toBe(initialState.blue.isVisible)
+    expect(result.red.isVisible).toBe(initialState.red.isVisible)
+    expect(result.yellow.isVisible).toBe(initialState.yellow.isVisible)
+    expect(result.purple.isVisible).toBe(initialState.purple.isVisible)
+    expect(result.gray.isVisible).toBe(initialState.gray.isVisible)
+  })
+
+  it('カウントが0でもマイナスにならないことを確認', () => {
+    const initialState: MemberHeartState = {
       pink: { count: 0, isVisible: true },
       green: { count: 0, isVisible: true },
       blue: { count: 0, isVisible: true },
@@ -264,258 +160,926 @@ describe('calculateHeartCount function', () => {
       purple: { count: 0, isVisible: true },
     }
 
-    const calculated = calculateHeartCount({
-      requiredLiveHearts: requiredLiveHearts,
-      memberHearts: insufficientMemberHearts,
-    })
+    const result = decrementHeartCount(initialState, 'pink')
 
-    // 全ての必要なハートが不足している場合
-    expect(calculated.requiredBladeHeart.pink.count).toBe(1)
-    expect(calculated.requiredBladeHeart.green.count).toBe(2)
-    expect(calculated.requiredBladeHeart.blue.count).toBe(3)
-    expect(calculated.requiredBladeHeart.red.count).toBe(0)
-    expect(calculated.requiredBladeHeart.yellow.count).toBe(1)
-    expect(calculated.requiredBladeHeart.purple.count).toBe(1)
-    expect(calculated.requiredBladeHeart.gray.count).toBe(5)
-
-    // 必要なブレードハートの合計
-    expect(calculated.requiredBladeHeartCount).toBe(13)
+    expect(result.pink.count).toBe(0)
   })
 })
 
-describe('表示/非表示を切り替え', () => {
-  it('ライブに必要なハート色の表示/非表示を切り替えた後、ライブに必要なハート色が適切か確認', () => {
-    const { result } = renderHook(() => useColorfulManager())
+describe('resetHeartCounts', () => {
+  it('全ての色のカウントが0にリセットされることを確認', () => {
+    const initialState: RequiredLiveHeartState = {
+      pink: { count: 3, isVisible: true },
+      green: { count: 5, isVisible: false },
+      blue: { count: 2, isVisible: true },
+      red: { count: 1, isVisible: true },
+      yellow: { count: 4, isVisible: false },
+      purple: { count: 6, isVisible: true },
+      gray: { count: 10, isVisible: true },
+    }
 
-    // NOTE: Sing！Shine！Smile！のライブに必要なハートの色を設定
-    act(() => {
-      Array(3)
-        .fill('purple')
-        .forEach(() => {
-          result.current.handleIncrementRequiredLiveHeart('purple')
-        })
-      Array(3)
-        .fill('red')
-        .forEach(() => {
-          result.current.handleIncrementRequiredLiveHeart('red')
-        })
-      Array(3)
-        .fill('yellow')
-        .forEach(() => {
-          result.current.handleIncrementRequiredLiveHeart('yellow')
-        })
-      Array(5)
-        .fill('gray')
-        .forEach(() => {
-          result.current.handleIncrementRequiredLiveHeart('gray')
-        })
-    })
+    const result = resetHeartCounts(initialState)
 
-    // NOTE: 15コスト嵐 千砂都のメンバーのハートの色を設定
-    act(() => {
-      Array(3)
-        .fill('purple')
-        .forEach(() => {
-          result.current.handleIncrementMemberHeart('purple')
-        })
-      Array(3)
-        .fill('red')
-        .forEach(() => {
-          result.current.handleIncrementMemberHeart('red')
-        })
-    })
-
-    // NOTE: ライブに必要なハートの色を赤と黄色にだけにする
-    act(() => {
-      result.current.handleChangeVisibilityRequiredLiveHeart(['red', 'yellow'])
-    })
-
-    // NOTE: stateのハート個数は変わらないことを確認
-    expect(result.current.requiredLiveHearts.purple.count).toBe(3)
-    expect(result.current.requiredLiveHearts.red.count).toBe(3)
-    expect(result.current.requiredLiveHearts.yellow.count).toBe(3)
-    expect(result.current.requiredLiveHearts.gray.count).toBe(5)
-
-    const calculateHeart = calculateHeartCount({
-      requiredLiveHearts: result.current.requiredLiveHearts,
-      memberHearts: result.current.memberHearts,
-    })
-
-    // NOTE: 非表示になった紫色ハートが計算に含まれていないことを確認
-    expect(calculateHeart.requiredBladeHeart.purple.count).toBe(0)
-
-    // NOTE: Sing！Shine！Smile！のライブの内、紫色以外のハートの合計数: 11
-    const updatedRequiredLiveHeartCount = 3 + 3 + 5
-    // 紫非表示後の必要なブレードハート数: 5
-    // Sing！Shine！Smile！ハート数 - 15コスト嵐 千砂都のハート数
-    const requiredBladeHeartCount = updatedRequiredLiveHeartCount - 6
-
-    expect(calculateHeart.requiredLiveHeartCount).toBe(
-      updatedRequiredLiveHeartCount
-    )
-    expect(calculateHeart.requiredBladeHeartCount).toBe(requiredBladeHeartCount)
-
-    // NOTE: 必要な灰色ハートは非表示になった紫色ハートを除いた値になることを確認
-    expect(calculateHeart.requiredBladeHeart.gray.count).toBe(
-      requiredBladeHeartCount - 3 - 0
-    )
-
-    // NOTE: 紫色以外は計算結果が変わらないことを確認
-    expect(calculateHeart.requiredBladeHeart.red.count).toBe(3 - 3)
-    expect(calculateHeart.requiredBladeHeart.yellow.count).toBe(3 - 0)
+    expect(result.pink.count).toBe(0)
+    expect(result.green.count).toBe(0)
+    expect(result.blue.count).toBe(0)
+    expect(result.red.count).toBe(0)
+    expect(result.yellow.count).toBe(0)
+    expect(result.purple.count).toBe(0)
+    expect(result.gray.count).toBe(0)
   })
 
-  it('メンバーのハート色の表示/非表示を切り替えた後、一部のメンバーのハートが表示されている場合の計算結果を確認', () => {
-    const { result } = renderHook(() => useColorfulManager())
+  it('isVisibleは変更されないことを確認', () => {
+    const initialState: MemberHeartState = {
+      pink: { count: 3, isVisible: true },
+      green: { count: 5, isVisible: false },
+      blue: { count: 2, isVisible: true },
+      red: { count: 1, isVisible: false },
+      yellow: { count: 4, isVisible: true },
+      purple: { count: 6, isVisible: false },
+    }
 
-    // NOTE: Sing！Shine！Smile！のライブに必要なハートの色を設定
-    act(() => {
-      Array(3)
-        .fill('purple')
-        .forEach(() => {
-          result.current.handleIncrementRequiredLiveHeart('purple')
-        })
-      Array(3)
-        .fill('red')
-        .forEach(() => {
-          result.current.handleIncrementRequiredLiveHeart('red')
-        })
-      Array(3)
-        .fill('yellow')
-        .forEach(() => {
-          result.current.handleIncrementRequiredLiveHeart('yellow')
-        })
-      Array(5)
-        .fill('gray')
-        .forEach(() => {
-          result.current.handleIncrementRequiredLiveHeart('gray')
-        })
-    })
+    const result = resetHeartCounts(initialState)
 
-    // NOTE: 15コスト嵐 千砂都のメンバーのハートの色を設定
-    act(() => {
-      Array(3)
-        .fill('purple')
-        .forEach(() => {
-          result.current.handleIncrementMemberHeart('purple')
-        })
-      Array(3)
-        .fill('red')
-        .forEach(() => {
-          result.current.handleIncrementMemberHeart('red')
-        })
-    })
+    expect(result.pink.isVisible).toBe(true)
+    expect(result.green.isVisible).toBe(false)
+    expect(result.blue.isVisible).toBe(true)
+    expect(result.red.isVisible).toBe(false)
+    expect(result.yellow.isVisible).toBe(true)
+    expect(result.purple.isVisible).toBe(false)
+  })
+})
 
-    // NOTE: メンバーのハートの色を赤と黄色にだけにする
-    act(() => {
-      result.current.handleChangeVisibilityMemberHeart(['red', 'yellow'])
-    })
+describe('updateHeartVisibility', () => {
+  it('指定した色のハートが表示されることを確認', () => {
+    const initialState: MemberHeartState = {
+      pink: { count: 1, isVisible: false },
+      green: { count: 2, isVisible: false },
+      blue: { count: 3, isVisible: true },
+      red: { count: 4, isVisible: true },
+      yellow: { count: 5, isVisible: false },
+      purple: { count: 6, isVisible: true },
+    }
 
-    // NOTE: stateのハート個数は変わらないことを確認
-    expect(result.current.memberHearts.purple.count).toBe(3)
-    expect(result.current.memberHearts.red.count).toBe(3)
-    expect(result.current.memberHearts.yellow.count).toBe(0)
+    const result = updateHeartVisibility(initialState, ['pink', 'blue'], false)
 
-    const calculateHeart = calculateHeartCount({
-      requiredLiveHearts: result.current.requiredLiveHearts,
-      memberHearts: result.current.memberHearts,
-    })
-
-    // NOTE: メンバーハート合計数。15コスト嵐 千砂都のハート数から紫色ハートを除いた値
-    const visibleMemberHeartCount = 6 - 3
-    // NOTE: 非表示になった紫色ハート3個が計算に含まれていないことを確認
-    expect(calculateHeart.memberHeartCount).toBe(visibleMemberHeartCount)
-
-    // NOTE: メンバーの紫色非表示後の必要なブレードハート数
-    // Sing！Shine！Smile！ハート14個 - 紫非表示後の15コスト嵐 千砂都のハート3個 = 11個
-    const remainingRequiredBladeHeartCount = 14 - visibleMemberHeartCount
-
-    // NOTE: Sing！Shine！Smile！に必要なハート数は変わらないことを確認
-    expect(calculateHeart.requiredLiveHeartCount).toBe(14)
-
-    expect(calculateHeart.requiredBladeHeartCount).toBe(
-      remainingRequiredBladeHeartCount
-    )
-
-    // NOTE: 必要な灰色ブレードハートは5個のまま
-    expect(calculateHeart.requiredBladeHeart.gray.count).toBe(5)
-    // NOTE: 必要な赤色ブレードハートは15コスト嵐 千砂都で足りているから0個
-    expect(calculateHeart.requiredBladeHeart.red.count).toBe(3 - 3)
-
-    // NOTE: 必要なブレードハートの内、紫と黄色に関しては計算結果が変わらないことを確認
-    expect(calculateHeart.requiredBladeHeart.purple.count).toBe(3)
-    expect(calculateHeart.requiredBladeHeart.yellow.count).toBe(3)
+    expect(result.pink.isVisible).toBe(true)
+    expect(result.green.isVisible).toBe(false)
+    expect(result.blue.isVisible).toBe(true)
+    expect(result.red.isVisible).toBe(false)
+    expect(result.yellow.isVisible).toBe(false)
+    expect(result.purple.isVisible).toBe(false)
   })
 
-  it('メンバーのハート色の表示/非表示を切り替えた後、メンバーのハートが全て非表示の場合の計算結果を確認', () => {
-    const { result } = renderHook(() => useColorfulManager())
+  it('forceGrayVisibleがtrueの場合、grayが強制表示されることを確認', () => {
+    const initialState: RequiredLiveHeartState = {
+      pink: { count: 1, isVisible: false },
+      green: { count: 2, isVisible: false },
+      blue: { count: 3, isVisible: true },
+      red: { count: 4, isVisible: true },
+      yellow: { count: 5, isVisible: false },
+      purple: { count: 6, isVisible: true },
+      gray: { count: 7, isVisible: false },
+    }
 
-    // NOTE: Sing！Shine！Smile！のライブに必要なハートの色を設定
-    act(() => {
-      Array(3)
-        .fill('purple')
-        .forEach(() => {
-          result.current.handleIncrementRequiredLiveHeart('purple')
-        })
-      Array(3)
-        .fill('red')
-        .forEach(() => {
-          result.current.handleIncrementRequiredLiveHeart('red')
-        })
-      Array(3)
-        .fill('yellow')
-        .forEach(() => {
-          result.current.handleIncrementRequiredLiveHeart('yellow')
-        })
-      Array(5)
-        .fill('gray')
-        .forEach(() => {
-          result.current.handleIncrementRequiredLiveHeart('gray')
-        })
+    const result = updateHeartVisibility(initialState, ['pink'], true)
+
+    expect(result.pink.isVisible).toBe(true)
+    expect(result.green.isVisible).toBe(false)
+    expect(result.blue.isVisible).toBe(false)
+    expect(result.red.isVisible).toBe(false)
+    expect(result.yellow.isVisible).toBe(false)
+    expect(result.purple.isVisible).toBe(false)
+    // 強制表示
+    expect(result.gray.isVisible).toBe(true)
+  })
+
+  it('forceGrayVisibleがfalseの場合、grayは指定した色リストに従うことを確認', () => {
+    const initialState: RequiredLiveHeartState = {
+      pink: { count: 1, isVisible: false },
+      green: { count: 2, isVisible: false },
+      blue: { count: 3, isVisible: true },
+      red: { count: 4, isVisible: true },
+      yellow: { count: 5, isVisible: false },
+      purple: { count: 6, isVisible: true },
+      gray: { count: 7, isVisible: true },
+    }
+
+    // grayは指定していない
+    const result1 = updateHeartVisibility(initialState, ['pink'], false)
+    expect(result1.gray.isVisible).toBe(false)
+
+    // grayを指定した場合（実際にはMemberHeartColorにgrayは含まれないが、テスト用に）
+    const result2 = updateHeartVisibility(
+      initialState,
+      ['pink', 'gray' as MemberHeartColor],
+      false
+    )
+    expect(result2.gray.isVisible).toBe(true)
+  })
+
+  it('countは変更されないことを確認', () => {
+    const initialState: MemberHeartState = {
+      pink: { count: 10, isVisible: false },
+      green: { count: 20, isVisible: true },
+      blue: { count: 30, isVisible: false },
+      red: { count: 40, isVisible: true },
+      yellow: { count: 50, isVisible: false },
+      purple: { count: 60, isVisible: true },
+    }
+
+    const result = updateHeartVisibility(initialState, ['pink', 'blue'], false)
+
+    expect(result.pink.count).toBe(initialState.pink.count)
+    expect(result.green.count).toBe(initialState.green.count)
+    expect(result.blue.count).toBe(initialState.blue.count)
+    expect(result.red.count).toBe(initialState.red.count)
+    expect(result.yellow.count).toBe(initialState.yellow.count)
+    expect(result.purple.count).toBe(initialState.purple.count)
+  })
+
+  it('空の配列を渡した場合、全て非表示になることを確認', () => {
+    const initialState: MemberHeartState = {
+      pink: { count: 1, isVisible: true },
+      green: { count: 2, isVisible: true },
+      blue: { count: 3, isVisible: true },
+      red: { count: 4, isVisible: true },
+      yellow: { count: 5, isVisible: true },
+      purple: { count: 6, isVisible: true },
+    }
+
+    const result = updateHeartVisibility(initialState, [], false)
+
+    expect(result.pink.isVisible).toBe(false)
+    expect(result.green.isVisible).toBe(false)
+    expect(result.blue.isVisible).toBe(false)
+    expect(result.red.isVisible).toBe(false)
+    expect(result.yellow.isVisible).toBe(false)
+    expect(result.purple.isVisible).toBe(false)
+  })
+
+  it('空の配列でもforceGrayVisibleがtrueならgrayは表示されることを確認', () => {
+    const initialState: RequiredLiveHeartState = {
+      pink: { count: 1, isVisible: true },
+      green: { count: 2, isVisible: true },
+      blue: { count: 3, isVisible: true },
+      red: { count: 4, isVisible: true },
+      yellow: { count: 5, isVisible: true },
+      purple: { count: 6, isVisible: true },
+      gray: { count: 7, isVisible: false },
+    }
+
+    const result = updateHeartVisibility(initialState, [], true)
+
+    expect(result.pink.isVisible).toBe(false)
+    expect(result.green.isVisible).toBe(false)
+    expect(result.blue.isVisible).toBe(false)
+    expect(result.red.isVisible).toBe(false)
+    expect(result.yellow.isVisible).toBe(false)
+    expect(result.purple.isVisible).toBe(false)
+    // grayのみ表示
+    expect(result.gray.isVisible).toBe(true)
+  })
+})
+
+describe('useMemberHeartState', () => {
+  it('grayを指定するとエラーが発生することを確認', () => {
+    const { result } = renderHook(() => useMemberHeartState())
+
+    expect(() => {
+      act(() => {
+        result.current.handleIncrementMemberHeart('gray')
+      })
+    }).toThrowError('メンバーに灰色ハートはありません')
+  })
+})
+
+describe('calculateMemberOverHeartCounts', () => {
+  it('メンバーの余剰ハートを正しく計算できているか確認', () => {
+    const requiredLiveHearts = {
+      pink: {
+        count: 1,
+        isVisible: true,
+      },
+      green: {
+        count: 2,
+        isVisible: true,
+      },
+      blue: {
+        count: 3,
+        isVisible: true,
+      },
+      red: {
+        count: 0,
+        isVisible: true,
+      },
+      yellow: {
+        count: 1,
+        isVisible: true,
+      },
+      purple: {
+        count: 1,
+        isVisible: true,
+      },
+      gray: {
+        count: 5,
+        isVisible: true,
+      },
+    }
+
+    const memberHearts = {
+      pink: {
+        count: 1,
+        isVisible: true,
+      },
+      green: {
+        count: 2,
+        isVisible: true,
+      },
+      blue: {
+        count: 2,
+        isVisible: true,
+      },
+      red: {
+        count: 0,
+        isVisible: true,
+      },
+      yellow: {
+        count: 2,
+        isVisible: true,
+      },
+      purple: {
+        count: 1,
+        isVisible: true,
+      },
+    }
+
+    const calculated = calculateMemberOverHeartCounts({
+      requiredLiveHearts: requiredLiveHearts,
+      memberHearts: memberHearts,
     })
 
-    // NOTE: 15コスト嵐 千砂都のメンバーのハートの色を設定
-    act(() => {
-      Array(3)
-        .fill('purple')
-        .forEach(() => {
-          result.current.handleIncrementMemberHeart('purple')
-        })
-      Array(3)
-        .fill('red')
-        .forEach(() => {
-          result.current.handleIncrementMemberHeart('red')
-        })
+    expect(calculated).toEqual([
+      Math.max(memberHearts.pink.count - requiredLiveHearts.pink.count, 0),
+      Math.max(memberHearts.green.count - requiredLiveHearts.green.count, 0),
+      Math.max(memberHearts.blue.count - requiredLiveHearts.blue.count, 0),
+      Math.max(memberHearts.red.count - requiredLiveHearts.red.count, 0),
+      Math.max(memberHearts.yellow.count - requiredLiveHearts.yellow.count, 0),
+      Math.max(memberHearts.purple.count - requiredLiveHearts.purple.count, 0),
+    ])
+  })
+
+  it('非表示のハートが計算に含まれないことを確認', () => {
+    const requiredLiveHearts = {
+      pink: {
+        count: 1,
+        isVisible: true,
+      },
+      green: {
+        count: 2,
+        isVisible: true,
+      },
+      blue: {
+        count: 3,
+        isVisible: true,
+      },
+      red: {
+        count: 0,
+        isVisible: true,
+      },
+      yellow: {
+        count: 1,
+        isVisible: true,
+      },
+      purple: {
+        count: 1,
+        isVisible: true,
+      },
+      gray: {
+        count: 5,
+        isVisible: true,
+      },
+    }
+
+    const invisibleMemberHearts = {
+      pink: { count: 5, isVisible: false },
+      green: { count: 2, isVisible: true },
+      blue: { count: 2, isVisible: true },
+      red: { count: 0, isVisible: true },
+      yellow: { count: 2, isVisible: true },
+      purple: { count: 1, isVisible: true },
+    }
+
+    const calculated = calculateMemberOverHeartCounts({
+      requiredLiveHearts: requiredLiveHearts,
+      memberHearts: invisibleMemberHearts,
     })
 
-    // NOTE: メンバーのハートの色を黄色にだけにする
-    act(() => {
-      result.current.handleChangeVisibilityMemberHeart(['yellow'])
+    expect(calculated).toEqual([
+      // 非表示の余剰ハートは0になる
+      0,
+      Math.max(
+        invisibleMemberHearts.green.count - requiredLiveHearts.green.count,
+        0
+      ),
+      Math.max(
+        invisibleMemberHearts.blue.count - requiredLiveHearts.blue.count,
+        0
+      ),
+      Math.max(
+        invisibleMemberHearts.red.count - requiredLiveHearts.red.count,
+        0
+      ),
+      Math.max(
+        invisibleMemberHearts.yellow.count - requiredLiveHearts.yellow.count,
+        0
+      ),
+      Math.max(
+        invisibleMemberHearts.purple.count - requiredLiveHearts.purple.count,
+        0
+      ),
+    ])
+  })
+})
+
+describe('getRequiredLiveHeartColorList', () => {
+  it('表示中のライブ必要ハート色リストを正しく取得できるか確認', () => {
+    const testRequiredLiveHearts: RequiredLiveHeartState = {
+      pink: { count: 1, isVisible: true },
+      green: { count: 2, isVisible: false },
+      blue: { count: 3, isVisible: true },
+      red: { count: 0, isVisible: true },
+      yellow: { count: 1, isVisible: false },
+      purple: { count: 1, isVisible: true },
+      gray: { count: 5, isVisible: true },
+    }
+
+    const result = getRequiredLiveHeartColorList(testRequiredLiveHearts)
+
+    // 表示中かつgray以外の色のみ含まれる
+    expect(result).toEqual(['pink', 'blue', 'red', 'purple'])
+  })
+
+  it('全て非表示の場合、空の配列を返すか確認', () => {
+    const testRequiredLiveHearts: RequiredLiveHeartState = {
+      pink: { count: 1, isVisible: false },
+      green: { count: 2, isVisible: false },
+      blue: { count: 3, isVisible: false },
+      red: { count: 0, isVisible: false },
+      yellow: { count: 1, isVisible: false },
+      purple: { count: 1, isVisible: false },
+      gray: { count: 5, isVisible: false },
+    }
+
+    const result = getRequiredLiveHeartColorList(testRequiredLiveHearts)
+    expect(result).toEqual([])
+  })
+
+  it('grayのみ表示の場合、空の配列を返すか確認', () => {
+    const testRequiredLiveHearts: RequiredLiveHeartState = {
+      pink: { count: 1, isVisible: false },
+      green: { count: 2, isVisible: false },
+      blue: { count: 3, isVisible: false },
+      red: { count: 0, isVisible: false },
+      yellow: { count: 1, isVisible: false },
+      purple: { count: 1, isVisible: false },
+      gray: { count: 5, isVisible: true },
+    }
+
+    const result = getRequiredLiveHeartColorList(testRequiredLiveHearts)
+    expect(result).toEqual([])
+  })
+})
+
+describe('getMemberHeartColorList', () => {
+  it('表示中のメンバーハート色リストを正しく取得できるか確認', () => {
+    const testMemberHearts: MemberHeartState = {
+      pink: { count: 1, isVisible: true },
+      green: { count: 2, isVisible: false },
+      blue: { count: 2, isVisible: true },
+      red: { count: 0, isVisible: true },
+      yellow: { count: 2, isVisible: false },
+      purple: { count: 1, isVisible: true },
+    }
+
+    const result = getMemberHeartColorList(testMemberHearts)
+
+    // 表示中の色のみ含まれる
+    expect(result).toEqual(['pink', 'blue', 'red', 'purple'])
+  })
+
+  it('全て非表示の場合、空の配列を返すか確認', () => {
+    const testMemberHearts: MemberHeartState = {
+      pink: { count: 1, isVisible: false },
+      green: { count: 2, isVisible: false },
+      blue: { count: 2, isVisible: false },
+      red: { count: 0, isVisible: false },
+      yellow: { count: 2, isVisible: false },
+      purple: { count: 1, isVisible: false },
+    }
+
+    const result = getMemberHeartColorList(testMemberHearts)
+    expect(result).toEqual([])
+  })
+})
+
+describe('calculateRequiredLiveHeartCount', () => {
+  it('表示中のライブに必要なハートの合計数を正しく計算できるか確認', () => {
+    const testRequiredLiveHearts: RequiredLiveHeartState = {
+      pink: { count: 2, isVisible: true },
+      green: { count: 3, isVisible: false },
+      blue: { count: 1, isVisible: true },
+      red: { count: 4, isVisible: true },
+      yellow: { count: 2, isVisible: false },
+      purple: { count: 1, isVisible: true },
+      gray: { count: 5, isVisible: true },
+    }
+
+    const result = calculateRequiredLiveHeartCount(testRequiredLiveHearts)
+
+    // 非表示の緑色と黄色のハートは計算に含まれない
+    const expected =
+      testRequiredLiveHearts.pink.count +
+      testRequiredLiveHearts.blue.count +
+      testRequiredLiveHearts.red.count +
+      testRequiredLiveHearts.purple.count +
+      testRequiredLiveHearts.gray.count
+
+    expect(result).toBe(expected)
+  })
+
+  it('全て非表示の場合、0を返すか確認', () => {
+    const testRequiredLiveHearts: RequiredLiveHeartState = {
+      pink: { count: 2, isVisible: false },
+      green: { count: 3, isVisible: false },
+      blue: { count: 1, isVisible: false },
+      red: { count: 4, isVisible: false },
+      yellow: { count: 2, isVisible: false },
+      purple: { count: 1, isVisible: false },
+      gray: { count: 5, isVisible: false },
+    }
+
+    const result = calculateRequiredLiveHeartCount(testRequiredLiveHearts)
+    expect(result).toBe(0)
+  })
+
+  it('全て表示かつcountが0の場合、0を返すか確認', () => {
+    const testRequiredLiveHearts: RequiredLiveHeartState = {
+      pink: { count: 0, isVisible: true },
+      green: { count: 0, isVisible: true },
+      blue: { count: 0, isVisible: true },
+      red: { count: 0, isVisible: true },
+      yellow: { count: 0, isVisible: true },
+      purple: { count: 0, isVisible: true },
+      gray: { count: 0, isVisible: true },
+    }
+
+    const result = calculateRequiredLiveHeartCount(testRequiredLiveHearts)
+    expect(result).toBe(0)
+  })
+})
+
+describe('calculateMemberHeartCount', () => {
+  it('表示中のメンバーハートの合計数を正しく計算できるか確認', () => {
+    const testMemberHearts: MemberHeartState = {
+      pink: { count: 1, isVisible: true },
+      green: { count: 2, isVisible: false },
+      blue: { count: 2, isVisible: true },
+      red: { count: 0, isVisible: true },
+      yellow: { count: 3, isVisible: false },
+      purple: { count: 1, isVisible: true },
+    }
+
+    const result = calculateMemberHeartCount(testMemberHearts)
+
+    // 非表示の緑色と黄色のハートは計算に含まれない
+    const expected =
+      testMemberHearts.pink.count +
+      testMemberHearts.blue.count +
+      testMemberHearts.red.count +
+      testMemberHearts.purple.count
+
+    expect(result).toBe(expected)
+  })
+
+  it('全て非表示の場合、0を返すか確認', () => {
+    const testMemberHearts: MemberHeartState = {
+      pink: { count: 1, isVisible: false },
+      green: { count: 2, isVisible: false },
+      blue: { count: 2, isVisible: false },
+      red: { count: 0, isVisible: false },
+      yellow: { count: 3, isVisible: false },
+      purple: { count: 1, isVisible: false },
+    }
+
+    const result = calculateMemberHeartCount(testMemberHearts)
+    expect(result).toBe(0)
+  })
+
+  it('全て表示かつcountが0の場合、0を返すか確認', () => {
+    const testMemberHearts: MemberHeartState = {
+      pink: { count: 0, isVisible: true },
+      green: { count: 0, isVisible: true },
+      blue: { count: 0, isVisible: true },
+      red: { count: 0, isVisible: true },
+      yellow: { count: 0, isVisible: true },
+      purple: { count: 0, isVisible: true },
+    }
+
+    const result = calculateMemberHeartCount(testMemberHearts)
+    expect(result).toBe(0)
+  })
+})
+
+describe('calculateRequiredGreyBladeHeart', () => {
+  it('必要な灰色ブレードハート数を正しく計算できるか確認', () => {
+    const testRequiredLiveHearts: RequiredLiveHeartState = {
+      pink: { count: 1, isVisible: true },
+      green: { count: 2, isVisible: true },
+      blue: { count: 3, isVisible: true },
+      red: { count: 0, isVisible: true },
+      yellow: { count: 0, isVisible: true },
+      purple: { count: 0, isVisible: true },
+      gray: { count: 5, isVisible: true },
+    }
+
+    const testMemberHearts: MemberHeartState = {
+      pink: { count: 1, isVisible: true },
+      green: { count: 2, isVisible: true },
+      blue: { count: 4, isVisible: true },
+      red: { count: 0, isVisible: true },
+      yellow: { count: 0, isVisible: true },
+      purple: { count: 0, isVisible: true },
+    }
+
+    const result = calculateRequiredGreyBladeHeart({
+      requiredLiveHearts: testRequiredLiveHearts,
+      memberHearts: testMemberHearts,
     })
 
-    // NOTE: stateのハート個数は変わらないことを確認
-    expect(result.current.memberHearts.purple.count).toBe(3)
-    expect(result.current.memberHearts.red.count).toBe(3)
-    expect(result.current.memberHearts.yellow.count).toBe(0)
+    // gary5個のうち、blue1個が余剰なので4個必要
+    expect(result).toBe(4)
+  })
 
-    const calculateHeart = calculateHeartCount({
-      requiredLiveHearts: result.current.requiredLiveHearts,
-      memberHearts: result.current.memberHearts,
+  it('必要な灰色ブレードハート数が0未満の場合、0を返すか確認', () => {
+    const testRequiredLiveHearts: RequiredLiveHeartState = {
+      pink: { count: 3, isVisible: true },
+      green: { count: 2, isVisible: true },
+      blue: { count: 1, isVisible: true },
+      red: { count: 0, isVisible: true },
+      yellow: { count: 4, isVisible: true },
+      purple: { count: 2, isVisible: true },
+      gray: { count: 5, isVisible: true },
+    }
+
+    const testMemberHearts: MemberHeartState = {
+      pink: { count: 1, isVisible: true },
+      green: { count: 2, isVisible: true },
+      blue: { count: 3, isVisible: true },
+      red: { count: 0, isVisible: true },
+      yellow: { count: 4, isVisible: true },
+      purple: { count: 5, isVisible: true },
+    }
+
+    const result = calculateRequiredGreyBladeHeart({
+      requiredLiveHearts: testRequiredLiveHearts,
+      memberHearts: testMemberHearts,
     })
 
-    // NOTE: 15コスト嵐 千砂都に黄色ハートが存在しないのでメンバーハートは0個となることを確認
-    expect(calculateHeart.memberHeartCount).toBe(0)
+    expect(result).toBe(0)
+  })
+})
 
-    // NOTE: Sing！Shine！Smile！に必要なハート数は変わらないことを確認
-    expect(calculateHeart.requiredLiveHeartCount).toBe(14)
+describe('calculateRequiredBladeHeartForColor', () => {
+  it('必要なブレードハート数を正しく計算できるか確認', () => {
+    const testRequiredLiveHearts: RequiredLiveHeartState = {
+      pink: { count: 3, isVisible: true },
+      green: { count: 2, isVisible: true },
+      blue: { count: 1, isVisible: true },
+      red: { count: 0, isVisible: true },
+      yellow: { count: 4, isVisible: true },
+      purple: { count: 2, isVisible: true },
+      gray: { count: 5, isVisible: true },
+    }
 
-    // Sing！Shine！Smile！に必要なブレードハート数は14個であることを確認
-    expect(calculateHeart.requiredBladeHeartCount).toBe(14)
+    const testMemberHearts: MemberHeartState = {
+      pink: { count: 1, isVisible: true },
+      green: { count: 2, isVisible: true },
+      blue: { count: 3, isVisible: true },
+      red: { count: 0, isVisible: true },
+      yellow: { count: 1, isVisible: true },
+      purple: { count: 5, isVisible: true },
+    }
 
-    // NOTE: 必要なブレードハート色は全ての色が必要なため、全ての色が計算結果に含まれることを確認
-    expect(calculateHeart.requiredBladeHeart.gray.count).toBe(5)
-    expect(calculateHeart.requiredBladeHeart.red.count).toBe(3)
-    expect(calculateHeart.requiredBladeHeart.purple.count).toBe(3)
-    expect(calculateHeart.requiredBladeHeart.yellow.count).toBe(3)
+    // pink: max(3-1, 0) = 2
+    expect(
+      calculateRequiredBladeHeartForColor({
+        color: 'pink',
+        requiredLiveHearts: testRequiredLiveHearts,
+        memberHearts: testMemberHearts,
+      })
+    ).toBe(2)
+
+    // green: max(2-2, 0) = 0
+    expect(
+      calculateRequiredBladeHeartForColor({
+        color: 'green',
+        requiredLiveHearts: testRequiredLiveHearts,
+        memberHearts: testMemberHearts,
+      })
+    ).toBe(0)
+
+    // blue: max(1-3, 0) = 0 (マイナスは0になる)
+    expect(
+      calculateRequiredBladeHeartForColor({
+        color: 'blue',
+        requiredLiveHearts: testRequiredLiveHearts,
+        memberHearts: testMemberHearts,
+      })
+    ).toBe(0)
+
+    // red: max(0-0, 0) = 0
+    expect(
+      calculateRequiredBladeHeartForColor({
+        color: 'red',
+        requiredLiveHearts: testRequiredLiveHearts,
+        memberHearts: testMemberHearts,
+      })
+    ).toBe(0)
+
+    // yellow: max(4-1, 0) = 3
+    expect(
+      calculateRequiredBladeHeartForColor({
+        color: 'yellow',
+        requiredLiveHearts: testRequiredLiveHearts,
+        memberHearts: testMemberHearts,
+      })
+    ).toBe(3)
+
+    // purple: max(2-5, 0) = 0 (マイナスは0になる)
+    expect(
+      calculateRequiredBladeHeartForColor({
+        color: 'purple',
+        requiredLiveHearts: testRequiredLiveHearts,
+        memberHearts: testMemberHearts,
+      })
+    ).toBe(0)
+  })
+
+  it('非表示のハートが計算に含まれないことを確認', () => {
+    const testRequiredLiveHearts: RequiredLiveHeartState = {
+      pink: { count: 5, isVisible: false },
+      green: { count: 3, isVisible: true },
+      blue: { count: 2, isVisible: true },
+      red: { count: 0, isVisible: true },
+      yellow: { count: 1, isVisible: true },
+      purple: { count: 2, isVisible: true },
+      gray: { count: 5, isVisible: true },
+    }
+
+    const testMemberHearts: MemberHeartState = {
+      pink: { count: 10, isVisible: false },
+      green: { count: 1, isVisible: true },
+      blue: { count: 0, isVisible: true },
+      red: { count: 0, isVisible: true },
+      yellow: { count: 2, isVisible: true },
+      purple: { count: 1, isVisible: true },
+    }
+
+    // pink: max(0-0, 0) = 0 (両方とも非表示なので0として計算)
+    expect(
+      calculateRequiredBladeHeartForColor({
+        color: 'pink',
+        requiredLiveHearts: testRequiredLiveHearts,
+        memberHearts: testMemberHearts,
+      })
+    ).toBe(0)
+  })
+
+  it('一方だけが非表示の場合の計算を確認', () => {
+    const testRequiredLiveHearts: RequiredLiveHeartState = {
+      pink: { count: 5, isVisible: false },
+      green: { count: 3, isVisible: true },
+      blue: { count: 2, isVisible: true },
+      red: { count: 0, isVisible: true },
+      yellow: { count: 1, isVisible: true },
+      purple: { count: 2, isVisible: true },
+      gray: { count: 5, isVisible: true },
+    }
+
+    const testMemberHearts: MemberHeartState = {
+      pink: { count: 2, isVisible: true },
+      green: { count: 1, isVisible: false },
+      blue: { count: 0, isVisible: true },
+      red: { count: 0, isVisible: true },
+      yellow: { count: 2, isVisible: true },
+      purple: { count: 1, isVisible: true },
+    }
+
+    // pink: max(0-2, 0) = 0 (ライブ側が非表示)
+    expect(
+      calculateRequiredBladeHeartForColor({
+        color: 'pink',
+        requiredLiveHearts: testRequiredLiveHearts,
+        memberHearts: testMemberHearts,
+      })
+    ).toBe(0)
+
+    // green: max(3-0, 0) = 3 (メンバー側が非表示)
+    expect(
+      calculateRequiredBladeHeartForColor({
+        color: 'green',
+        requiredLiveHearts: testRequiredLiveHearts,
+        memberHearts: testMemberHearts,
+      })
+    ).toBe(3)
+  })
+})
+
+describe('calculateRequiredBladeHeart', () => {
+  it('requiredLiveHeartsのgrayが表示されている場合、calculateRequiredGreyBladeHeartの結果を使用することを確認', () => {
+    const testRequiredLiveHearts: RequiredLiveHeartState = {
+      pink: { count: 1, isVisible: true },
+      green: { count: 0, isVisible: true },
+      blue: { count: 0, isVisible: true },
+      red: { count: 0, isVisible: true },
+      yellow: { count: 1, isVisible: true },
+      purple: { count: 0, isVisible: true },
+      gray: { count: 5, isVisible: true },
+    }
+
+    const testMemberHearts: MemberHeartState = {
+      pink: { count: 1, isVisible: true },
+      green: { count: 0, isVisible: true },
+      blue: { count: 0, isVisible: true },
+      red: { count: 0, isVisible: true },
+      yellow: { count: 2, isVisible: true },
+      purple: { count: 0, isVisible: true },
+    }
+
+    const result = calculateRequiredBladeHeart({
+      requiredLiveHearts: testRequiredLiveHearts,
+      memberHearts: testMemberHearts,
+    })
+
+    const expected = calculateRequiredGreyBladeHeart({
+      requiredLiveHearts: testRequiredLiveHearts,
+      memberHearts: testMemberHearts,
+    })
+
+    expect(result.gray.count).toBe(expected)
+  })
+
+  it('gray以外の色はcalculateRequiredBladeHeartForColorの結果を使用することを確認', () => {
+    const testRequiredLiveHearts: RequiredLiveHeartState = {
+      pink: { count: 3, isVisible: true },
+      green: { count: 2, isVisible: true },
+      blue: { count: 1, isVisible: true },
+      red: { count: 0, isVisible: true },
+      yellow: { count: 4, isVisible: true },
+      purple: { count: 2, isVisible: true },
+      gray: { count: 0, isVisible: false },
+    }
+
+    const testMemberHearts: MemberHeartState = {
+      pink: { count: 1, isVisible: true },
+      green: { count: 2, isVisible: true },
+      blue: { count: 3, isVisible: true },
+      red: { count: 0, isVisible: true },
+      yellow: { count: 1, isVisible: true },
+      purple: { count: 5, isVisible: true },
+    }
+
+    const result = calculateRequiredBladeHeart({
+      requiredLiveHearts: testRequiredLiveHearts,
+      memberHearts: testMemberHearts,
+    })
+
+    const expected = calculateRequiredBladeHeartForColor({
+      color: 'pink',
+      requiredLiveHearts: testRequiredLiveHearts,
+      memberHearts: testMemberHearts,
+    })
+    const expectedGreen = calculateRequiredBladeHeartForColor({
+      color: 'green',
+      requiredLiveHearts: testRequiredLiveHearts,
+      memberHearts: testMemberHearts,
+    })
+    const expectedBlue = calculateRequiredBladeHeartForColor({
+      color: 'blue',
+      requiredLiveHearts: testRequiredLiveHearts,
+      memberHearts: testMemberHearts,
+    })
+    const expectedRed = calculateRequiredBladeHeartForColor({
+      color: 'red',
+      requiredLiveHearts: testRequiredLiveHearts,
+      memberHearts: testMemberHearts,
+    })
+    const expectedYellow = calculateRequiredBladeHeartForColor({
+      color: 'yellow',
+      requiredLiveHearts: testRequiredLiveHearts,
+      memberHearts: testMemberHearts,
+    })
+    const expectedPurple = calculateRequiredBladeHeartForColor({
+      color: 'purple',
+      requiredLiveHearts: testRequiredLiveHearts,
+      memberHearts: testMemberHearts,
+    })
+
+    expect(result.pink.count).toBe(expected)
+    expect(result.green.count).toBe(expectedGreen)
+    expect(result.blue.count).toBe(expectedBlue)
+    expect(result.red.count).toBe(expectedRed)
+    expect(result.yellow.count).toBe(expectedYellow)
+    expect(result.purple.count).toBe(expectedPurple)
+  })
+
+  it('非表示のハートはcount=0になることを確認', () => {
+    const testRequiredLiveHearts: RequiredLiveHeartState = {
+      pink: { count: 5, isVisible: false }, // 非表示
+      green: { count: 3, isVisible: true },
+      blue: { count: 2, isVisible: false }, // 非表示
+      red: { count: 1, isVisible: true },
+      yellow: { count: 4, isVisible: true },
+      purple: { count: 2, isVisible: false }, // 非表示
+      gray: { count: 10, isVisible: false }, // 非表示
+    }
+
+    const testMemberHearts: MemberHeartState = {
+      pink: { count: 1, isVisible: true },
+      green: { count: 1, isVisible: true },
+      blue: { count: 0, isVisible: true },
+      red: { count: 0, isVisible: true },
+      yellow: { count: 1, isVisible: true },
+      purple: { count: 1, isVisible: true },
+    }
+
+    const result = calculateRequiredBladeHeart({
+      requiredLiveHearts: testRequiredLiveHearts,
+      memberHearts: testMemberHearts,
+    })
+
+    // 非表示のハートはcount=0になる
+    expect(result.pink.count).toBe(0)
+    expect(result.blue.count).toBe(0)
+    expect(result.purple.count).toBe(0)
+    expect(result.gray.count).toBe(0)
+
+    // 表示のハートは通常通り計算される
+    expect(result.green.count).toBe(2) // max(3-1, 0) = 2
+    expect(result.red.count).toBe(1) // max(1-0, 0) = 1
+    expect(result.yellow.count).toBe(3) // max(4-1, 0) = 3
+
+    // isVisibleは元の値が保持される
+    expect(result.pink.isVisible).toBe(false)
+    expect(result.green.isVisible).toBe(true)
+    expect(result.blue.isVisible).toBe(false)
+    expect(result.red.isVisible).toBe(true)
+    expect(result.yellow.isVisible).toBe(true)
+    expect(result.purple.isVisible).toBe(false)
+    expect(result.gray.isVisible).toBe(false)
+  })
+
+  it('全ての色が含まれた完全なオブジェクトが返されることを確認', () => {
+    const testRequiredLiveHearts: RequiredLiveHeartState = {
+      pink: { count: 1, isVisible: true },
+      green: { count: 1, isVisible: true },
+      blue: { count: 1, isVisible: true },
+      red: { count: 1, isVisible: true },
+      yellow: { count: 1, isVisible: true },
+      purple: { count: 1, isVisible: true },
+      gray: { count: 1, isVisible: true },
+    }
+
+    const testMemberHearts: MemberHeartState = {
+      pink: { count: 0, isVisible: true },
+      green: { count: 0, isVisible: true },
+      blue: { count: 0, isVisible: true },
+      red: { count: 0, isVisible: true },
+      yellow: { count: 0, isVisible: true },
+      purple: { count: 0, isVisible: true },
+    }
+
+    const result = calculateRequiredBladeHeart({
+      requiredLiveHearts: testRequiredLiveHearts,
+      memberHearts: testMemberHearts,
+    })
+
+    // 全ての色のプロパティが存在することを確認
+    expect(result).toHaveProperty('pink')
+    expect(result).toHaveProperty('green')
+    expect(result).toHaveProperty('blue')
+    expect(result).toHaveProperty('red')
+    expect(result).toHaveProperty('yellow')
+    expect(result).toHaveProperty('purple')
+    expect(result).toHaveProperty('gray')
+
+    // 各プロパティにcountとisVisibleが存在することを確認
+    Object.values(result).forEach((heartState) => {
+      expect(heartState).toHaveProperty('count')
+      expect(heartState).toHaveProperty('isVisible')
+      expect(typeof heartState.count).toBe('number')
+      expect(typeof heartState.isVisible).toBe('boolean')
+    })
   })
 })
