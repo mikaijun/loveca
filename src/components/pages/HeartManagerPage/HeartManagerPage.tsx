@@ -1,10 +1,250 @@
-import { Tabs } from 'radix-ui'
+'use client'
 
-import { ColorfulHeartManager } from '@components/features/heartCounter/ColorfulHeartManager'
-import { MonochromeManager } from '@components/features/heartCounter/MonochromeHeartManager'
+import React from 'react'
+import { Tabs, Flex, Box } from '@radix-ui/themes'
+import { Heart } from 'lucide-react'
+import { BsPersonHearts } from 'react-icons/bs'
+import { VscWand } from 'react-icons/vsc'
+
+import { useColorfulHeartManager } from '../../../hooks/useColorfulHeartManager'
+import { useMonochromeHeartManager } from '../../../hooks/useMonochromeHeartManager'
+import { getHeartStateByColor } from '../../../domain/entities/HeartCollection'
+import {
+  getAllLiveHeartColors,
+  getAllMemberHeartColors,
+  getHeartColorValue,
+} from '../../../domain/valueObjects/HeartColor'
+import {
+  getEffectiveCount,
+  getDisplayCount,
+} from '../../../domain/entities/HeartState'
+import { HeartColorSettingsModal } from '@components/features/heartCounter/HeartColorSettingsModal'
+import { HeartCounter } from '@components/features/heartCounter/HeartCounter'
+import { HeartIcon } from '@components/features/heartCounter/HeartIcon'
+import { ResetButton } from '@components/commons/ui/ResetButton'
+import { Summary } from '@components/commons/ui/Summary'
+import { NumberSelect } from '@components/commons/function/NumberSelect'
+import { colors } from '@constants/colors'
 import './HeartManagerPage.css'
+import '../../features/heartCounter/ColorfulHeartManager/ColorfulHeartManager.css'
 
-export const HeartManagerPage = () => {
+/**
+ * カラフルハート管理コンポーネント
+ */
+const ColorfulHeartManager: React.FC = () => {
+  const {
+    requiredLiveHearts,
+    memberHearts,
+    requiredLiveHeartCount,
+    memberHeartCount,
+    liveResultMessage,
+    requiredBladeHearts,
+    requiredLiveHeartColorList,
+    memberHeartColorList,
+    handleIncrementRequiredLiveHeart,
+    handleDecrementRequiredLiveHeart,
+    handleIncrementMemberHeart,
+    handleDecrementMemberHeart,
+    handleResetAllHeartCounts,
+    handleChangeRequiredLiveHeartVisibility,
+    handleChangeMemberHeartVisibility,
+  } = useColorfulHeartManager()
+
+  return (
+    <div className="HeartManagerContainer">
+      <div className="HeartManagerHeader">
+        <HeartColorSettingsModal
+          memberHeartColorList={memberHeartColorList}
+          onChangeMemberHeartColor={handleChangeMemberHeartVisibility}
+          onChangeRequiredLiveHeartColor={
+            handleChangeRequiredLiveHeartVisibility
+          }
+          requiredLiveHeartColorList={requiredLiveHeartColorList}
+        />
+        <ResetButton
+          onReset={handleResetAllHeartCounts}
+          text="カウントリセット"
+        />
+      </div>
+
+      <Summary
+        icon={<Heart size="20px" style={{ transform: 'rotate(-90deg)' }} />}
+        label={liveResultMessage}
+      />
+
+      {/* 必要ブレードハート表示 */}
+      <div className="HeartCounterGroup">
+        {getAllLiveHeartColors().map((color) => {
+          const colorValue = getHeartColorValue(color)
+          const requiredState = getHeartStateByColor(requiredLiveHearts, color)
+          const bladeState = getHeartStateByColor(requiredBladeHearts, color)
+
+          if (!requiredState || !requiredState.visibility) {
+            return null
+          }
+
+          const requiredCount = getEffectiveCount(requiredState)
+          const bladeCount = bladeState ? getEffectiveCount(bladeState) : 0
+
+          return (
+            <div className="HeartCounterItem" key={colorValue}>
+              <HeartIcon color={colorValue} />
+              <span className="HeartCounterValue">
+                {requiredCount > 0 && bladeCount === 0 ? '達成' : bladeCount}
+              </span>
+            </div>
+          )
+        })}
+      </div>
+
+      <Summary
+        icon={<VscWand size="20px" />}
+        label={`ライブに必要なハート数: ${requiredLiveHeartCount}`}
+      />
+
+      {/* ライブハートカウンター */}
+      <div className="HeartCounterGroup">
+        {getAllLiveHeartColors().map((color) => {
+          const colorValue = getHeartColorValue(color)
+          const state = getHeartStateByColor(requiredLiveHearts, color)
+
+          if (!state || !state.visibility) {
+            return null
+          }
+
+          return (
+            <HeartCounter
+              color={colorValue}
+              count={getDisplayCount(state)}
+              key={colorValue}
+              onDecrement={handleDecrementRequiredLiveHeart}
+              onIncrement={handleIncrementRequiredLiveHeart}
+            />
+          )
+        })}
+      </div>
+
+      <Summary
+        icon={<BsPersonHearts size="20px" />}
+        label={`メンバーのハート合計数: ${memberHeartCount}`}
+      />
+
+      {/* メンバーハートカウンター */}
+      <div className="HeartCounterGroup">
+        {getAllMemberHeartColors().map((color) => {
+          const colorValue = getHeartColorValue(color)
+          const state = getHeartStateByColor(memberHearts, color)
+
+          if (!state || !state.visibility) {
+            return null
+          }
+
+          return (
+            <HeartCounter
+              color={colorValue}
+              count={getDisplayCount(state)}
+              key={colorValue}
+              onDecrement={handleDecrementMemberHeart}
+              onIncrement={handleIncrementMemberHeart}
+            />
+          )
+        })}
+      </div>
+
+      <div className="HeartManagerFooter">
+        ※ALLハート持ちメンバーは好きな色を選択してください
+      </div>
+    </div>
+  )
+}
+
+/**
+ * モノクロハート管理コンポーネント
+ */
+const MonochromeHeartManager: React.FC = () => {
+  const {
+    memberHeartCount,
+    requiredLiveHeartCount,
+    requiredBladeHeartCount,
+    handleChangeMemberHeartCount,
+    handleRequiredLiveHeartCount,
+    handleResetHeart,
+  } = useMonochromeHeartManager()
+
+  const bladeHeartDisplayMessage =
+    typeof requiredBladeHeartCount === 'string'
+      ? requiredBladeHeartCount
+      : `必要ブレードハート数: ${requiredBladeHeartCount}`
+
+  return (
+    <Flex direction="column" gap="8px">
+      <ResetButton
+        onReset={handleResetHeart}
+        style={{
+          marginLeft: 'auto',
+          alignItems: 'center',
+        }}
+      />
+      <Flex direction="column" gap="24px">
+        <Summary
+          icon={<Heart size="20px" style={{ transform: 'rotate(-90deg)' }} />}
+          label={bladeHeartDisplayMessage}
+          style={{
+            backgroundColor: colors.blue[2],
+            padding: '16px',
+          }}
+        />
+        <Box
+          style={{
+            backgroundColor: colors.blue[2],
+            padding: '16px',
+          }}
+        >
+          <Summary
+            icon={<VscWand size="20px" />}
+            label={`ライブに必要なハート数: ${requiredLiveHeartCount}`}
+            style={{
+              marginBottom: '4px',
+            }}
+          />
+          <NumberSelect
+            ariaLabel="Required Live Heart"
+            endNumber={40}
+            onChangeValue={handleRequiredLiveHeartCount}
+            startNumber={0}
+            value={requiredLiveHeartCount}
+          />
+        </Box>
+        <Box
+          style={{
+            backgroundColor: colors.blue[2],
+            padding: '16px',
+          }}
+        >
+          <Summary
+            icon={<BsPersonHearts size="20px" />}
+            label={`メンバーのハート合計数: ${memberHeartCount}`}
+            style={{
+              marginBottom: '4px',
+            }}
+          />
+          <NumberSelect
+            ariaLabel="Member Heart"
+            endNumber={40}
+            onChangeValue={handleChangeMemberHeartCount}
+            startNumber={0}
+            value={memberHeartCount}
+          />
+        </Box>
+      </Flex>
+    </Flex>
+  )
+}
+
+/**
+ * ハート管理ページのメインコンポーネント
+ */
+export const HeartManagerPage: React.FC = () => {
   return (
     <Tabs.Root
       className="TabsRoot"
@@ -35,7 +275,7 @@ export const HeartManagerPage = () => {
         }}
         value="tab2"
       >
-        <MonochromeManager />
+        <MonochromeHeartManager />
       </Tabs.Content>
     </Tabs.Root>
   )
