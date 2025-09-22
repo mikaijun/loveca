@@ -8,7 +8,7 @@ import { VscWand } from 'react-icons/vsc'
 
 import { useColorfulHeartManager } from '../../../hooks/useColorfulHeartManager'
 import { useMonochromeHeartManager } from '../../../hooks/useMonochromeHeartManager'
-import { getHeartStateByColor } from '../../../domain/entities/Heart/Collection'
+import { getHeartStateByColor } from '../../../domain/entities/Heart/collection'
 import {
   getAllLiveHeartColors,
   getAllMemberHeartColors,
@@ -17,7 +17,7 @@ import {
 import {
   getEffectiveCount,
   getDisplayCount,
-} from '../../../domain/entities/Heart/State'
+} from '../../../domain/entities/Heart'
 import { HeartColorSettingsModal } from '@components/ui/HeartColorSettingsModal'
 import { HeartCounter } from '@components/ui/HeartCounter'
 import { HeartIcon } from '@components/ui/HeartIcon'

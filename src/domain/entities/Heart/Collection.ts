@@ -13,7 +13,7 @@ import {
   withResetCount,
   getEffectiveCount,
   withUpdatedVisibility,
-} from './State'
+} from '.'
 
 /**
  * ハートの集合を表すエンティティ

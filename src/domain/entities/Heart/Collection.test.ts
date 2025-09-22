@@ -12,8 +12,8 @@ import {
   withResetAllHeartCounts,
   getHeartStateByColor,
   getTotalEffectiveCount,
-} from './Collection'
-import { getEffectiveCount } from './State'
+} from './collection'
+import { getEffectiveCount } from '.'
 
 describe('HeartCollection', () => {
   describe('withIncrementedHeartCount', () => {

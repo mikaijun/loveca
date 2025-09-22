@@ -1,7 +1,7 @@
 import {
   HeartCollection,
   getHeartStateByColor,
-} from '../../entities/Heart/Collection'
+} from '../../entities/Heart/collection'
 import {
   HeartColor,
   MemberHeartColor,

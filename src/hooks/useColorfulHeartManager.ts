@@ -11,7 +11,7 @@ import {
   withUpdatedVisibilities,
   getTotalEffectiveCount,
   getVisibleColorNames,
-} from '../domain/entities/Heart/Collection'
+} from '../domain/entities/Heart/collection'
 import {
   createHeartColor,
   MemberHeartColor,
