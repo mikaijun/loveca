@@ -1,4 +1,4 @@
-import { HeartColor } from '../valueObjects/HeartColor'
+import { HeartColor } from '../../valueObjects/HeartColor'
 
 /**
  * 個々のハートの状態を表すエンティティ

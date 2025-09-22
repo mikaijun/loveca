@@ -1,12 +1,12 @@
 import {
   HeartCollection,
   getHeartStateByColor,
-} from '../entities/HeartCollection'
+} from '../../entities/Heart/Collection'
 import {
   HeartColor,
   MemberHeartColor,
   getHeartColorValue,
-} from '../valueObjects/HeartColor'
+} from '../../valueObjects/HeartColor'
 
 /**
  * ハートの状態検証に関するドメインサービス

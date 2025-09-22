@@ -4,7 +4,7 @@ import {
   getAllLiveHeartColors,
   getAllMemberHeartColors,
   MemberHeartColor,
-} from '../valueObjects/HeartColor'
+} from '../../valueObjects/HeartColor'
 import {
   HeartState,
   createHeartState,
@@ -13,7 +13,7 @@ import {
   withResetCount,
   getEffectiveCount,
   withUpdatedVisibility,
-} from './HeartState'
+} from './State'
 
 /**
  * ハートの集合を表すエンティティ

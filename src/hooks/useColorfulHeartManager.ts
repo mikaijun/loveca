@@ -11,13 +11,13 @@ import {
   withUpdatedVisibilities,
   getTotalEffectiveCount,
   getVisibleColorNames,
-} from '../domain/entities/HeartCollection'
+} from '../domain/entities/Heart/Collection'
 import {
   createHeartColor,
   MemberHeartColor,
 } from '../domain/valueObjects/HeartColor'
-import { HeartCalculationService } from '../domain/services/HeartCalculationService'
-import { HeartValidationService } from '../domain/services/HeartValidationService'
+import { HeartCalculationService } from '../domain/services/HeartCalculationService/index'
+import { HeartValidationService } from '../domain/services/HeartValidationService/index'
 
 /**
  * カラフルハート管理のためのReactフック

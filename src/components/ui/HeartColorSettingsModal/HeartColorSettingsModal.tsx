@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 
 import { Button, CheckboxGroup, Text, Flex } from '@radix-ui/themes'
 import { DialogDescription, DialogTitle } from '@radix-ui/react-dialog'
@@ -6,10 +6,9 @@ import { VscWand } from 'react-icons/vsc'
 import { BsPersonHearts } from 'react-icons/bs'
 import { Dialog } from 'radix-ui'
 import { TbSettingsHeart } from 'react-icons/tb'
-import { useHeartColorSettingsModal } from './HeartColorSettingsModal.hooks'
 import { Summary } from '@components/commons/ui/Summary'
 import { Modal } from '@components/commons/ui/Modal'
-import { HeartIcon } from '@components/features/heartCounter/HeartIcon'
+import { HeartIcon } from '@components/ui/HeartIcon'
 import { MemberHeartColor, memberHeartColors } from '@constants/hearts'
 import './HeartColorSettingsModal.css'
 
@@ -28,11 +27,31 @@ export const HeartColorSettingsModal: React.FC<
   onChangeRequiredLiveHeartColor,
   onChangeMemberHeartColor,
 }) => {
-  const { handleChangeRequiredLiveHeartColor, handleChangeMemberHeartColor } =
-    useHeartColorSettingsModal({
-      onChangeRequiredLiveHeartColor,
-      onChangeMemberHeartColor,
-    })
+  // 単純なバリデーション処理（rules.mdc: コンポーネント内で可）
+  const createHandleChange = useCallback(
+    (onChange: (values: MemberHeartColor[]) => void) => {
+      return (values: string[]) => {
+        const validValues = memberHeartColors.filter((color) =>
+          values.includes(color)
+        )
+        if (validValues.length === values.length) {
+          onChange(validValues)
+        } else {
+          throw new Error('ハートの色に無効な値が指定されました')
+        }
+      }
+    },
+    []
+  )
+
+  const handleChangeRequiredLiveHeartColor = createHandleChange(
+    onChangeRequiredLiveHeartColor
+  )
+
+  const handleChangeMemberHeartColor = createHandleChange(
+    onChangeMemberHeartColor
+  )
+
   const isSingleMemberHeart = memberHeartColorList.length <= 1
 
   return (

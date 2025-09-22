@@ -2,14 +2,14 @@ import {
   HeartCollection,
   getTotalEffectiveCount,
   getHeartStateByColor,
-} from '../entities/HeartCollection'
-import { getEffectiveCount } from '../entities/HeartState'
+} from '../../entities/Heart/Collection'
+import { getEffectiveCount } from '../../entities/Heart/State'
 import {
   HeartColor,
   getAllMemberHeartColors,
   getHeartColorValue,
   createHeartColor,
-} from '../valueObjects/HeartColor'
+} from '../../valueObjects/HeartColor'
 
 /**
  * ハートの計算に関するドメインサービス

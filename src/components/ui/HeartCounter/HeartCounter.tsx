@@ -1,5 +1,5 @@
 import React from 'react'
-import { HeartIcon } from '@components/features/heartCounter/HeartIcon'
+import { HeartIcon } from '@components/ui/HeartIcon'
 import { HeartIconProps } from '@constants/hearts'
 import './HeartCounter.css'
 

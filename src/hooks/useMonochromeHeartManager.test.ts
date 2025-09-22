@@ -1,10 +1,10 @@
 import { describe, it, expect } from 'vitest'
 import { act, renderHook } from '@testing-library/react'
-import { useMonochromeManager } from './MonochromeHeartManager.hooks'
+import { useMonochromeHeartManager } from './useMonochromeHeartManager'
 
-describe('useMonochromeManager hook', () => {
+describe('useMonochromeHeartManager hook', () => {
   it('ハート数の変更が正しく反映されること', () => {
-    const { result } = renderHook(() => useMonochromeManager())
+    const { result } = renderHook(() => useMonochromeHeartManager())
 
     expect(result.current.memberHeartCount).toBe(0)
     expect(result.current.requiredLiveHeartCount).toBe(0)
@@ -23,7 +23,7 @@ describe('useMonochromeManager hook', () => {
   })
 
   it('ハート数の計算が正しく行われること', () => {
-    const { result } = renderHook(() => useMonochromeManager())
+    const { result } = renderHook(() => useMonochromeHeartManager())
 
     expect(result.current.requiredBladeHeartCount).toBe(0)
 
@@ -38,7 +38,7 @@ describe('useMonochromeManager hook', () => {
   })
 
   it('リセットが正常に機能すること', () => {
-    const { result } = renderHook(() => useMonochromeManager())
+    const { result } = renderHook(() => useMonochromeHeartManager())
 
     act(() => {
       result.current.handleChangeMemberHeartCount(5)

@@ -8,7 +8,7 @@ import { VscWand } from 'react-icons/vsc'
 
 import { useColorfulHeartManager } from '../../../hooks/useColorfulHeartManager'
 import { useMonochromeHeartManager } from '../../../hooks/useMonochromeHeartManager'
-import { getHeartStateByColor } from '../../../domain/entities/HeartCollection'
+import { getHeartStateByColor } from '../../../domain/entities/Heart/Collection'
 import {
   getAllLiveHeartColors,
   getAllMemberHeartColors,
@@ -17,16 +17,16 @@ import {
 import {
   getEffectiveCount,
   getDisplayCount,
-} from '../../../domain/entities/HeartState'
-import { HeartColorSettingsModal } from '@components/features/heartCounter/HeartColorSettingsModal'
-import { HeartCounter } from '@components/features/heartCounter/HeartCounter'
-import { HeartIcon } from '@components/features/heartCounter/HeartIcon'
+} from '../../../domain/entities/Heart/State'
+import { HeartColorSettingsModal } from '@components/ui/HeartColorSettingsModal'
+import { HeartCounter } from '@components/ui/HeartCounter'
+import { HeartIcon } from '@components/ui/HeartIcon'
 import { ResetButton } from '@components/commons/ui/ResetButton'
 import { Summary } from '@components/commons/ui/Summary'
 import { NumberSelect } from '@components/commons/function/NumberSelect'
 import { colors } from '@constants/colors'
 import './HeartManagerPage.css'
-import '../../features/heartCounter/ColorfulHeartManager/ColorfulHeartManager.css'
+import './ColorfulHeartManager.css'
 
 /**
  * カラフルハート管理コンポーネント
