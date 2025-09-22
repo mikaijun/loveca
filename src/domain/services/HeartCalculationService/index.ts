@@ -2,8 +2,8 @@ import {
   HeartCollection,
   getTotalEffectiveCount,
   getHeartStateByColor,
-} from '../../entities/Heart/collection'
-import { getEffectiveCount } from '../../entities/Heart'
+} from '../../entities/heart/collection'
+import { getEffectiveCount } from '../../entities/heart'
 import {
   HeartColor,
   getAllMemberHeartColors,

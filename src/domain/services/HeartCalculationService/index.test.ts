@@ -3,7 +3,7 @@ import {
   createRequiredLiveHeartCollection,
   createMemberHeartCollection,
   withIncrementedHeartCount,
-} from '../../entities/Heart/collection'
+} from '../../entities/heart/collection'
 import { createHeartColor } from '../../valueObjects/HeartColor'
 import { HeartCalculationService } from './index'
 
