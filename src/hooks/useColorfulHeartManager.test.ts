@@ -9,7 +9,6 @@ describe('useColorfulHeartManager hook', () => {
     expect(result.current.requiredLiveHeartCount).toBe(0)
     expect(result.current.memberHeartCount).toBe(0)
     expect(result.current.canSucceedLive).toBe(false)
-    expect(result.current.error).toBeNull()
   })
 
   it('ライブハートのインクリメントが正しく動作すること', () => {
@@ -20,7 +19,6 @@ describe('useColorfulHeartManager hook', () => {
     })
 
     expect(result.current.requiredLiveHeartCount).toBe(1)
-    expect(result.current.error).toBeNull()
   })
 
   it('ライブハートのデクリメントが正しく動作すること', () => {
@@ -43,7 +41,6 @@ describe('useColorfulHeartManager hook', () => {
     })
 
     expect(result.current.requiredLiveHeartCount).toBe(1)
-    expect(result.current.error).toBeNull()
   })
 
   it('メンバーハートのインクリメントが正しく動作すること', () => {
@@ -54,17 +51,6 @@ describe('useColorfulHeartManager hook', () => {
     })
 
     expect(result.current.memberHeartCount).toBe(1)
-    expect(result.current.error).toBeNull()
-  })
-
-  it('メンバーハートに灰色を指定するとエラーが発生すること', () => {
-    const { result } = renderHook(() => useColorfulHeartManager())
-
-    act(() => {
-      result.current.handleIncrementMemberHeart('gray')
-    })
-
-    expect(result.current.error).toBe('メンバーハートに灰色は使用できません')
   })
 
   it('全てのハートカウントがリセットされること', () => {
@@ -118,24 +104,6 @@ describe('useColorfulHeartManager hook', () => {
     expect(result.current.canSucceedLive).toBe(true)
   })
 
-  it('エラークリアが正しく動作すること', () => {
-    const { result } = renderHook(() => useColorfulHeartManager())
-
-    // エラーを発生させる
-    act(() => {
-      result.current.handleIncrementMemberHeart('gray')
-    })
-
-    expect(result.current.error).not.toBeNull()
-
-    // エラークリア
-    act(() => {
-      result.current.clearError()
-    })
-
-    expect(result.current.error).toBeNull()
-  })
-
   it('表示色リストの更新が正しく動作すること', () => {
     const { result } = renderHook(() => useColorfulHeartManager())
 
@@ -151,15 +119,5 @@ describe('useColorfulHeartManager hook', () => {
     expect(result.current.memberHeartColorList).toContain('pink')
     expect(result.current.memberHeartColorList).toContain('blue')
     expect(result.current.memberHeartColorList).not.toContain('green')
-  })
-
-  it('無効な色を指定するとエラーが発生すること', () => {
-    const { result } = renderHook(() => useColorfulHeartManager())
-
-    act(() => {
-      result.current.handleIncrementRequiredLiveHeart('invalid-color')
-    })
-
-    expect(result.current.error).toContain('無効')
   })
 })

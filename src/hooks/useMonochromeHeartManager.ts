@@ -1,111 +1,40 @@
 'use client'
 
 import { useState, useCallback, useMemo } from 'react'
+import {
+  MonochromeHeartService,
+  MonochromeHeartState,
+} from '../domain/services/MonochromeHeartService'
 
 /**
  * モノクロハート管理のためのReactフック
- * 直接的な状態管理とバリデーション
+ * MonochromeHeartServiceを使用したシンプルな状態管理
  */
-
-type MonochromeHeartState = {
-  memberHeartCount: number
-  requiredLiveHeartCount: number
-}
-
-type MonochromeHeartSummary = {
-  memberHeartCount: number
-  requiredLiveHeartCount: number
-  requiredBladeHeartCount: number | 'ライブ成功'
-  isLiveSuccess: boolean
-}
-
-// バリデーション関数
-function validateHeartCount(count: number): string | null {
-  if (!Number.isInteger(count)) {
-    return 'ハートの数量は整数である必要があります'
-  }
-  if (count < 0) {
-    return 'ハートの数量は0以上である必要があります'
-  }
-  if (count > 40) {
-    return 'ハートの数量は40以下である必要があります'
-  }
-  return null
-}
-
-// サマリー計算関数
-function calculateSummary(state: MonochromeHeartState): MonochromeHeartSummary {
-  const memberCount = state.memberHeartCount
-  const requiredCount = state.requiredLiveHeartCount
-
-  const diffCount = requiredCount - memberCount
-  const isLiveSuccess = requiredCount > 0 && diffCount <= 0
-  const requiredBladeHeartCount = isLiveSuccess
-    ? ('ライブ成功' as const)
-    : Math.max(diffCount, 0)
-
-  return {
-    memberHeartCount: memberCount,
-    requiredLiveHeartCount: requiredCount,
-    requiredBladeHeartCount,
-    isLiveSuccess,
-  }
-}
 export const useMonochromeHeartManager = () => {
-  const [state, setState] = useState<MonochromeHeartState>({
-    memberHeartCount: 0,
-    requiredLiveHeartCount: 0,
-  })
-  const [error, setError] = useState<string | null>(null)
-
-  // エラーをクリア
-  const clearError = useCallback(() => {
-    setError(null)
-  }, [])
+  const [state, setState] = useState<MonochromeHeartState>(
+    MonochromeHeartService.createInitialState()
+  )
 
   // メンバーハート数を更新
-  const handleChangeMemberHeartCount = useCallback(
-    (count: number) => {
-      const validationError = validateHeartCount(count)
-
-      if (validationError) {
-        setError(validationError)
-        return
-      }
-
-      setState((prev) => ({ ...prev, memberHeartCount: count }))
-      clearError()
-    },
-    [clearError]
-  )
+  const handleChangeMemberHeartCount = useCallback((count: number) => {
+    setState((prev) => ({ ...prev, memberHeartCount: count }))
+  }, [])
 
   // ライブに必要なハート数を更新
-  const handleRequiredLiveHeartCount = useCallback(
-    (count: number) => {
-      const validationError = validateHeartCount(count)
-
-      if (validationError) {
-        setError(validationError)
-        return
-      }
-
-      setState((prev) => ({ ...prev, requiredLiveHeartCount: count }))
-      clearError()
-    },
-    [clearError]
-  )
+  const handleRequiredLiveHeartCount = useCallback((count: number) => {
+    setState((prev) => ({ ...prev, requiredLiveHeartCount: count }))
+  }, [])
 
   // 全てのカウントをリセット
   const handleResetHeart = useCallback(() => {
-    setState({
-      memberHeartCount: 0,
-      requiredLiveHeartCount: 0,
-    })
-    clearError()
-  }, [clearError])
+    setState(MonochromeHeartService.createInitialState())
+  }, [])
 
   // サマリーデータの計算（メモ化）
-  const summaryData = useMemo(() => calculateSummary(state), [state])
+  const summaryData = useMemo(
+    () => MonochromeHeartService.calculateSummary(state),
+    [state]
+  )
 
   return {
     // 基本値
@@ -120,9 +49,5 @@ export const useMonochromeHeartManager = () => {
     handleChangeMemberHeartCount,
     handleRequiredLiveHeartCount,
     handleResetHeart,
-
-    // エラー処理
-    error,
-    clearError,
   }
 }
