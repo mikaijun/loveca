@@ -9,7 +9,7 @@ import {
   getAllMemberHeartColors,
   getHeartColorValue,
   createHeartColor,
-} from '@domain/valueObjects/HeartColor'
+} from '@domain/valueObjects/heartColor'
 
 export const heartCalculationService = {
   /**

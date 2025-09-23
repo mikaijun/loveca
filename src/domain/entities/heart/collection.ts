@@ -13,7 +13,7 @@ import {
   getAllLiveHeartColors,
   getAllMemberHeartColors,
   MemberHeartColor,
-} from '@domain/valueObjects/HeartColor'
+} from '@domain/valueObjects/heartColor'
 
 export type HeartCollection = Readonly<{
   states: ReadonlyMap<string, Heart>

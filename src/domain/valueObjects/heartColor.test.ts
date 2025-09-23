@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { createHeartColor } from './HeartColor'
+import { createHeartColor } from './heartColor'
 
 describe('createHeartColor', () => {
   it('有効な色の場合、正しくHeartColorが作成されること', () => {

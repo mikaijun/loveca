@@ -11,7 +11,7 @@ import {
   getVisibleColorNames,
 } from '@domain/entities/heart/collection'
 import { Heart } from '@domain/entities/heart'
-import { HeartColor, MemberHeartColor } from '@domain/valueObjects/HeartColor'
+import { HeartColor, MemberHeartColor } from '@domain/valueObjects/heartColor'
 
 function createTestHeartCollection(
   heartCounts: Record<string, number>

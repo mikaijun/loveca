@@ -3,7 +3,7 @@ import { describe, it, expect } from 'vitest'
 import { heartCalculationService } from '@domain/services/heartCalculationService'
 import { HeartCollection } from '@domain/entities/heart/collection'
 import { Heart } from '@domain/entities/heart'
-import { HeartColor } from '@domain/valueObjects/HeartColor'
+import { HeartColor } from '@domain/valueObjects/heartColor'
 
 function createTestHeartCollection(
   heartCounts: Record<string, number>

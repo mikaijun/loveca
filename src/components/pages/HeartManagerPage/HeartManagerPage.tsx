@@ -16,9 +16,9 @@ import {
   getAllLiveHeartColors,
   getAllMemberHeartColors,
   getHeartColorValue,
-} from '@domain/valueObjects/HeartColor'
+} from '@domain/valueObjects/heartColor'
 import { getEffectiveCount, getDisplayCount } from '@domain/entities/heart'
-import { MemberHeartColor } from '@domain/valueObjects/HeartColor'
+import { MemberHeartColor } from '@domain/valueObjects/heartColor'
 import { HeartColorSettingsModal } from '@components/ui/HeartColorSettingsModal'
 import { HeartCounter } from '@components/ui/HeartCounter'
 import { HeartIcon } from '@components/ui/HeartIcon'

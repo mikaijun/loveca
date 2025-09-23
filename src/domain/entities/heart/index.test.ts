@@ -5,7 +5,7 @@ import {
   withDecrementedCount,
 } from './index'
 import { Heart } from './index'
-import { HeartColor } from '@domain/valueObjects/HeartColor'
+import { HeartColor } from '@domain/valueObjects/heartColor'
 
 // テストヘルパー関数
 function createTestHeart(count: number, visibility: boolean): Heart {

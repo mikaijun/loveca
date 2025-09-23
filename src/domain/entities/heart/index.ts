@@ -1,4 +1,4 @@
-import { HeartColor } from '@domain/valueObjects/HeartColor'
+import { HeartColor } from '@domain/valueObjects/heartColor'
 
 export type Heart = Readonly<{
   color: HeartColor
