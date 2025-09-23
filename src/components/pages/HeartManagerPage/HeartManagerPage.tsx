@@ -31,7 +31,6 @@ import { Summary } from '@components/commons/ui/Summary'
 import { NumberSelect } from '@components/commons/function/NumberSelect'
 import { colors } from '@constants/colors'
 import './HeartManagerPage.css'
-import './ColorfulHeartManager.css'
 
 /**
  * カラフルハート管理コンポーネント
