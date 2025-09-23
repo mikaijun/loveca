@@ -6,7 +6,7 @@ import {
   MemberHeartColor,
 } from '../../valueObjects/HeartColor'
 import {
-  HeartState,
+  Heart,
   createHeartState,
   withIncrementedCount,
   withDecrementedCount,
@@ -16,11 +16,11 @@ import {
 } from '.'
 
 export type HeartCollection = Readonly<{
-  states: ReadonlyMap<string, HeartState>
+  states: ReadonlyMap<string, Heart>
 }>
 
 export function createRequiredLiveHeartCollection(): HeartCollection {
-  const states = new Map<string, HeartState>()
+  const states = new Map<string, Heart>()
 
   getAllLiveHeartColors().forEach((color) => {
     const key = getHeartColorValue(color)
@@ -31,7 +31,7 @@ export function createRequiredLiveHeartCollection(): HeartCollection {
 }
 
 export function createMemberHeartCollection(): HeartCollection {
-  const states = new Map<string, HeartState>()
+  const states = new Map<string, Heart>()
 
   getAllMemberHeartColors().forEach((color) => {
     const key = getHeartColorValue(color)
@@ -78,7 +78,7 @@ export function withDecrementedHeartCount(
 export function withResetAllHeartCounts(
   collection: HeartCollection
 ): HeartCollection {
-  const newStates = new Map<string, HeartState>()
+  const newStates = new Map<string, Heart>()
 
   collection.states.forEach((state, key) => {
     newStates.set(key, withResetCount(state))
@@ -92,7 +92,7 @@ export function withUpdatedVisibilities(
   visibleColors: MemberHeartColor[],
   forceGrayVisible: boolean = false
 ): HeartCollection {
-  const newStates = new Map<string, HeartState>()
+  const newStates = new Map<string, Heart>()
 
   collection.states.forEach((state, key) => {
     let visibility: boolean
@@ -120,7 +120,7 @@ export function getTotalEffectiveCount(collection: HeartCollection): number {
 export function getHeartStateByColor(
   collection: HeartCollection,
   color: HeartColor
-): HeartState | undefined {
+): Heart | undefined {
   const colorKey = getHeartColorValue(color)
   return collection.states.get(colorKey)
 }

@@ -104,13 +104,13 @@ if (!VALID_COLORS.includes(value)) throw new Error('無効な色')
 return { value }
 }
 
-// domain/entities/HeartState.ts（状態管理）
-export type HeartState = {
+// domain/entities/Heart.ts（状態管理）
+export type Heart = {
 color: HeartColor
 count: number // 直接number使用（単純な値）
 visibility: boolean // 直接boolean使用
 }
-export function withUpdatedCount(state: HeartState, newCount: number): HeartState {
+export function withUpdatedCount(state: Heart, newCount: number): Heart {
 return { ...state, count: newCount }
 }
 
