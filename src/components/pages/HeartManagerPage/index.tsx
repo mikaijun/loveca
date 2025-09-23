@@ -1,1 +1,1 @@
-export * from './HeartManagerPage'
+export { default as HeartManagerPage } from './HeartManagerPage'

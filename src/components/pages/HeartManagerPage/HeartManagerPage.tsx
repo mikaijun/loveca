@@ -1,13 +1,17 @@
 'use client'
 
-import React from 'react'
+import React, { useState, useCallback, useMemo } from 'react'
 import { Tabs, Flex, Box } from '@radix-ui/themes'
 import { Heart } from 'lucide-react'
 import { BsPersonHearts } from 'react-icons/bs'
 import { VscWand } from 'react-icons/vsc'
 
-import { useColorfulHeartManager } from '../../../hooks/useColorfulHeartManager'
-import { useMonochromeHeartManager } from '../../../hooks/useMonochromeHeartManager'
+import {
+  ColorfulHeartService,
+  ColorfulHeartState,
+  ColorfulHeartSummary,
+} from '../../../domain/services/ColorfulHeartService'
+import { MonochromeHeartService } from '../../../domain/services/MonochromeHeartService'
 import { getHeartStateByColor } from '../../../domain/entities/heart/collection'
 import {
   getAllLiveHeartColors,
@@ -18,6 +22,7 @@ import {
   getEffectiveCount,
   getDisplayCount,
 } from '../../../domain/entities/heart'
+import { MemberHeartColor } from '../../../domain/valueObjects/HeartColor'
 import { HeartColorSettingsModal } from '@components/ui/HeartColorSettingsModal'
 import { HeartCounter } from '@components/ui/HeartCounter'
 import { HeartIcon } from '@components/ui/HeartIcon'
@@ -31,25 +36,43 @@ import './ColorfulHeartManager.css'
 /**
  * カラフルハート管理コンポーネント
  */
-const ColorfulHeartManager: React.FC = () => {
-  const {
-    requiredLiveHearts,
-    memberHearts,
-    requiredLiveHeartCount,
-    memberHeartCount,
-    liveResultMessage,
-    requiredBladeHearts,
-    requiredLiveHeartColorList,
-    memberHeartColorList,
-    handleIncrementRequiredLiveHeart,
-    handleDecrementRequiredLiveHeart,
-    handleIncrementMemberHeart,
-    handleDecrementMemberHeart,
-    handleResetAllHeartCounts,
-    handleChangeRequiredLiveHeartVisibility,
-    handleChangeMemberHeartVisibility,
-  } = useColorfulHeartManager()
+interface ColorfulHeartManagerProps {
+  requiredLiveHearts: ColorfulHeartState['requiredLiveHearts']
+  memberHearts: ColorfulHeartState['memberHearts']
+  requiredLiveHeartCount: number
+  memberHeartCount: number
+  liveResultMessage: string
+  requiredBladeHearts: ColorfulHeartSummary['requiredBladeHearts']
+  requiredLiveHeartColorList: MemberHeartColor[]
+  memberHeartColorList: MemberHeartColor[]
+  handleIncrementRequiredLiveHeart: (colorValue: string) => void
+  handleDecrementRequiredLiveHeart: (colorValue: string) => void
+  handleIncrementMemberHeart: (colorValue: string) => void
+  handleDecrementMemberHeart: (colorValue: string) => void
+  handleResetAllHeartCounts: () => void
+  handleChangeRequiredLiveHeartVisibility: (
+    visibleColors: MemberHeartColor[]
+  ) => void
+  handleChangeMemberHeartVisibility: (visibleColors: MemberHeartColor[]) => void
+}
 
+const ColorfulHeartManager: React.FC<ColorfulHeartManagerProps> = ({
+  requiredLiveHearts,
+  memberHearts,
+  requiredLiveHeartCount,
+  memberHeartCount,
+  liveResultMessage,
+  requiredBladeHearts,
+  requiredLiveHeartColorList,
+  memberHeartColorList,
+  handleIncrementRequiredLiveHeart,
+  handleDecrementRequiredLiveHeart,
+  handleIncrementMemberHeart,
+  handleDecrementMemberHeart,
+  handleResetAllHeartCounts,
+  handleChangeRequiredLiveHeartVisibility,
+  handleChangeMemberHeartVisibility,
+}) => {
   return (
     <div className="HeartManagerContainer">
       <div className="HeartManagerHeader">
@@ -161,16 +184,24 @@ const ColorfulHeartManager: React.FC = () => {
 /**
  * モノクロハート管理コンポーネント
  */
-const MonochromeHeartManager: React.FC = () => {
-  const {
-    memberHeartCount,
-    requiredLiveHeartCount,
-    requiredBladeHeartCount,
-    handleChangeMemberHeartCount,
-    handleRequiredLiveHeartCount,
-    handleResetHeart,
-  } = useMonochromeHeartManager()
+interface MonochromeHeartManagerProps {
+  memberHeartCount: number
+  requiredLiveHeartCount: number
+  requiredBladeHeartCount: number | string
+  isLiveSuccess: boolean
+  handleChangeMemberHeartCount: (count: number) => void
+  handleRequiredLiveHeartCount: (count: number) => void
+  handleResetHeart: () => void
+}
 
+const MonochromeHeartManager: React.FC<MonochromeHeartManagerProps> = ({
+  memberHeartCount,
+  requiredLiveHeartCount,
+  requiredBladeHeartCount,
+  handleChangeMemberHeartCount,
+  handleRequiredLiveHeartCount,
+  handleResetHeart,
+}) => {
   const bladeHeartDisplayMessage =
     typeof requiredBladeHeartCount === 'string'
       ? requiredBladeHeartCount
@@ -244,7 +275,95 @@ const MonochromeHeartManager: React.FC = () => {
 /**
  * ハート管理ページのメインコンポーネント
  */
-export const HeartManagerPage: React.FC = () => {
+export default function HeartManagerPage() {
+  // カラフルハート管理のフック
+  const [colorfulHeartState, setColorfulHeartState] = useState(() =>
+    ColorfulHeartService.createInitialState()
+  )
+
+  const colorfulHeartSummary = useMemo(
+    () => ColorfulHeartService.calculateSummary(colorfulHeartState),
+    [colorfulHeartState]
+  )
+
+  const handleIncrementRequiredLiveHeart = useCallback((colorValue: string) => {
+    setColorfulHeartState((prev) =>
+      ColorfulHeartService.incrementRequiredLiveHeart(prev, colorValue)
+    )
+  }, [])
+
+  const handleDecrementRequiredLiveHeart = useCallback((colorValue: string) => {
+    setColorfulHeartState((prev) =>
+      ColorfulHeartService.decrementRequiredLiveHeart(prev, colorValue)
+    )
+  }, [])
+
+  const handleIncrementMemberHeart = useCallback((colorValue: string) => {
+    setColorfulHeartState((prev) =>
+      ColorfulHeartService.incrementMemberHeart(prev, colorValue)
+    )
+  }, [])
+
+  const handleDecrementMemberHeart = useCallback((colorValue: string) => {
+    setColorfulHeartState((prev) =>
+      ColorfulHeartService.decrementMemberHeart(prev, colorValue)
+    )
+  }, [])
+
+  const handleResetAllHeartCounts = useCallback(() => {
+    setColorfulHeartState((prev) =>
+      ColorfulHeartService.resetAllHeartCounts(prev)
+    )
+  }, [])
+
+  const handleChangeRequiredLiveHeartVisibility = useCallback(
+    (visibleColors: MemberHeartColor[]) => {
+      setColorfulHeartState((prev) =>
+        ColorfulHeartService.updateRequiredLiveHeartVisibility(
+          prev,
+          visibleColors
+        )
+      )
+    },
+    []
+  )
+
+  const handleChangeMemberHeartVisibility = useCallback(
+    (visibleColors: MemberHeartColor[]) => {
+      setColorfulHeartState((prev) =>
+        ColorfulHeartService.updateMemberHeartVisibility(prev, visibleColors)
+      )
+    },
+    []
+  )
+
+  // モノクロハート管理のフック
+  const [monochromeHeartState, setMonochromeHeartState] = useState(() =>
+    MonochromeHeartService.createInitialState()
+  )
+
+  const monochromeHeartSummary = useMemo(
+    () => MonochromeHeartService.calculateSummary(monochromeHeartState),
+    [monochromeHeartState]
+  )
+
+  const handleChangeMemberHeartCount = useCallback((count: number) => {
+    setMonochromeHeartState((prev) => ({ ...prev, memberHeartCount: count }))
+  }, [])
+
+  const handleRequiredLiveHeartCount = useCallback((count: number) => {
+    setMonochromeHeartState((prev) => ({
+      ...prev,
+      requiredLiveHeartCount: count,
+    }))
+  }, [])
+
+  const handleResetHeart = useCallback(() => {
+    setMonochromeHeartState(MonochromeHeartService.createInitialState())
+  }, [])
+
+  // カラフルハートのデータ取得
+  const { requiredLiveHearts, memberHearts } = colorfulHeartState
   return (
     <Tabs.Root
       className="TabsRoot"
@@ -266,7 +385,27 @@ export const HeartManagerPage: React.FC = () => {
         }}
         value="tab1"
       >
-        <ColorfulHeartManager />
+        <ColorfulHeartManager
+          handleChangeMemberHeartVisibility={handleChangeMemberHeartVisibility}
+          handleChangeRequiredLiveHeartVisibility={
+            handleChangeRequiredLiveHeartVisibility
+          }
+          handleDecrementMemberHeart={handleDecrementMemberHeart}
+          handleDecrementRequiredLiveHeart={handleDecrementRequiredLiveHeart}
+          handleIncrementMemberHeart={handleIncrementMemberHeart}
+          handleIncrementRequiredLiveHeart={handleIncrementRequiredLiveHeart}
+          handleResetAllHeartCounts={handleResetAllHeartCounts}
+          liveResultMessage={colorfulHeartSummary.liveResultMessage}
+          memberHeartColorList={colorfulHeartSummary.memberHeartColors}
+          memberHeartCount={colorfulHeartSummary.memberHeartCount}
+          memberHearts={memberHearts}
+          requiredBladeHearts={colorfulHeartSummary.requiredBladeHearts}
+          requiredLiveHeartColorList={
+            colorfulHeartSummary.requiredLiveHeartColors
+          }
+          requiredLiveHeartCount={colorfulHeartSummary.requiredLiveHeartCount}
+          requiredLiveHearts={requiredLiveHearts}
+        />
       </Tabs.Content>
       <Tabs.Content
         className="TabsContent"
@@ -275,7 +414,17 @@ export const HeartManagerPage: React.FC = () => {
         }}
         value="tab2"
       >
-        <MonochromeHeartManager />
+        <MonochromeHeartManager
+          handleChangeMemberHeartCount={handleChangeMemberHeartCount}
+          handleRequiredLiveHeartCount={handleRequiredLiveHeartCount}
+          handleResetHeart={handleResetHeart}
+          isLiveSuccess={monochromeHeartSummary.isLiveSuccess}
+          memberHeartCount={monochromeHeartSummary.memberHeartCount}
+          requiredBladeHeartCount={
+            monochromeHeartSummary.requiredBladeHeartCount
+          }
+          requiredLiveHeartCount={monochromeHeartSummary.requiredLiveHeartCount}
+        />
       </Tabs.Content>
     </Tabs.Root>
   )
