@@ -156,22 +156,14 @@ export const HeartCalculationService = {
     requiredLiveHearts: HeartCollection,
     memberHearts: HeartCollection
   ): string => {
-    const canSucceed = HeartCalculationService.canSucceedLive(
-      requiredLiveHearts,
-      memberHearts
-    )
-    const totalRequired = getTotalEffectiveCount(requiredLiveHearts)
-
-    if (totalRequired > 0 && canSucceed) {
-      return 'ライブ成功'
-    }
-
-    const totalBladeRequired =
+    const totalRequiredBladeHearts =
       HeartCalculationService.calculateTotalRequiredBladeHearts(
         requiredLiveHearts,
         memberHearts
       )
 
-    return `必要ブレードハート数: ${totalBladeRequired}`
+    return totalRequiredBladeHearts
+      ? `必要ブレードハート数: ${totalRequiredBladeHearts}`
+      : 'ライブ成功'
   },
 }
