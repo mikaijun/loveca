@@ -11,7 +11,6 @@ import {
 import { Heart } from '@domain/entities/heart'
 import { HeartColor } from '@domain/valueObjects/HeartColor'
 
-// テストデータ作成ヘルパー関数（ドメインメソッドを使わずに直接作成）
 function createTestHeartCollection(
   heartCounts: Record<string, number>
 ): HeartCollection {
