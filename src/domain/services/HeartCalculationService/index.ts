@@ -120,20 +120,6 @@ export const HeartCalculationService = {
   },
 
   /**
-   * ライブが成功可能かを判定する
-   */
-  canSucceedLive: (
-    requiredLiveHearts: HeartCollection,
-    memberHearts: HeartCollection
-  ): boolean => {
-    const totalRequired = getTotalEffectiveCount(requiredLiveHearts)
-    const totalMember = getTotalEffectiveCount(memberHearts)
-
-    // 必要ハート数が0より大きく、かつメンバーハートで充足可能な場合
-    return totalRequired > 0 && totalMember >= totalRequired
-  },
-
-  /**
    * 合計必要ブレードハート数を計算する
    */
   calculateTotalRequiredBladeHearts: (

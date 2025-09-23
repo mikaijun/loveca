@@ -29,7 +29,6 @@ export type ColorfulHeartSummary = {
   memberHeartCount: number
   totalRequiredBladeHearts: number
   liveResultMessage: string
-  canSucceedLive: boolean
   requiredBladeHearts: HeartCollection
   requiredLiveHeartColors: MemberHeartColor[]
   memberHeartColors: MemberHeartColor[]
@@ -159,10 +158,7 @@ export const ColorfulHeartService = {
       state.requiredLiveHearts,
       state.memberHearts
     )
-    const canSucceedLive = HeartCalculationService.canSucceedLive(
-      state.requiredLiveHearts,
-      state.memberHearts
-    )
+
     const requiredBladeHearts =
       HeartCalculationService.calculateAllRequiredBladeHearts(
         state.requiredLiveHearts,
@@ -180,7 +176,6 @@ export const ColorfulHeartService = {
       memberHeartCount,
       totalRequiredBladeHearts,
       liveResultMessage,
-      canSucceedLive,
       requiredBladeHearts,
       requiredLiveHeartColors,
       memberHeartColors,
