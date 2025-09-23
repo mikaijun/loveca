@@ -55,6 +55,39 @@ describe('calculateRequiredBladeHeartByColor', () => {
     // 十分なので0
     expect(result).toBe(0)
   })
+
+  it('gray色の場合、特別な計算が呼ばれることを確認', () => {
+    const requiredLiveHearts = createTestHeartCollection({ gray: 3 })
+    const memberHearts = createTestHeartCollection({
+      pink: 1,
+      green: 2, // 余剰合計3個
+    })
+    const grayColor: HeartColor = { value: 'gray' }
+
+    const result = heartCalculationService.calculateRequiredBladeHeartByColor(
+      requiredLiveHearts,
+      memberHearts,
+      grayColor
+    )
+
+    // gray必要数3 - メンバー余剰数3 = 0
+    expect(result).toBe(0)
+  })
+
+  it('存在しない色の状態でも正しく計算されることを確認', () => {
+    const requiredLiveHearts = createTestHeartCollection({ pink: 2 })
+    const memberHearts = createTestHeartCollection({}) // blueが存在しない
+    const blueColor: HeartColor = { value: 'blue' }
+
+    const result = heartCalculationService.calculateRequiredBladeHeartByColor(
+      requiredLiveHearts,
+      memberHearts,
+      blueColor
+    )
+
+    // required: 0 (存在しない), member: 0 (存在しない) = 0
+    expect(result).toBe(0)
+  })
 })
 
 describe('calculateTotalRequiredBladeHearts', () => {
@@ -74,5 +107,44 @@ describe('calculateTotalRequiredBladeHearts', () => {
     // green: max(2-0, 0) = 2
     // 合計: 4
     expect(result).toBe(4)
+  })
+})
+
+describe('getLiveResultMessage', () => {
+  it('必要ハート数が0の場合、固定メッセージが返されることを確認', () => {
+    const requiredLiveHearts = createTestHeartCollection({}) // 必要数0
+    const memberHearts = createTestHeartCollection({ pink: 5 })
+
+    const result = heartCalculationService.getLiveResultMessage(
+      requiredLiveHearts,
+      memberHearts
+    )
+
+    expect(result).toBe('必要ブレードハート数: 0')
+  })
+
+  it('ライブ成功の場合、成功メッセージが返されることを確認', () => {
+    const requiredLiveHearts = createTestHeartCollection({ pink: 2, green: 1 })
+    const memberHearts = createTestHeartCollection({ pink: 2, green: 1 })
+
+    const result = heartCalculationService.getLiveResultMessage(
+      requiredLiveHearts,
+      memberHearts
+    )
+
+    expect(result).toBe('ライブ成功')
+  })
+
+  it('ブレードハートが必要な場合、必要数メッセージが返されることを確認', () => {
+    const requiredLiveHearts = createTestHeartCollection({ pink: 5, green: 3 })
+    const memberHearts = createTestHeartCollection({ pink: 2, green: 1 })
+
+    const result = heartCalculationService.getLiveResultMessage(
+      requiredLiveHearts,
+      memberHearts
+    )
+
+    // pink不足3 + green不足2 = 5
+    expect(result).toBe('必要ブレードハート数: 5')
   })
 })
