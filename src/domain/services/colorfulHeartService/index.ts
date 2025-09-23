@@ -1,4 +1,4 @@
-import { HeartCalculationService } from '@domain/services/HeartCalculationService'
+import { heartCalculationService } from '@domain/services/heartCalculationService'
 import {
   HeartCollection,
   createRequiredLiveHeartCollection,
@@ -34,7 +34,7 @@ export type ColorfulHeartSummary = {
   memberHeartColors: MemberHeartColor[]
 }
 
-export const ColorfulHeartService = {
+export const colorfulHeartService = {
   createInitialState(): ColorfulHeartState {
     return {
       requiredLiveHearts: createRequiredLiveHeartCollection(),
@@ -150,17 +150,17 @@ export const ColorfulHeartService = {
     )
     const memberHeartCount = getTotalEffectiveCount(state.memberHearts)
     const totalRequiredBladeHearts =
-      HeartCalculationService.calculateTotalRequiredBladeHearts(
+      heartCalculationService.calculateTotalRequiredBladeHearts(
         state.requiredLiveHearts,
         state.memberHearts
       )
-    const liveResultMessage = HeartCalculationService.getLiveResultMessage(
+    const liveResultMessage = heartCalculationService.getLiveResultMessage(
       state.requiredLiveHearts,
       state.memberHearts
     )
 
     const requiredBladeHearts =
-      HeartCalculationService.calculateAllRequiredBladeHearts(
+      heartCalculationService.calculateAllRequiredBladeHearts(
         state.requiredLiveHearts,
         state.memberHearts
       )

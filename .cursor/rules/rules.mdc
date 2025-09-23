@@ -114,8 +114,8 @@ export function withUpdatedCount(state: Heart, newCount: number): Heart {
 return { ...state, count: newCount }
 }
 
-// domain/services/HeartCalculationService.ts（横断ロジック）
-export const HeartCalculationService = {
+// domain/services/heartCalculationService.ts（横断ロジック）
+export const heartCalculationService = {
 calculateRequiredBladeHearts: (required: HeartCollection, member: HeartCollection) => {
 // 複雑な計算ロジック
 }

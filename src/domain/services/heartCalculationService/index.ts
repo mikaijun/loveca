@@ -11,7 +11,7 @@ import {
   createHeartColor,
 } from '@domain/valueObjects/HeartColor'
 
-export const HeartCalculationService = {
+export const heartCalculationService = {
   /**
    * 必要なブレードハート数を計算する（各色ごと）
    */
@@ -24,7 +24,7 @@ export const HeartCalculationService = {
 
     // 灰色の場合は特別な計算が必要
     if (colorKey === 'gray') {
-      return HeartCalculationService.calculateRequiredGrayBladeHeart(
+      return heartCalculationService.calculateRequiredGrayBladeHeart(
         requiredLiveHearts,
         memberHearts
       )
@@ -57,7 +57,7 @@ export const HeartCalculationService = {
       : 0
 
     // メンバーハートの各色における余剰数を計算
-    const memberSurplus = HeartCalculationService.calculateMemberHeartSurplus(
+    const memberSurplus = heartCalculationService.calculateMemberHeartSurplus(
       requiredLiveHearts,
       memberHearts
     )
@@ -101,7 +101,7 @@ export const HeartCalculationService = {
     requiredLiveHearts.states.forEach((state, colorKey) => {
       const color = createHeartColor(colorKey)
       const requiredBladeCount =
-        HeartCalculationService.calculateRequiredBladeHeartByColor(
+        heartCalculationService.calculateRequiredBladeHeartByColor(
           requiredLiveHearts,
           memberHearts,
           color
@@ -127,7 +127,7 @@ export const HeartCalculationService = {
     memberHearts: HeartCollection
   ): number => {
     const allBladeHearts =
-      HeartCalculationService.calculateAllRequiredBladeHearts(
+      heartCalculationService.calculateAllRequiredBladeHearts(
         requiredLiveHearts,
         memberHearts
       )
@@ -143,7 +143,7 @@ export const HeartCalculationService = {
     memberHearts: HeartCollection
   ): string => {
     const totalRequiredBladeHearts =
-      HeartCalculationService.calculateTotalRequiredBladeHearts(
+      heartCalculationService.calculateTotalRequiredBladeHearts(
         requiredLiveHearts,
         memberHearts
       )

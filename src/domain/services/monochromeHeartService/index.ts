@@ -19,7 +19,7 @@ export type HeartCountValidationResult = {
   reason?: string
 }
 
-export const MonochromeHeartService = {
+export const monochromeHeartService = {
   calculateSummary(state: MonochromeHeartState): MonochromeHeartSummary {
     const memberCount = state.memberHeartCount
     const requiredCount = state.requiredLiveHeartCount

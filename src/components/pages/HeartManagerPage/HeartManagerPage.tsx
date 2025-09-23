@@ -10,7 +10,7 @@ import { useHeartManager } from './HeartManagerPage.hooks'
 import {
   ColorfulHeartState,
   ColorfulHeartSummary,
-} from '@domain/services/ColorfulHeartService'
+} from '@domain/services/colorfulHeartService'
 import { getHeartStateByColor } from '@domain/entities/heart/collection'
 import {
   getAllLiveHeartColors,

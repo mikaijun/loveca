@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 
-import { HeartCalculationService } from '@domain/services/HeartCalculationService'
+import { heartCalculationService } from '@domain/services/heartCalculationService'
 import { HeartCollection } from '@domain/entities/heart/collection'
 import { Heart } from '@domain/entities/heart'
 import { HeartColor } from '@domain/valueObjects/HeartColor'
@@ -31,7 +31,7 @@ describe('calculateRequiredBladeHeartByColor', () => {
     const memberHearts = createTestHeartCollection({ pink: 1 })
     const pinkColor: HeartColor = { value: 'pink' }
 
-    const result = HeartCalculationService.calculateRequiredBladeHeartByColor(
+    const result = heartCalculationService.calculateRequiredBladeHeartByColor(
       requiredLiveHearts,
       memberHearts,
       pinkColor
@@ -46,7 +46,7 @@ describe('calculateRequiredBladeHeartByColor', () => {
     const memberHearts = createTestHeartCollection({ pink: 3 })
     const pinkColor: HeartColor = { value: 'pink' }
 
-    const result = HeartCalculationService.calculateRequiredBladeHeartByColor(
+    const result = heartCalculationService.calculateRequiredBladeHeartByColor(
       requiredLiveHearts,
       memberHearts,
       pinkColor
@@ -65,7 +65,7 @@ describe('calculateTotalRequiredBladeHearts', () => {
     })
     const memberHearts = createTestHeartCollection({ pink: 1, green: 0 })
 
-    const result = HeartCalculationService.calculateTotalRequiredBladeHearts(
+    const result = heartCalculationService.calculateTotalRequiredBladeHearts(
       requiredLiveHearts,
       memberHearts
     )

@@ -1,52 +1,52 @@
 import { useState, useCallback, useMemo } from 'react'
-import { ColorfulHeartService } from '@domain/services/ColorfulHeartService'
-import { MonochromeHeartService } from '@domain/services/MonochromeHeartService'
+import { colorfulHeartService } from '@domain/services/colorfulHeartService'
+import { monochromeHeartService } from '@domain/services/monochromeHeartService'
 import { MemberHeartColor } from '@domain/valueObjects/HeartColor'
 
 function useColorfulHeartManager() {
   const [colorfulHeartState, setColorfulHeartState] = useState(() =>
-    ColorfulHeartService.createInitialState()
+    colorfulHeartService.createInitialState()
   )
 
   const colorfulHeartSummary = useMemo(
-    () => ColorfulHeartService.calculateSummary(colorfulHeartState),
+    () => colorfulHeartService.calculateSummary(colorfulHeartState),
     [colorfulHeartState]
   )
 
   const handleIncrementRequiredLiveHeart = useCallback((colorValue: string) => {
     setColorfulHeartState((prev) =>
-      ColorfulHeartService.incrementRequiredLiveHeart(prev, colorValue)
+      colorfulHeartService.incrementRequiredLiveHeart(prev, colorValue)
     )
   }, [])
 
   const handleDecrementRequiredLiveHeart = useCallback((colorValue: string) => {
     setColorfulHeartState((prev) =>
-      ColorfulHeartService.decrementRequiredLiveHeart(prev, colorValue)
+      colorfulHeartService.decrementRequiredLiveHeart(prev, colorValue)
     )
   }, [])
 
   const handleIncrementMemberHeart = useCallback((colorValue: string) => {
     setColorfulHeartState((prev) =>
-      ColorfulHeartService.incrementMemberHeart(prev, colorValue)
+      colorfulHeartService.incrementMemberHeart(prev, colorValue)
     )
   }, [])
 
   const handleDecrementMemberHeart = useCallback((colorValue: string) => {
     setColorfulHeartState((prev) =>
-      ColorfulHeartService.decrementMemberHeart(prev, colorValue)
+      colorfulHeartService.decrementMemberHeart(prev, colorValue)
     )
   }, [])
 
   const handleResetAllHeartCounts = useCallback(() => {
     setColorfulHeartState((prev) =>
-      ColorfulHeartService.resetAllHeartCounts(prev)
+      colorfulHeartService.resetAllHeartCounts(prev)
     )
   }, [])
 
   const handleChangeRequiredLiveHeartVisibility = useCallback(
     (visibleColors: MemberHeartColor[]) => {
       setColorfulHeartState((prev) =>
-        ColorfulHeartService.updateRequiredLiveHeartVisibility(
+        colorfulHeartService.updateRequiredLiveHeartVisibility(
           prev,
           visibleColors
         )
@@ -58,7 +58,7 @@ function useColorfulHeartManager() {
   const handleChangeMemberHeartVisibility = useCallback(
     (visibleColors: MemberHeartColor[]) => {
       setColorfulHeartState((prev) =>
-        ColorfulHeartService.updateMemberHeartVisibility(prev, visibleColors)
+        colorfulHeartService.updateMemberHeartVisibility(prev, visibleColors)
       )
     },
     []
@@ -82,11 +82,11 @@ function useColorfulHeartManager() {
 
 function useMonochromeHeartManager() {
   const [monochromeHeartState, setMonochromeHeartState] = useState(() =>
-    MonochromeHeartService.createInitialState()
+    monochromeHeartService.createInitialState()
   )
 
   const monochromeHeartSummary = useMemo(
-    () => MonochromeHeartService.calculateSummary(monochromeHeartState),
+    () => monochromeHeartService.calculateSummary(monochromeHeartState),
     [monochromeHeartState]
   )
 
@@ -102,7 +102,7 @@ function useMonochromeHeartManager() {
   }, [])
 
   const handleResetHeart = useCallback(() => {
-    setMonochromeHeartState(MonochromeHeartService.createInitialState())
+    setMonochromeHeartState(monochromeHeartService.createInitialState())
   }, [])
 
   return {
