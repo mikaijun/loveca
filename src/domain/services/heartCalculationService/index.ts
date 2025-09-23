@@ -142,6 +142,10 @@ export const heartCalculationService = {
     requiredLiveHearts: HeartCollection,
     memberHearts: HeartCollection
   ): string => {
+    if (getTotalEffectiveCount(requiredLiveHearts) === 0) {
+      return '必要ブレードハート数: 0'
+    }
+
     const totalRequiredBladeHearts =
       heartCalculationService.calculateTotalRequiredBladeHearts(
         requiredLiveHearts,
