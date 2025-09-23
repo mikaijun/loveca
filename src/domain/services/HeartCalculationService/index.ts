@@ -2,14 +2,14 @@ import {
   HeartCollection,
   getTotalEffectiveCount,
   getHeartStateByColor,
-} from '../../entities/heart/collection'
-import { getEffectiveCount } from '../../entities/heart'
+} from '@domain/entities/heart/collection'
+import { getEffectiveCount } from '@domain/entities/heart'
 import {
   HeartColor,
   getAllMemberHeartColors,
   getHeartColorValue,
   createHeartColor,
-} from '../../valueObjects/HeartColor'
+} from '@domain/valueObjects/HeartColor'
 
 export const HeartCalculationService = {
   /**

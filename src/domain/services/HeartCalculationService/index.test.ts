@@ -1,11 +1,12 @@
 import { describe, it, expect } from 'vitest'
+
+import { HeartCalculationService } from '@domain/services/HeartCalculationService'
 import {
   createRequiredLiveHeartCollection,
   createMemberHeartCollection,
   withIncrementedHeartCount,
-} from '../../entities/heart/collection'
-import { createHeartColor } from '../../valueObjects/HeartColor'
-import { HeartCalculationService } from './index'
+} from '@domain/entities/heart/collection'
+import { createHeartColor } from '@domain/valueObjects/HeartColor'
 
 describe('HeartCalculationService', () => {
   describe('calculateRequiredBladeHeartByColor', () => {

@@ -1,7 +1,7 @@
 import { useState, useCallback, useMemo } from 'react'
-import { ColorfulHeartService } from '../../../domain/services/ColorfulHeartService'
-import { MonochromeHeartService } from '../../../domain/services/MonochromeHeartService'
-import { MemberHeartColor } from '../../../domain/valueObjects/HeartColor'
+import { ColorfulHeartService } from '@domain/services/ColorfulHeartService'
+import { MonochromeHeartService } from '@domain/services/MonochromeHeartService'
+import { MemberHeartColor } from '@domain/valueObjects/HeartColor'
 
 function useColorfulHeartManager() {
   const [colorfulHeartState, setColorfulHeartState] = useState(() =>

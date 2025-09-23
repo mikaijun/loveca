@@ -6,22 +6,19 @@ import { Heart } from 'lucide-react'
 import { BsPersonHearts } from 'react-icons/bs'
 import { VscWand } from 'react-icons/vsc'
 
+import { useHeartManager } from './HeartManagerPage.hooks'
 import {
   ColorfulHeartState,
   ColorfulHeartSummary,
-} from '../../../domain/services/ColorfulHeartService'
-import { getHeartStateByColor } from '../../../domain/entities/heart/collection'
+} from '@domain/services/ColorfulHeartService'
+import { getHeartStateByColor } from '@domain/entities/heart/collection'
 import {
   getAllLiveHeartColors,
   getAllMemberHeartColors,
   getHeartColorValue,
-} from '../../../domain/valueObjects/HeartColor'
-import {
-  getEffectiveCount,
-  getDisplayCount,
-} from '../../../domain/entities/heart'
-import { MemberHeartColor } from '../../../domain/valueObjects/HeartColor'
-import { useHeartManager } from './HeartManagerPage.hooks'
+} from '@domain/valueObjects/HeartColor'
+import { getEffectiveCount, getDisplayCount } from '@domain/entities/heart'
+import { MemberHeartColor } from '@domain/valueObjects/HeartColor'
 import { HeartColorSettingsModal } from '@components/ui/HeartColorSettingsModal'
 import { HeartCounter } from '@components/ui/HeartCounter'
 import { HeartIcon } from '@components/ui/HeartIcon'

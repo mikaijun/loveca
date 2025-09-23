@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { ColorfulHeartService } from './index'
+import { ColorfulHeartService } from '@domain/services/ColorfulHeartService'
 
 describe('ColorfulHeartService', () => {
   describe('createInitialState', () => {

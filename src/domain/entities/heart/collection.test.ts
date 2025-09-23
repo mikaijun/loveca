@@ -1,9 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import {
-  createHeartColor,
-  getAllLiveHeartColors,
-  getAllMemberHeartColors,
-} from '../../valueObjects/HeartColor'
+
 import {
   createRequiredLiveHeartCollection,
   createMemberHeartCollection,
@@ -12,7 +8,12 @@ import {
   withResetAllHeartCounts,
   getHeartStateByColor,
   getTotalEffectiveCount,
-} from './collection'
+} from '@domain/entities/heart/collection'
+import {
+  createHeartColor,
+  getAllLiveHeartColors,
+  getAllMemberHeartColors,
+} from '@domain/valueObjects/HeartColor'
 
 describe('HeartCollection', () => {
   describe('withIncrementedHeartCount', () => {

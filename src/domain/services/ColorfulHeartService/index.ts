@@ -1,3 +1,4 @@
+import { HeartCalculationService } from '@domain/services/HeartCalculationService'
 import {
   HeartCollection,
   createRequiredLiveHeartCollection,
@@ -8,12 +9,11 @@ import {
   withUpdatedVisibilities,
   getTotalEffectiveCount,
   getVisibleColorNames,
-} from '../../entities/heart/collection'
+} from '@domain/entities/heart/collection'
 import {
   createHeartColor,
   MemberHeartColor,
-} from '../../valueObjects/HeartColor'
-import { HeartCalculationService } from '../HeartCalculationService'
+} from '@domain/valueObjects/HeartColor'
 
 /**
  * カラフルハート管理のドメインサービス

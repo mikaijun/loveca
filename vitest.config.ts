@@ -10,6 +10,7 @@ export default defineConfig({
     alias: {
       '@constants/': path.join(__dirname, 'src/constants/'),
       '@components/': path.join(__dirname, 'src/components/'),
+      '@domain/': path.join(__dirname, 'src/domain/'),
     },
   },
 })

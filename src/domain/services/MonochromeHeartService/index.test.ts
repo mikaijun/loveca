@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { MonochromeHeartService } from './index'
+import { MonochromeHeartService } from '@domain/services/MonochromeHeartService'
 
 describe('MonochromeHeartService', () => {
   describe('calculateSummary', () => {
