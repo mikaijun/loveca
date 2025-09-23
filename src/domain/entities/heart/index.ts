@@ -1,8 +1,5 @@
 import { HeartColor } from '../../valueObjects/HeartColor'
 
-/**
- * 個々のハートの状態を表すエンティティ
- */
 export type HeartState = Readonly<{
   color: HeartColor
   count: number

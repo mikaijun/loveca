@@ -15,9 +15,6 @@ import {
   withUpdatedVisibility,
 } from '.'
 
-/**
- * ハートの集合を表すエンティティ
- */
 export type HeartCollection = Readonly<{
   states: ReadonlyMap<string, HeartState>
 }>

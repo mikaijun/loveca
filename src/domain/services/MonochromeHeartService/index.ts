@@ -20,34 +20,6 @@ export type HeartCountValidationResult = {
 }
 
 export const MonochromeHeartService = {
-  /**
-   * ハートカウントのバリデーション
-   */
-  validateHeartCount(count: number): HeartCountValidationResult {
-    if (!Number.isInteger(count)) {
-      return {
-        isValid: false,
-        reason: 'ハートの数量は整数である必要があります',
-      }
-    }
-    if (count < 0) {
-      return {
-        isValid: false,
-        reason: 'ハートの数量は0以上である必要があります',
-      }
-    }
-    if (count > 40) {
-      return {
-        isValid: false,
-        reason: 'ハートの数量は40以下である必要があります',
-      }
-    }
-    return { isValid: true }
-  },
-
-  /**
-   * サマリーデータの計算
-   */
   calculateSummary(state: MonochromeHeartState): MonochromeHeartSummary {
     const memberCount = state.memberHeartCount
     const requiredCount = state.requiredLiveHeartCount
@@ -66,9 +38,6 @@ export const MonochromeHeartService = {
     }
   },
 
-  /**
-   * 初期状態の作成
-   */
   createInitialState(): MonochromeHeartState {
     return {
       memberHeartCount: 0,

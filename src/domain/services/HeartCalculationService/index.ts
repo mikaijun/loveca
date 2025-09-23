@@ -11,9 +11,6 @@ import {
   createHeartColor,
 } from '../../valueObjects/HeartColor'
 
-/**
- * ハートの計算に関するドメインサービス
- */
 export const HeartCalculationService = {
   /**
    * 必要なブレードハート数を計算する（各色ごと）

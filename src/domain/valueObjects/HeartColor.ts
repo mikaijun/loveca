@@ -1,6 +1,3 @@
-/**
- * ハートの色を表す値オブジェクト
- */
 export type HeartColor = Readonly<{
   value: 'pink' | 'green' | 'blue' | 'red' | 'yellow' | 'purple' | 'gray'
 }>
@@ -44,9 +41,6 @@ export function getAllLiveHeartColors(): HeartColor[] {
   ]
 }
 
-/**
- * 全てのメンバーハート色を取得
- */
 export function getAllMemberHeartColors(): HeartColor[] {
   return [
     createHeartColor('pink'),

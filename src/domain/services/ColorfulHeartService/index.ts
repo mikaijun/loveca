@@ -36,9 +36,6 @@ export type ColorfulHeartSummary = {
 }
 
 export const ColorfulHeartService = {
-  /**
-   * 初期状態の作成
-   */
   createInitialState(): ColorfulHeartState {
     return {
       requiredLiveHearts: createRequiredLiveHeartCollection(),
@@ -46,9 +43,6 @@ export const ColorfulHeartService = {
     }
   },
 
-  /**
-   * ライブハートをインクリメント
-   */
   incrementRequiredLiveHeart(
     state: ColorfulHeartState,
     colorValue: string
@@ -65,9 +59,6 @@ export const ColorfulHeartService = {
     }
   },
 
-  /**
-   * ライブハートをデクリメント
-   */
   decrementRequiredLiveHeart(
     state: ColorfulHeartState,
     colorValue: string
@@ -84,9 +75,6 @@ export const ColorfulHeartService = {
     }
   },
 
-  /**
-   * メンバーハートをインクリメント
-   */
   incrementMemberHeart(
     state: ColorfulHeartState,
     colorValue: string
@@ -100,9 +88,6 @@ export const ColorfulHeartService = {
     }
   },
 
-  /**
-   * メンバーハートをデクリメント
-   */
   decrementMemberHeart(
     state: ColorfulHeartState,
     colorValue: string
@@ -116,9 +101,6 @@ export const ColorfulHeartService = {
     }
   },
 
-  /**
-   * 全てのハートカウントをリセット
-   */
   resetAllHeartCounts(state: ColorfulHeartState): ColorfulHeartState {
     const newRequiredLiveHearts = withResetAllHeartCounts(
       state.requiredLiveHearts
@@ -131,9 +113,6 @@ export const ColorfulHeartService = {
     }
   },
 
-  /**
-   * ライブハートの表示設定を更新
-   */
   updateRequiredLiveHeartVisibility(
     state: ColorfulHeartState,
     visibleColors: MemberHeartColor[]
@@ -150,9 +129,6 @@ export const ColorfulHeartService = {
     }
   },
 
-  /**
-   * メンバーハートの表示設定を更新
-   */
   updateMemberHeartVisibility(
     state: ColorfulHeartState,
     visibleColors: MemberHeartColor[]
@@ -169,9 +145,6 @@ export const ColorfulHeartService = {
     }
   },
 
-  /**
-   * サマリーデータの計算
-   */
   calculateSummary(state: ColorfulHeartState): ColorfulHeartSummary {
     const requiredLiveHeartCount = getTotalEffectiveCount(
       state.requiredLiveHearts

@@ -2,32 +2,6 @@ import { describe, it, expect } from 'vitest'
 import { MonochromeHeartService } from './index'
 
 describe('MonochromeHeartService', () => {
-  describe('validateHeartCount', () => {
-    it('有効な数値の場合、バリデーションが成功すること', () => {
-      const result = MonochromeHeartService.validateHeartCount(5)
-      expect(result.isValid).toBe(true)
-      expect(result.reason).toBeUndefined()
-    })
-
-    it('負の数の場合、バリデーションが失敗すること', () => {
-      const result = MonochromeHeartService.validateHeartCount(-1)
-      expect(result.isValid).toBe(false)
-      expect(result.reason).toBe('ハートの数量は0以上である必要があります')
-    })
-
-    it('40を超える数の場合、バリデーションが失敗すること', () => {
-      const result = MonochromeHeartService.validateHeartCount(41)
-      expect(result.isValid).toBe(false)
-      expect(result.reason).toBe('ハートの数量は40以下である必要があります')
-    })
-
-    it('整数でない場合、バリデーションが失敗すること', () => {
-      const result = MonochromeHeartService.validateHeartCount(5.5)
-      expect(result.isValid).toBe(false)
-      expect(result.reason).toBe('ハートの数量は整数である必要があります')
-    })
-  })
-
   describe('calculateSummary', () => {
     it('ブレードハートの必要数が正しく計算されること', () => {
       const state = { memberHeartCount: 5, requiredLiveHeartCount: 10 }

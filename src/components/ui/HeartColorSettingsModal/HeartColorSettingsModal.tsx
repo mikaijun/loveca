@@ -27,7 +27,6 @@ export const HeartColorSettingsModal: React.FC<
   onChangeRequiredLiveHeartColor,
   onChangeMemberHeartColor,
 }) => {
-  // 単純なバリデーション処理（rules.mdc: コンポーネント内で可）
   const createHandleChange = useCallback(
     (onChange: (values: MemberHeartColor[]) => void) => {
       return (values: string[]) => {
