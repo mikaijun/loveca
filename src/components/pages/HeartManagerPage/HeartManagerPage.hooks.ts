@@ -65,11 +65,8 @@ function useColorfulHeartManager() {
   )
 
   return {
-    // 状態
     colorfulHeartState,
     colorfulHeartSummary,
-
-    // ハンドラー
     handleIncrementRequiredLiveHeart,
     handleDecrementRequiredLiveHeart,
     handleIncrementMemberHeart,

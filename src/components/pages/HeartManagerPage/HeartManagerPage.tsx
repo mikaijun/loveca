@@ -28,9 +28,6 @@ import { NumberSelect } from '@components/commons/function/NumberSelect'
 import { colors } from '@constants/colors'
 import './HeartManagerPage.css'
 
-/**
- * カラフルハート管理コンポーネント
- */
 interface ColorfulHeartManagerProps {
   requiredLiveHearts: ColorfulHeartState['requiredLiveHearts']
   memberHearts: ColorfulHeartState['memberHearts']
@@ -90,7 +87,6 @@ const ColorfulHeartManager: React.FC<ColorfulHeartManagerProps> = ({
         label={liveResultMessage}
       />
 
-      {/* 必要ブレードハート表示 */}
       <div className="HeartCounterGroup">
         {getAllLiveHeartColors().map((color) => {
           const colorValue = getHeartColorValue(color)
@@ -120,7 +116,6 @@ const ColorfulHeartManager: React.FC<ColorfulHeartManagerProps> = ({
         label={`ライブに必要なハート数: ${requiredLiveHeartCount}`}
       />
 
-      {/* ライブハートカウンター */}
       <div className="HeartCounterGroup">
         {getAllLiveHeartColors().map((color) => {
           const colorValue = getHeartColorValue(color)
@@ -147,7 +142,6 @@ const ColorfulHeartManager: React.FC<ColorfulHeartManagerProps> = ({
         label={`メンバーのハート合計数: ${memberHeartCount}`}
       />
 
-      {/* メンバーハートカウンター */}
       <div className="HeartCounterGroup">
         {getAllMemberHeartColors().map((color) => {
           const colorValue = getHeartColorValue(color)
@@ -176,9 +170,6 @@ const ColorfulHeartManager: React.FC<ColorfulHeartManagerProps> = ({
   )
 }
 
-/**
- * モノクロハート管理コンポーネント
- */
 interface MonochromeHeartManagerProps {
   memberHeartCount: number
   requiredLiveHeartCount: number
@@ -267,14 +258,9 @@ const MonochromeHeartManager: React.FC<MonochromeHeartManagerProps> = ({
   )
 }
 
-/**
- * ハート管理ページのメインコンポーネント
- */
 export default function HeartManagerPage() {
-  // 統合フックを使用
   const { colorful, monochrome } = useHeartManager()
 
-  // カラフルハートのデータ取得
   const { requiredLiveHearts, memberHearts } = colorful.colorfulHeartState
   return (
     <Tabs.Root

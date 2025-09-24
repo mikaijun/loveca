@@ -2,19 +2,19 @@
  * モノクロハートに関するドメインサービス
  */
 
-export type MonochromeHeartState = {
+export interface MonochromeHeartState {
   memberHeartCount: number
   requiredLiveHeartCount: number
 }
 
-export type MonochromeHeartSummary = {
+export interface MonochromeHeartSummary {
   memberHeartCount: number
   requiredLiveHeartCount: number
   requiredBladeHeartCount: number | 'ライブ成功'
   isLiveSuccess: boolean
 }
 
-export type HeartCountValidationResult = {
+export interface HeartCountValidationResult {
   isValid: boolean
   reason?: string
 }

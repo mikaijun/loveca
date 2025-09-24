@@ -15,9 +15,9 @@ import {
   MemberHeartColor,
 } from '@domain/valueObjects/heartColor'
 
-export type HeartCollection = Readonly<{
-  states: ReadonlyMap<string, Heart>
-}>
+export interface HeartCollection {
+  readonly states: ReadonlyMap<string, Heart>
+}
 
 export function createRequiredLiveHeartCollection(): HeartCollection {
   const states = new Map<string, Heart>()

@@ -1,10 +1,10 @@
 import { HeartColor } from '@domain/valueObjects/heartColor'
 
-export type Heart = Readonly<{
-  color: HeartColor
-  count: number
-  visibility: boolean
-}>
+export interface Heart {
+  readonly color: HeartColor
+  readonly count: number
+  readonly visibility: boolean
+}
 
 export function createHeartState(args: {
   color: HeartColor

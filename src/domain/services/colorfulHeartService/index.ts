@@ -19,12 +19,12 @@ import {
  * カラフルハート管理のドメインサービス
  */
 
-export type ColorfulHeartState = {
+export interface ColorfulHeartState {
   requiredLiveHearts: HeartCollection
   memberHearts: HeartCollection
 }
 
-export type ColorfulHeartSummary = {
+export interface ColorfulHeartSummary {
   requiredLiveHeartCount: number
   memberHeartCount: number
   totalRequiredBladeHearts: number
