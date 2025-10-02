@@ -1,1 +1,1 @@
-export * from './LiveCalculatorPage'
+export { LiveCalculatorPage } from './LiveCalculatorPage'

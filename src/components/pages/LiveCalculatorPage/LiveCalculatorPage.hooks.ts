@@ -18,9 +18,9 @@ const calculateProbability = (
 }
 
 /**
- * LiveSuccessCalculator のロジック
+ * LiveCalculatorPage のロジック
  */
-export const useLiveSuccessCalculator = () => {
+export const useLiveCalculator = () => {
   const [memberHeartCount, setMemberHeartCount] = useState<number>(0)
   const [requiredLiveHeartCount, setRequiredLiveHeart] = useState<number>(0)
   const [yellCount, setYellCount] = useState<number>(0)

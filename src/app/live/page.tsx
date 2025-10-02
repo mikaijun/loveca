@@ -1,5 +1,5 @@
-import { LiveSuccessCalculator } from '@components/features/liveCalculator/LiveSuccessCalculator'
+import { LiveCalculatorPage } from '@components/pages/LiveCalculatorPage'
 
 export default function LivePage() {
-  return <LiveSuccessCalculator />
+  return <LiveCalculatorPage />
 }
