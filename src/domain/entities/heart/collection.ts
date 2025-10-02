@@ -6,7 +6,7 @@ import {
   withResetCount,
   getEffectiveCount,
   withUpdatedVisibility,
-} from '.'
+} from '@domain/entities/heart'
 import {
   HeartColor,
   getAllLiveHeartColors,

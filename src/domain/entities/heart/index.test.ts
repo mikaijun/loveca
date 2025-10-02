@@ -5,8 +5,8 @@ import {
   withDecrementedCount,
   createHeart,
   getDisplayCount,
-} from './index'
-import { Heart } from './index'
+  type Heart,
+} from '@domain/entities/heart'
 
 describe('createHeart', () => {
   it('正しくHeartオブジェクトが作成されること', () => {
