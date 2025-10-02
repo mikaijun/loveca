@@ -8,11 +8,6 @@ const useColorfulHeartManager = () => {
     colorfulHeartService.createInitialState()
   )
 
-  const colorfulHeartSummary = useMemo(
-    () => colorfulHeartService.calculateSummary(colorfulHeartState),
-    [colorfulHeartState]
-  )
-
   const handleIncrementRequiredLiveHeart = useCallback((colorValue: string) => {
     setColorfulHeartState((prev) =>
       colorfulHeartService.incrementRequiredLiveHeart(prev, colorValue)
@@ -66,7 +61,6 @@ const useColorfulHeartManager = () => {
 
   return {
     colorfulHeartState,
-    colorfulHeartSummary,
     handleIncrementRequiredLiveHeart,
     handleDecrementRequiredLiveHeart,
     handleIncrementMemberHeart,
