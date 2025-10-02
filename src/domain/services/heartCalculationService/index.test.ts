@@ -8,16 +8,14 @@ import { HeartColor } from '@domain/valueObjects/heartColor'
 const createTestHeartCollection = (
   heartCounts: Record<string, number>
 ): HeartCollection => {
-  const states = new Map()
-
-  Object.entries(heartCounts).forEach(([colorValue, count]) => {
+  const states = Object.entries(heartCounts).map(([colorValue, count]) => {
     const color: HeartColor = colorValue as HeartColor
     const heart: Heart = {
       color,
       count,
       visibility: true,
     }
-    states.set(colorValue, heart)
+    return heart
   })
 
   return { states }

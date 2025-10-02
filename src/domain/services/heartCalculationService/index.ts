@@ -70,28 +70,18 @@ export const heartCalculationService = {
     requiredLiveHearts: HeartCollection,
     memberHearts: HeartCollection
   ): HeartCollection => {
-    const bladeHeartStates = new Map()
-
-    // 各色について必要ブレードハート数を計算
-    requiredLiveHearts.states.forEach((state, colorKey) => {
-      const color = createHeartColor(colorKey)
+    const states = requiredLiveHearts.states.map((state) => {
       const requiredBladeCount =
         heartCalculationService.calculateRequiredBladeHeartByColor(
           requiredLiveHearts,
           memberHearts,
-          color
+          state.color
         )
 
-      // 新しいHeartStateを作成（countは計算結果、visibilityは元の設定を維持）
-      const bladeHeartState = {
-        ...state,
-        count: requiredBladeCount,
-      }
-
-      bladeHeartStates.set(colorKey, bladeHeartState)
+      return { ...state, count: requiredBladeCount }
     })
 
-    return { states: bladeHeartStates }
+    return { states }
   },
 
   /**

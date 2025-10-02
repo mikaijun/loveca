@@ -18,16 +18,14 @@ import { HeartColor, MemberHeartColor } from '@domain/valueObjects/heartColor'
 const createTestHeartCollection = (
   heartCounts: Record<string, number>
 ): HeartCollection => {
-  const states = new Map()
-
-  Object.entries(heartCounts).forEach(([colorValue, count]) => {
+  const states = Object.entries(heartCounts).map(([colorValue, count]) => {
     const color: HeartColor = colorValue as HeartColor
     const heart: Heart = {
       color,
       count,
       visibility: true,
     }
-    states.set(colorValue, heart)
+    return heart
   })
 
   return { states }
@@ -174,7 +172,7 @@ describe('createRequiredLiveHeartCollection', () => {
       'gray',
     ]
 
-    expect(collection.states.size).toBe(expectedColors.length)
+    expect(collection.states.length).toBe(expectedColors.length)
 
     expectedColors.forEach((colorValue) => {
       const color = createTestHeartColor(colorValue)
@@ -198,7 +196,7 @@ describe('createMemberHeartCollection', () => {
     })
     const expectedColors = ['pink', 'green', 'blue', 'red', 'yellow', 'purple']
 
-    expect(collection.states.size).toBe(expectedColors.length)
+    expect(collection.states.length).toBe(expectedColors.length)
 
     expectedColors.forEach((colorValue) => {
       const color = createTestHeartColor(colorValue)

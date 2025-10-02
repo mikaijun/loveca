@@ -15,28 +15,16 @@ import {
 } from '@domain/valueObjects/heartColor'
 
 export interface HeartCollection {
-  readonly states: ReadonlyMap<string, Heart>
+  readonly states: readonly Heart[]
 }
 
 export const createRequiredLiveHeartCollection = (): HeartCollection => {
-  const states = new Map<string, Heart>()
-
-  getAllLiveHeartColors().forEach((color) => {
-    const key = color
-    states.set(key, createHeart(color))
-  })
-
+  const states = getAllLiveHeartColors().map((color) => createHeart(color))
   return { states }
 }
 
 export const createMemberHeartCollection = (): HeartCollection => {
-  const states = new Map<string, Heart>()
-
-  getAllMemberHeartColors().forEach((color) => {
-    const key = color
-    states.set(key, createHeart(color))
-  })
-
+  const states = getAllMemberHeartColors().map((color) => createHeart(color))
   return { states }
 }
 
@@ -44,46 +32,35 @@ export const withIncrementedHeartCount = (
   collection: HeartCollection,
   color: HeartColor
 ): HeartCollection => {
-  const colorKey = color
-  const currentState = collection.states.get(colorKey)
+  const states = collection.states.map((heart) => {
+    if (heart.color === color) {
+      return withIncrementedCount(heart)
+    }
+    return heart
+  })
 
-  if (!currentState) {
-    throw new Error(`指定された色のハートが見つかりません: ${colorKey}`)
-  }
-
-  const newStates = new Map(collection.states)
-  newStates.set(colorKey, withIncrementedCount(currentState))
-
-  return { states: newStates }
+  return { states }
 }
 
 export const withDecrementedHeartCount = (
   collection: HeartCollection,
   color: HeartColor
 ): HeartCollection => {
-  const colorKey = color
-  const currentState = collection.states.get(colorKey)
+  const states = collection.states.map((heart) => {
+    if (heart.color === color) {
+      return withDecrementedCount(heart)
+    }
+    return heart
+  })
 
-  if (!currentState) {
-    throw new Error(`指定された色のハートが見つかりません: ${colorKey}`)
-  }
-
-  const newStates = new Map(collection.states)
-  newStates.set(colorKey, withDecrementedCount(currentState))
-
-  return { states: newStates }
+  return { states }
 }
 
 export const withResetAllHeartCounts = (
   collection: HeartCollection
 ): HeartCollection => {
-  const newStates = new Map<string, Heart>()
-
-  collection.states.forEach((state, key) => {
-    newStates.set(key, withResetCount(state))
-  })
-
-  return { states: newStates }
+  const states = collection.states.map((heart) => withResetCount(heart))
+  return { states }
 }
 
 export const withUpdatedVisibilities = (
@@ -91,50 +68,40 @@ export const withUpdatedVisibilities = (
   visibleColors: MemberHeartColor[],
   forceGrayVisible: boolean = false
 ): HeartCollection => {
-  const newStates = new Map<string, Heart>()
-
-  collection.states.forEach((state, key) => {
+  const states = collection.states.map((heart) => {
     let visibility: boolean
 
-    if (forceGrayVisible && key === 'gray') {
+    if (forceGrayVisible && heart.color === 'gray') {
       visibility = true
     } else {
-      visibility = visibleColors.includes(key as MemberHeartColor)
+      visibility = visibleColors.includes(heart.color as MemberHeartColor)
     }
 
-    newStates.set(key, withUpdatedVisibility(state, visibility))
+    return withUpdatedVisibility(heart, visibility)
   })
 
-  return { states: newStates }
+  return { states }
 }
 
 export const getTotalEffectiveCount = (collection: HeartCollection): number => {
-  let total = 0
-  collection.states.forEach((state) => {
-    total += getEffectiveCount(state)
-  })
-  return total
+  return collection.states.reduce((total, heart) => {
+    return total + getEffectiveCount(heart)
+  }, 0)
 }
 
 export const getHeartStateByColor = (
   collection: HeartCollection,
   color: HeartColor
 ): Heart | undefined => {
-  const colorKey = color
-  return collection.states.get(colorKey)
+  return collection.states.find((heart) => heart.color === color)
 }
 
 export const getVisibleColorNames = (
   collection: HeartCollection
 ): MemberHeartColor[] => {
-  const visibleColors: MemberHeartColor[] = []
-  collection.states.forEach((state) => {
-    const colorValue = state.color
-    if (state.visibility && colorValue !== 'gray') {
-      visibleColors.push(colorValue as MemberHeartColor)
-    }
-  })
-  return visibleColors
+  return collection.states
+    .filter((heart) => heart.visibility && heart.color !== 'gray')
+    .map((heart) => heart.color as MemberHeartColor)
 }
 
 /**
