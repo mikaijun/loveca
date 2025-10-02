@@ -187,7 +187,6 @@ interface MonochromeHeartManagerProps {
   memberHeartCount: number
   requiredLiveHeartCount: number
   requiredBladeHeartCount: number | string
-  isLiveSuccess: boolean
   handleChangeMemberHeartCount: (count: number) => void
   handleRequiredLiveHeartCount: (count: number) => void
   handleResetHeart: () => void
@@ -343,14 +342,9 @@ export default function HeartManagerPage() {
           handleChangeMemberHeartCount={monochrome.handleChangeMemberHeartCount}
           handleRequiredLiveHeartCount={monochrome.handleRequiredLiveHeartCount}
           handleResetHeart={monochrome.handleResetHeart}
-          isLiveSuccess={monochrome.monochromeHeartSummary.isLiveSuccess}
-          memberHeartCount={monochrome.monochromeHeartSummary.memberHeartCount}
-          requiredBladeHeartCount={
-            monochrome.monochromeHeartSummary.requiredBladeHeartCount
-          }
-          requiredLiveHeartCount={
-            monochrome.monochromeHeartSummary.requiredLiveHeartCount
-          }
+          memberHeartCount={monochrome.memberHeartCount}
+          requiredBladeHeartCount={monochrome.requiredBladeHeartCount}
+          requiredLiveHeartCount={monochrome.requiredLiveHeartCount}
         />
       </Tabs.Content>
     </Tabs.Root>

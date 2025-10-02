@@ -1,5 +1,4 @@
-import { useState, useCallback, useMemo } from 'react'
-import { monochromeHeartService } from '@domain/services/monochromeHeartService'
+import { useState, useCallback } from 'react'
 import { MemberHeartColor } from '@domain/valueObjects/heartColor'
 import {
   createRequiredLiveHeartCollection,
@@ -141,14 +140,19 @@ const useColorfulHeartManager = () => {
 }
 
 const useMonochromeHeartManager = () => {
-  const [monochromeHeartState, setMonochromeHeartState] = useState(() =>
-    monochromeHeartService.createInitialState()
-  )
+  const [monochromeHeartState, setMonochromeHeartState] = useState(() => ({
+    memberHeartCount: 0,
+    requiredLiveHeartCount: 0,
+  }))
 
-  const monochromeHeartSummary = useMemo(
-    () => monochromeHeartService.calculateSummary(monochromeHeartState),
-    [monochromeHeartState]
-  )
+  const memberHeartCount = monochromeHeartState.memberHeartCount
+  const requiredLiveHeartCount = monochromeHeartState.requiredLiveHeartCount
+
+  const diffCount = requiredLiveHeartCount - memberHeartCount
+  const isLiveSuccess = requiredLiveHeartCount > 0 && diffCount <= 0
+  const requiredBladeHeartCount = isLiveSuccess
+    ? ('ライブ成功' as const)
+    : Math.max(diffCount, 0)
 
   const handleChangeMemberHeartCount = useCallback((count: number) => {
     setMonochromeHeartState((prev) => ({ ...prev, memberHeartCount: count }))
@@ -162,12 +166,16 @@ const useMonochromeHeartManager = () => {
   }, [])
 
   const handleResetHeart = useCallback(() => {
-    setMonochromeHeartState(monochromeHeartService.createInitialState())
+    setMonochromeHeartState({
+      memberHeartCount: 0,
+      requiredLiveHeartCount: 0,
+    })
   }, [])
 
   return {
-    monochromeHeartState,
-    monochromeHeartSummary,
+    memberHeartCount,
+    requiredLiveHeartCount,
+    requiredBladeHeartCount,
     handleChangeMemberHeartCount,
     handleRequiredLiveHeartCount,
     handleResetHeart,
