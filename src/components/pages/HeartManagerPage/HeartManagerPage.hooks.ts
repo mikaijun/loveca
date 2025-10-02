@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useMemo } from 'react'
 import { MemberHeartColor } from '@domain/valueObjects/heartColor'
 import {
   createRequiredLiveHeartCollection,
@@ -7,14 +7,25 @@ import {
   withDecrementedHeartCount,
   withResetAllHeartCounts,
   withUpdatedVisibilities,
+  calculateTotalRequiredBladeHearts,
+  getTotalEffectiveCount,
 } from '@domain/entities/heart/collection'
 import { HeartIconProps } from '@constants/hearts'
 
-const useColorfulHeartManager = () => {
+export const useColorfulHeartManager = () => {
   const [colorfulHeartState, setColorfulHeartState] = useState(() => ({
     requiredLiveHearts: createRequiredLiveHeartCollection(),
     memberHearts: createMemberHeartCollection(),
   }))
+
+  const liveResultMessage = useMemo(() => {
+    return calculateTotalRequiredBladeHearts(
+      colorfulHeartState.requiredLiveHearts,
+      colorfulHeartState.memberHearts
+    ) === 0 && getTotalEffectiveCount(colorfulHeartState.requiredLiveHearts) > 0
+      ? 'ライブ成功'
+      : `必要ブレードハート数: ${calculateTotalRequiredBladeHearts(colorfulHeartState.requiredLiveHearts, colorfulHeartState.memberHearts)}`
+  }, [colorfulHeartState.requiredLiveHearts, colorfulHeartState.memberHearts])
 
   const handleIncrementRequiredLiveHeart = useCallback(
     (color: HeartIconProps['color']) => {
@@ -129,6 +140,7 @@ const useColorfulHeartManager = () => {
 
   return {
     colorfulHeartState,
+    liveResultMessage,
     handleIncrementRequiredLiveHeart,
     handleDecrementRequiredLiveHeart,
     handleIncrementMemberHeart,
@@ -139,7 +151,7 @@ const useColorfulHeartManager = () => {
   }
 }
 
-const useMonochromeHeartManager = () => {
+export const useMonochromeHeartManager = () => {
   const [monochromeHeartState, setMonochromeHeartState] = useState(() => ({
     memberHeartCount: 0,
     requiredLiveHeartCount: 0,
@@ -153,6 +165,10 @@ const useMonochromeHeartManager = () => {
   const requiredBladeHeartCount = isLiveSuccess
     ? ('ライブ成功' as const)
     : Math.max(diffCount, 0)
+  const bladeHeartDisplayMessage =
+    typeof requiredBladeHeartCount === 'string'
+      ? requiredBladeHeartCount
+      : `必要ブレードハート数: ${requiredBladeHeartCount}`
 
   const handleChangeMemberHeartCount = useCallback((count: number) => {
     setMonochromeHeartState((prev) => ({ ...prev, memberHeartCount: count }))
@@ -175,19 +191,9 @@ const useMonochromeHeartManager = () => {
   return {
     memberHeartCount,
     requiredLiveHeartCount,
-    requiredBladeHeartCount,
+    bladeHeartDisplayMessage,
     handleChangeMemberHeartCount,
     handleRequiredLiveHeartCount,
     handleResetHeart,
-  }
-}
-
-export const useHeartManager = () => {
-  const colorfulHeartManager = useColorfulHeartManager()
-  const monochromeHeartManager = useMonochromeHeartManager()
-
-  return {
-    colorful: colorfulHeartManager,
-    monochrome: monochromeHeartManager,
   }
 }
