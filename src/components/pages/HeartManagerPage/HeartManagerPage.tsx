@@ -7,7 +7,6 @@ import { BsPersonHearts } from 'react-icons/bs'
 import { VscWand } from 'react-icons/vsc'
 
 import { useHeartManager } from './HeartManagerPage.hooks'
-import { ColorfulHeartState } from '@domain/services/colorfulHeartService'
 import {
   getHeartStateByColor,
   getTotalEffectiveCount,
@@ -31,21 +30,22 @@ import {
 } from '@domain/entities/heart/collection'
 import { getVisibleColorNames } from '@domain/entities/heart/collection'
 import { calculateTotalRequiredBladeHearts } from '@domain/entities/heart/collection'
+import { HeartIconProps } from '@constants/hearts'
 
 import './HeartManagerPage.css'
 
 interface ColorfulHeartManagerProps {
-  requiredLiveHearts: ColorfulHeartState['requiredLiveHearts']
-  memberHearts: ColorfulHeartState['memberHearts']
+  requiredLiveHearts: HeartCollection
+  memberHearts: HeartCollection
   requiredLiveHeartCount: number
   memberHeartCount: number
   requiredBladeHearts: HeartCollection
   requiredLiveHeartColorList: MemberHeartColor[]
   memberHeartColorList: MemberHeartColor[]
-  handleIncrementRequiredLiveHeart: (colorValue: string) => void
-  handleDecrementRequiredLiveHeart: (colorValue: string) => void
-  handleIncrementMemberHeart: (colorValue: string) => void
-  handleDecrementMemberHeart: (colorValue: string) => void
+  handleIncrementRequiredLiveHeart: (color: HeartIconProps['color']) => void
+  handleDecrementRequiredLiveHeart: (color: HeartIconProps['color']) => void
+  handleIncrementMemberHeart: (color: HeartIconProps['color']) => void
+  handleDecrementMemberHeart: (color: HeartIconProps['color']) => void
   handleResetAllHeartCounts: () => void
   handleChangeRequiredLiveHeartVisibility: (
     visibleColors: MemberHeartColor[]
