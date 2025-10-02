@@ -12,7 +12,7 @@ import {
 } from '@domain/entities/heart/collection'
 import { HeartIconProps } from '@constants/hearts'
 
-const useColorfulHeartManager = () => {
+export const useColorfulHeartManager = () => {
   const [colorfulHeartState, setColorfulHeartState] = useState(() => ({
     requiredLiveHearts: createRequiredLiveHeartCollection(),
     memberHearts: createMemberHeartCollection(),
@@ -151,7 +151,7 @@ const useColorfulHeartManager = () => {
   }
 }
 
-const useMonochromeHeartManager = () => {
+export const useMonochromeHeartManager = () => {
   const [monochromeHeartState, setMonochromeHeartState] = useState(() => ({
     memberHeartCount: 0,
     requiredLiveHeartCount: 0,
@@ -191,20 +191,9 @@ const useMonochromeHeartManager = () => {
   return {
     memberHeartCount,
     requiredLiveHeartCount,
-    requiredBladeHeartCount,
     bladeHeartDisplayMessage,
     handleChangeMemberHeartCount,
     handleRequiredLiveHeartCount,
     handleResetHeart,
-  }
-}
-
-export const useHeartManager = () => {
-  const colorfulHeartManager = useColorfulHeartManager()
-  const monochromeHeartManager = useMonochromeHeartManager()
-
-  return {
-    colorful: colorfulHeartManager,
-    monochrome: monochromeHeartManager,
   }
 }

@@ -6,7 +6,10 @@ import { Heart } from 'lucide-react'
 import { BsPersonHearts } from 'react-icons/bs'
 import { VscWand } from 'react-icons/vsc'
 
-import { useHeartManager } from './HeartManagerPage.hooks'
+import {
+  useColorfulHeartManager,
+  useMonochromeHeartManager,
+} from './HeartManagerPage.hooks'
 import {
   getHeartStateByColor,
   getTotalEffectiveCount,
@@ -29,12 +32,32 @@ import { colors } from '@constants/colors'
 import './HeartManagerPage.css'
 
 export default function HeartManagerPage() {
-  const { colorful, monochrome } = useHeartManager()
+  const {
+    colorfulHeartState,
+    liveResultMessage,
+    handleIncrementRequiredLiveHeart,
+    handleDecrementRequiredLiveHeart,
+    handleIncrementMemberHeart,
+    handleDecrementMemberHeart,
+    handleResetAllHeartCounts,
+    handleChangeRequiredLiveHeartVisibility,
+    handleChangeMemberHeartVisibility,
+  } = useColorfulHeartManager()
 
-  const { requiredLiveHearts, memberHearts } = colorful.colorfulHeartState
+  const {
+    memberHeartCount,
+    requiredLiveHeartCount,
+    bladeHeartDisplayMessage,
+    handleChangeMemberHeartCount,
+    handleRequiredLiveHeartCount,
+    handleResetHeart,
+  } = useMonochromeHeartManager()
 
-  const requiredLiveHeartCount = getTotalEffectiveCount(requiredLiveHearts)
-  const memberHeartCount = getTotalEffectiveCount(memberHearts)
+  const { requiredLiveHearts, memberHearts } = colorfulHeartState
+
+  const colorfulRequiredLiveHeartCount =
+    getTotalEffectiveCount(requiredLiveHearts)
+  const colorfulMemberHeartCount = getTotalEffectiveCount(memberHearts)
   const requiredBladeHearts = calculateAllRequiredBladeHearts(
     requiredLiveHearts,
     memberHearts
@@ -68,23 +91,21 @@ export default function HeartManagerPage() {
           <div className="HeartManagerHeader">
             <HeartColorSettingsModal
               memberHeartColorList={memberHeartColorList}
-              onChangeMemberHeartColor={
-                colorful.handleChangeMemberHeartVisibility
-              }
+              onChangeMemberHeartColor={handleChangeMemberHeartVisibility}
               onChangeRequiredLiveHeartColor={
-                colorful.handleChangeRequiredLiveHeartVisibility
+                handleChangeRequiredLiveHeartVisibility
               }
               requiredLiveHeartColorList={requiredLiveHeartColorList}
             />
             <ResetButton
-              onReset={colorful.handleResetAllHeartCounts}
+              onReset={handleResetAllHeartCounts}
               text="カウントリセット"
             />
           </div>
 
           <Summary
             icon={<Heart size="20px" style={{ transform: 'rotate(-90deg)' }} />}
-            label={colorful.liveResultMessage}
+            label={liveResultMessage}
           />
 
           <div className="HeartCounterGroup">
@@ -121,7 +142,7 @@ export default function HeartManagerPage() {
 
           <Summary
             icon={<VscWand size="20px" />}
-            label={`ライブに必要なハート数: ${requiredLiveHeartCount}`}
+            label={`ライブに必要なハート数: ${colorfulRequiredLiveHeartCount}`}
           />
 
           <div className="HeartCounterGroup">
@@ -138,8 +159,8 @@ export default function HeartManagerPage() {
                   color={colorValue}
                   count={getDisplayCount(state)}
                   key={colorValue}
-                  onDecrement={colorful.handleDecrementRequiredLiveHeart}
-                  onIncrement={colorful.handleIncrementRequiredLiveHeart}
+                  onDecrement={handleDecrementRequiredLiveHeart}
+                  onIncrement={handleIncrementRequiredLiveHeart}
                 />
               )
             })}
@@ -147,7 +168,7 @@ export default function HeartManagerPage() {
 
           <Summary
             icon={<BsPersonHearts size="20px" />}
-            label={`メンバーのハート合計数: ${memberHeartCount}`}
+            label={`メンバーのハート合計数: ${colorfulMemberHeartCount}`}
           />
 
           <div className="HeartCounterGroup">
@@ -164,8 +185,8 @@ export default function HeartManagerPage() {
                   color={colorValue}
                   count={getDisplayCount(state)}
                   key={colorValue}
-                  onDecrement={colorful.handleDecrementMemberHeart}
-                  onIncrement={colorful.handleIncrementMemberHeart}
+                  onDecrement={handleDecrementMemberHeart}
+                  onIncrement={handleIncrementMemberHeart}
                 />
               )
             })}
@@ -184,10 +205,9 @@ export default function HeartManagerPage() {
         }}
         value="tab2"
       >
-        {/* MonochromeHeartManager の内容 */}
         <Flex direction="column" gap="8px">
           <ResetButton
-            onReset={monochrome.handleResetHeart}
+            onReset={handleResetHeart}
             style={{
               marginLeft: 'auto',
               alignItems: 'center',
@@ -198,7 +218,7 @@ export default function HeartManagerPage() {
               icon={
                 <Heart size="20px" style={{ transform: 'rotate(-90deg)' }} />
               }
-              label={monochrome.bladeHeartDisplayMessage}
+              label={bladeHeartDisplayMessage}
               style={{
                 backgroundColor: colors.blue[2],
                 padding: '16px',
@@ -212,7 +232,7 @@ export default function HeartManagerPage() {
             >
               <Summary
                 icon={<VscWand size="20px" />}
-                label={`ライブに必要なハート数: ${monochrome.requiredLiveHeartCount}`}
+                label={`ライブに必要なハート数: ${requiredLiveHeartCount}`}
                 style={{
                   marginBottom: '4px',
                 }}
@@ -220,9 +240,9 @@ export default function HeartManagerPage() {
               <NumberSelect
                 ariaLabel="Required Live Heart"
                 endNumber={40}
-                onChangeValue={monochrome.handleRequiredLiveHeartCount}
+                onChangeValue={handleRequiredLiveHeartCount}
                 startNumber={0}
-                value={monochrome.requiredLiveHeartCount}
+                value={requiredLiveHeartCount}
               />
             </Box>
             <Box
@@ -233,7 +253,7 @@ export default function HeartManagerPage() {
             >
               <Summary
                 icon={<BsPersonHearts size="20px" />}
-                label={`メンバーのハート合計数: ${monochrome.memberHeartCount}`}
+                label={`メンバーのハート合計数: ${memberHeartCount}`}
                 style={{
                   marginBottom: '4px',
                 }}
@@ -241,9 +261,9 @@ export default function HeartManagerPage() {
               <NumberSelect
                 ariaLabel="Member Heart"
                 endNumber={40}
-                onChangeValue={monochrome.handleChangeMemberHeartCount}
+                onChangeValue={handleChangeMemberHeartCount}
                 startNumber={0}
-                value={monochrome.memberHeartCount}
+                value={memberHeartCount}
               />
             </Box>
           </Flex>
