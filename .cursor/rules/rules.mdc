@@ -1,0 +1,191 @@
+Cursor Project Rules — 実用的なフロントエンド設計指針（DDD簡易版）
+目標
+
+UI ロジックと業務ルールを適度に分離し、メンテナンス性を向上させる。
+
+小規模アプリケーションでは過度な抽象化を避け、シンプルで理解しやすい構造を優先する。
+
+必要に応じて値オブジェクト・エンティティ・ドメインサービスを使用するが、実用性を重視する。
+
+ディレクトリ指針
+src/
+├── app/ # 画面/ルーティング層（Next.js等）
+├── components/ # UI層（ページとfeatureコンポーネント）
+│ ├── pages/ # ページコンポーネント（ビジネスロジック統合可）
+│ └── features/ # 機能別UIコンポーネント
+├── hooks/ # React hooks（domain services直接呼び出し）
+├── domain/ # ビジネスロジック層
+│ ├── valueObjects/ # 複雑な制約のある値のみ
+│ ├── entities/ # 状態管理が必要なオブジェクト
+│ └── services/ # 横断的な計算・バリデーション
+├── constants/ # 定数・設定値
+└── utils.ts # ユーティリティ関数
+
+命名・原則
+
+値オブジェクト：複雑な制約やバリデーションが必要な場合のみ使用。単純な数値・文字列は直接使用も可。
+
+状態遷移の明示：エンティティは withXxx などで不変な状態遷移を表現。
+
+横断判定はサービス：複数エンティティをまたぐ計算・バリデーションはドメインサービスへ。
+
+フック設計：React hooksから直接domain servicesを呼び出し可。過度な抽象化を避ける。
+
+UI 統合：小規模なコンポーネントはページ内統合も可。再利用性より理解しやすさを重視。
+
+値オブジェクト（Value Object）
+
+複雑な制約やドメイン固有のルールがある場合に使用。単純な値は通常の型でも可。
+
+例：HeartColor は有効な色のみを許可、複雑な変換ロジックを内包。
+
+使い分け：
+
+- 複雑な制約 → 値オブジェクト（例：HeartColor）
+- 単純な範囲制約 → 関数でバリデーション（例：0-40の数値）
+- 基本的な値 → そのまま使用（例：boolean）
+
+エンティティ（Entity）
+
+状態の集合体として設計。簡潔な値は直接プロパティとして持つ。
+
+例：HeartState は color、count、visibilityを持ち、withXxx関数で不変な状態変更を提供。
+
+実用的な設計：
+
+- 重要な状態遷移のみエンティティ化
+- 単純な値の更新は直接代入も可
+- 過度な抽象化より理解しやすさを重視
+
+ドメインサービス（Domain Service）
+
+1 つのエンティティに置くと不自然な横断ルールを担当（例：「注文を在庫合計で充足可能か？」）。
+
+ステートレス関数として実装し、テスト容易性を高める。UI から直接 if 文で判定しない。
+Qiita
+
+React Hooks（簡易ユースケース層）
+
+小規模アプリではReact hooksが実質的なユースケース層として機能。
+
+設計指針：
+
+- hooksから直接domain servicesを呼び出し
+- 状態管理とエラーハンドリングを担当
+- 必要に応じてバリデーション実行
+- UI用の状態に整形して返す
+
+過度な抽象化より直接的で理解しやすい構造を優先。
+
+型と安全性
+
+生成系は createXxx、変更は withXxx / applyXxx、比較は equalsXxx を徹底。
+
+例外を投げる代わりに Result/Either を返すのも可（チーム規約に従う）。
+
+UI 実装ルール（React/TS）
+
+基本方針：複雑な業務ロジックはhooksまたはdomain servicesに委譲。
+
+許可される例外：
+
+- 小規模なUIロジック（表示/非表示切り替え等）はコンポーネント内でも可
+- ページコンポーネント内での関連コンポーネント統合
+- 単純なバリデーション（入力値チェック等）
+
+重要な業務ルールのみ分離し、過度な分離は避ける。
+
+実装例（heartCounter構造）
+
+// domain/valueObjects/HeartColor.ts（複雑なルールあり）
+export type HeartColor = Readonly<{ value: string }>
+export function createHeartColor(value: string): HeartColor {
+if (!VALID_COLORS.includes(value)) throw new Error('無効な色')
+return { value }
+}
+
+// domain/entities/Heart.ts（状態管理）
+export type Heart = {
+color: HeartColor
+count: number // 直接number使用（単純な値）
+visibility: boolean // 直接boolean使用
+}
+export function withUpdatedCount(state: Heart, newCount: number): Heart {
+return { ...state, count: newCount }
+}
+
+// domain/services/heartCalculationService.ts（横断ロジック）
+export const heartCalculationService = {
+calculateRequiredBladeHearts: (required: HeartCollection, member: HeartCollection) => {
+// 複雑な計算ロジック
+}
+}
+
+// hooks/useColorfulHeartManager.ts（React hooks = 簡易ユースケース）
+export const useColorfulHeartManager = () => {
+const [state, setState] = useState(...)
+
+const handleIncrement = useCallback((colorValue: string) => {
+const color = createHeartColor(colorValue) // VO使用
+const validation = HeartValidationService.canIncrement(state, color)
+
+    if (!validation.canIncrement) {
+      setError(validation.reason)
+      return
+    }
+
+    setState(prev => withIncrementedCount(prev, color))  // エンティティ使用
+
+}, [state])
+
+return { handleIncrement, ... }
+}
+
+// components/pages/HeartManagerPage.tsx（統合UI）
+const HeartManagerPage = () => {
+const { handleIncrement, ... } = useColorfulHeartManager()
+
+return (
+
+<div>
+{/_ ColorfulHeartManagerとMonochromeHeartManagerを統合 _/}
+</div>
+)
+}
+
+（考え方と例は記事の記述を要約・再構成しています。
+Qiita
+）
+
+テスト戦略
+
+値オブジェクト：生成・演算・比較の性質テスト。
+
+エンティティ：無効遷移の拒否と有効遷移の結果。
+
+ドメインサービス：複数入力に対する判定境界（合計 =/≠ 必要量）。
+
+ユースケース：ドメイン組み合わせ + infra のモックで分岐網羅。
+Qiita
+
+設計指針のバランス
+
+推奨パターン：
+✅ 複雑な計算・バリデーションはdomain servicesへ
+✅ 状態管理が必要な場合はエンティティ化
+✅ 複雑な制約がある値は値オブジェクト化
+✅ React hooksでの直接的なドメイン層呼び出し
+✅ 理解しやすさを重視した適度な統合
+
+注意すべき過度な抽象化：
+❌ 単純な値まで全て値オブジェクト化
+❌ 不要なユースケース層の追加
+❌ 過度なコンポーネント分離
+❌ 複雑すぎる責務分離
+
+導入指針：
+
+1. まずは既存コードのまま動作させる
+2. 複雑になった部分のみ段階的にドメイン層に移行
+3. 実用性と理解しやすさのバランスを重視
+4. 小規模チームでは厳格すぎるルールより実用性優先

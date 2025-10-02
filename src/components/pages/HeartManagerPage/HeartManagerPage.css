@@ -13,25 +13,35 @@ input {
   --color-blue-2: #F4FAFF;
   --color-blue-5: #C2E5FF;
   --color-blue-8: #5EB1EF;
+  --color-blue-9: #0090FF;
   --color-slate-11: #60646C;
   --color-white: #FFFFFF;
+  --color-black: #000000;
 
-  /* コンポーネント固有の変数 */
+  /* 共通の変数 */
+  --common-shadow: 0 4px 12px rgba(0, 144, 255, 0.15);
+  --common-transition: all 0.2s ease;
+
+  /* タブ関連の変数 */
   --tabs-bg: linear-gradient(135deg, var(--color-blue-2), var(--color-white));
   --tabs-border: var(--color-blue-5);
   --tabs-active: var(--color-blue-8);
   --tabs-text: var(--color-slate-11);
-  --tabs-shadow: 0 4px 12px rgba(0, 144, 255, 0.15);
   --tabs-radius: 24px;
   --tabs-padding: 8px;
-  --tabs-transition: all 0.2s ease;
+
+  /* ハートマネージャー関連の変数 */
+  --heart-manager-bg: var(--color-blue-2);
+  --heart-manager-radius: 16px;
+  --heart-manager-padding: 12px;
+  --heart-manager-gap: 8px;
 }
 
 .TabsRoot {
   display: flex;
   flex-direction: column;
   width: 100%;
-  box-shadow: var(--tabs-shadow);
+  box-shadow: var(--common-shadow);
   border-radius: var(--tabs-radius);
   background: var(--tabs-bg);
   border: 2px solid var(--tabs-border);
@@ -60,20 +70,38 @@ input {
   color: var(--tabs-text);
   user-select: none;
   padding: 0 20px;
-  transition: var(--tabs-transition);
+  transition: var(--common-transition);
   border-radius: calc(var(--tabs-radius) - 8px);
 }
 
 .TabsTrigger[data-state='active'] {
   color: var(--tabs-active);
-  box-shadow: var(--tabs-shadow);
+  box-shadow: var(--common-shadow);
   background: var(--color-white);
   font-weight: 600;
 }
 
 .TabsTrigger:focus {
   position: relative;
-  box-shadow: var(--tabs-shadow);
+  box-shadow: var(--common-shadow);
+  outline: none;
+}
+
+/* RadixUI内部スタイルの上書き */
+.rt-BaseTabListTrigger:where([data-state="active"], [data-active]):before {
+  background-color: transparent !important;
+  background: transparent !important;
+  content: none !important;
+  display: none !important;
+}
+
+/* より詳細度の高いセレクターでの上書き */
+.TabsRoot .rt-BaseTabListTrigger:where([data-state="active"], [data-active]):before,
+.TabsList .rt-BaseTabListTrigger:where([data-state="active"], [data-active]):before {
+  background-color: transparent !important;
+  background: transparent !important;
+  content: none !important;
+  display: none !important;
 }
 
 .TabsContent {
@@ -85,5 +113,67 @@ input {
 }
 
 .TabsContent:focus {
-  box-shadow: var(--tabs-shadow);
+  box-shadow: var(--common-shadow);
+  outline: none;
+}
+
+/* ============================================
+   HeartManager コンポーネントのスタイル
+   ============================================ */
+
+.HeartManagerContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--heart-manager-gap);
+}
+
+.HeartManagerHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.HeartCounterGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 4px;
+}
+
+.HeartCounterItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  background: var(--heart-manager-bg);
+  border-radius: calc(var(--heart-manager-radius) - 8px);
+  transition: var(--common-transition);
+}
+
+.HeartCounterLabel {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-slate-11);
+}
+
+.HeartCounterValue {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-blue-9);
+}
+
+.HeartManagerFooter {
+  font-size: 12px;
+  color: var(--color-slate-11);
+  margin-top: 4px;
+}
+
+/* Summaryコンポーネントのスタイルオーバーライド */
+.Summary {
+  margin: 0 !important;
+  padding: 8px !important;
+}
+
+.SummaryContent {
+  padding: 4px 8px !important;
 }
