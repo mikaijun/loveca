@@ -19,7 +19,7 @@ export interface HeartCollection {
   readonly states: ReadonlyMap<string, Heart>
 }
 
-export function createRequiredLiveHeartCollection(): HeartCollection {
+export const createRequiredLiveHeartCollection = (): HeartCollection => {
   const states = new Map<string, Heart>()
 
   getAllLiveHeartColors().forEach((color) => {
@@ -30,7 +30,7 @@ export function createRequiredLiveHeartCollection(): HeartCollection {
   return { states }
 }
 
-export function createMemberHeartCollection(): HeartCollection {
+export const createMemberHeartCollection = (): HeartCollection => {
   const states = new Map<string, Heart>()
 
   getAllMemberHeartColors().forEach((color) => {
@@ -41,10 +41,10 @@ export function createMemberHeartCollection(): HeartCollection {
   return { states }
 }
 
-export function withIncrementedHeartCount(
+export const withIncrementedHeartCount = (
   collection: HeartCollection,
   color: HeartColor
-): HeartCollection {
+): HeartCollection => {
   const colorKey = getHeartColorValue(color)
   const currentState = collection.states.get(colorKey)
 
@@ -58,10 +58,10 @@ export function withIncrementedHeartCount(
   return { states: newStates }
 }
 
-export function withDecrementedHeartCount(
+export const withDecrementedHeartCount = (
   collection: HeartCollection,
   color: HeartColor
-): HeartCollection {
+): HeartCollection => {
   const colorKey = getHeartColorValue(color)
   const currentState = collection.states.get(colorKey)
 
@@ -75,9 +75,9 @@ export function withDecrementedHeartCount(
   return { states: newStates }
 }
 
-export function withResetAllHeartCounts(
+export const withResetAllHeartCounts = (
   collection: HeartCollection
-): HeartCollection {
+): HeartCollection => {
   const newStates = new Map<string, Heart>()
 
   collection.states.forEach((state, key) => {
@@ -87,11 +87,11 @@ export function withResetAllHeartCounts(
   return { states: newStates }
 }
 
-export function withUpdatedVisibilities(
+export const withUpdatedVisibilities = (
   collection: HeartCollection,
   visibleColors: MemberHeartColor[],
   forceGrayVisible: boolean = false
-): HeartCollection {
+): HeartCollection => {
   const newStates = new Map<string, Heart>()
 
   collection.states.forEach((state, key) => {
@@ -109,7 +109,7 @@ export function withUpdatedVisibilities(
   return { states: newStates }
 }
 
-export function getTotalEffectiveCount(collection: HeartCollection): number {
+export const getTotalEffectiveCount = (collection: HeartCollection): number => {
   let total = 0
   collection.states.forEach((state) => {
     total += getEffectiveCount(state)
@@ -117,17 +117,17 @@ export function getTotalEffectiveCount(collection: HeartCollection): number {
   return total
 }
 
-export function getHeartStateByColor(
+export const getHeartStateByColor = (
   collection: HeartCollection,
   color: HeartColor
-): Heart | undefined {
+): Heart | undefined => {
   const colorKey = getHeartColorValue(color)
   return collection.states.get(colorKey)
 }
 
-export function getVisibleColorNames(
+export const getVisibleColorNames = (
   collection: HeartCollection
-): MemberHeartColor[] {
+): MemberHeartColor[] => {
   const visibleColors: MemberHeartColor[] = []
   collection.states.forEach((state) => {
     const colorValue = getHeartColorValue(state.color)

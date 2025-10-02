@@ -3,7 +3,7 @@ import { colorfulHeartService } from '@domain/services/colorfulHeartService'
 import { monochromeHeartService } from '@domain/services/monochromeHeartService'
 import { MemberHeartColor } from '@domain/valueObjects/heartColor'
 
-function useColorfulHeartManager() {
+const useColorfulHeartManager = () => {
   const [colorfulHeartState, setColorfulHeartState] = useState(() =>
     colorfulHeartService.createInitialState()
   )
@@ -77,7 +77,7 @@ function useColorfulHeartManager() {
   }
 }
 
-function useMonochromeHeartManager() {
+const useMonochromeHeartManager = () => {
   const [monochromeHeartState, setMonochromeHeartState] = useState(() =>
     monochromeHeartService.createInitialState()
   )
@@ -111,7 +111,7 @@ function useMonochromeHeartManager() {
   }
 }
 
-export function useHeartManager() {
+export const useHeartManager = () => {
   const colorfulHeartManager = useColorfulHeartManager()
   const monochromeHeartManager = useMonochromeHeartManager()
 

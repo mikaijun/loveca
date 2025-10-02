@@ -6,11 +6,11 @@ export interface Heart {
   readonly visibility: boolean
 }
 
-export function createHeartState(args: {
+export const createHeartState = (args: {
   color: HeartColor
   count?: number
   visibility?: boolean
-}): Heart {
+}): Heart => {
   return {
     color: args.color,
     count: args.count ?? 0,
@@ -18,7 +18,7 @@ export function createHeartState(args: {
   }
 }
 
-export function withIncrementedCount(state: Heart): Heart {
+export const withIncrementedCount = (state: Heart): Heart => {
   const newCount = Math.min(state.count + 1, 40)
 
   return {
@@ -27,7 +27,7 @@ export function withIncrementedCount(state: Heart): Heart {
   }
 }
 
-export function withDecrementedCount(state: Heart): Heart {
+export const withDecrementedCount = (state: Heart): Heart => {
   const newCount = Math.max(state.count - 1, 0)
 
   return {
@@ -36,30 +36,30 @@ export function withDecrementedCount(state: Heart): Heart {
   }
 }
 
-export function withResetCount(state: Heart): Heart {
+export const withResetCount = (state: Heart): Heart => {
   return {
     ...state,
     count: 0,
   }
 }
 
-export function withUpdatedVisibility(
+export const withUpdatedVisibility = (
   state: Heart,
   visibility: boolean
-): Heart {
+): Heart => {
   return {
     ...state,
     visibility,
   }
 }
 
-export function getEffectiveCount(state: Heart): number {
+export const getEffectiveCount = (state: Heart): number => {
   if (!state.visibility) {
     return 0
   }
   return state.count
 }
 
-export function getDisplayCount(state: Heart): number {
+export const getDisplayCount = (state: Heart): number => {
   return state.count
 }

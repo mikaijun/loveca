@@ -4,7 +4,7 @@ export type HeartColor = Readonly<{
 
 export type MemberHeartColor = Exclude<HeartColor['value'], 'gray'>
 
-export function createHeartColor(value: string): HeartColor {
+export const createHeartColor = (value: string): HeartColor => {
   const validColors: HeartColor['value'][] = [
     'pink',
     'green',
@@ -22,14 +22,14 @@ export function createHeartColor(value: string): HeartColor {
   return { value: value as HeartColor['value'] }
 }
 
-export function getHeartColorValue(color: HeartColor): HeartColor['value'] {
+export const getHeartColorValue = (color: HeartColor): HeartColor['value'] => {
   return color.value
 }
 
 /**
  * 全てのライブ用ハート色を取得
  */
-export function getAllLiveHeartColors(): HeartColor[] {
+export const getAllLiveHeartColors = (): HeartColor[] => {
   return [
     createHeartColor('pink'),
     createHeartColor('green'),
@@ -41,7 +41,7 @@ export function getAllLiveHeartColors(): HeartColor[] {
   ]
 }
 
-export function getAllMemberHeartColors(): HeartColor[] {
+export const getAllMemberHeartColors = (): HeartColor[] => {
   return [
     createHeartColor('pink'),
     createHeartColor('green'),

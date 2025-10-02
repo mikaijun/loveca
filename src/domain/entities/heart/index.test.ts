@@ -8,7 +8,7 @@ import { Heart } from './index'
 import { HeartColor } from '@domain/valueObjects/heartColor'
 
 // テストヘルパー関数
-function createTestHeart(count: number, visibility: boolean): Heart {
+const createTestHeart = (count: number, visibility: boolean): Heart => {
   const color: HeartColor = { value: 'pink' }
   return { color, count, visibility }
 }

@@ -5,9 +5,9 @@ import { HeartCollection } from '@domain/entities/heart/collection'
 import { Heart } from '@domain/entities/heart'
 import { HeartColor } from '@domain/valueObjects/heartColor'
 
-function createTestHeartCollection(
+const createTestHeartCollection = (
   heartCounts: Record<string, number>
-): HeartCollection {
+): HeartCollection => {
   const states = new Map()
 
   Object.entries(heartCounts).forEach(([colorValue, count]) => {
