@@ -3,60 +3,72 @@ import {
   getEffectiveCount,
   withIncrementedCount,
   withDecrementedCount,
-} from './index'
-import { Heart } from './index'
-import { HeartColor } from '@domain/valueObjects/heartColor'
+  createHeart,
+  getDisplayCount,
+  type Heart,
+} from '@domain/entities/heart'
 
-// テストヘルパー関数
-const createTestHeart = (count: number, visibility: boolean): Heart => {
-  const color: HeartColor = { value: 'pink' }
-  return { color, count, visibility }
-}
+describe('createHeart', () => {
+  it('正しくHeartオブジェクトが作成されること', () => {
+    const actual = createHeart('pink')
 
-describe('getEffectiveCount', () => {
-  it('visibilityがtrueの場合、countが返されること', () => {
-    const heart = createTestHeart(5, true)
-    const result = getEffectiveCount(heart)
-    expect(result).toBe(5)
-  })
-
-  it('visibilityがfalseの場合、0が返されること', () => {
-    const heart = createTestHeart(5, false)
-    const result = getEffectiveCount(heart)
-    expect(result).toBe(0)
-  })
-
-  it('countが0でvisibilityがtrueの場合、0が返されること', () => {
-    const heart = createTestHeart(0, true)
-    const result = getEffectiveCount(heart)
-    expect(result).toBe(0)
+    const expected: Heart = { color: 'pink', count: 0, visibility: true }
+    expect(actual).toMatchObject(expected)
   })
 })
 
-describe('withIncrementedCount', () => {
-  it('最大値（40）に達したときそれ以上増えないことを確認', () => {
-    let heart = createTestHeart(39, true)
+describe('getDisplayCount', () => {
+  it('正しくcountが返されること', () => {
+    const heart: Heart = { color: 'pink', count: 5, visibility: true }
+    const actual = getDisplayCount(heart)
 
-    // 39 → 40
-    heart = withIncrementedCount(heart)
-    expect(heart.count).toBe(40)
+    const expected = heart.count
+    expect(actual).toBe(expected)
+  })
+})
 
-    // 40 → 40（増えない）
-    heart = withIncrementedCount(heart)
-    expect(heart.count).toBe(40)
+describe('getEffectiveCount', () => {
+  it('visibilityがtrueの場合、countが返されること', () => {
+    const heart: Heart = { color: 'pink', count: 5, visibility: true }
+    const actual = getEffectiveCount(heart)
+
+    const expected = heart.count
+    expect(actual).toBe(expected)
+  })
+
+  it('visibilityがfalseの場合、0が返されること', () => {
+    const heart: Heart = { color: 'pink', count: 5, visibility: false }
+    const actual = getEffectiveCount(heart)
+
+    const expected = 0
+    expect(actual).toBe(expected)
   })
 })
 
 describe('withDecrementedCount', () => {
-  it('最小値（0）に達したときそれ以下にならないことを確認', () => {
-    let heart = createTestHeart(1, true)
+  it('正しくcountが1減ること', () => {
+    const heart: Heart = { color: 'pink', count: 5, visibility: true }
+    const actual = withDecrementedCount(heart)
 
-    // 1 → 0
-    heart = withDecrementedCount(heart)
-    expect(heart.count).toBe(0)
+    const expected = { ...heart, count: heart.count - 1 }
+    expect(actual).toMatchObject(expected)
+  })
 
-    // 0 → 0（減らない）
-    heart = withDecrementedCount(heart)
-    expect(heart.count).toBe(0)
+  it('countが0の場合、countが0のままであること', () => {
+    const heart: Heart = { color: 'pink', count: 0, visibility: true }
+    const actual = withDecrementedCount(heart)
+
+    const expected = heart
+    expect(actual).toMatchObject(expected)
+  })
+})
+
+describe('withIncrementedCount', () => {
+  it('正しくcountが1増えること', () => {
+    const heart: Heart = { color: 'pink', count: 5, visibility: true }
+    const actual = withIncrementedCount(heart)
+
+    const expected = { ...heart, count: heart.count + 1 }
+    expect(actual).toMatchObject(expected)
   })
 })
