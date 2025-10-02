@@ -1,6 +1,6 @@
 import {
   Heart,
-  createHeartState,
+  createHeart,
   withIncrementedCount,
   withDecrementedCount,
   withResetCount,
@@ -9,7 +9,6 @@ import {
 } from '.'
 import {
   HeartColor,
-  getHeartColorValue,
   getAllLiveHeartColors,
   getAllMemberHeartColors,
   MemberHeartColor,
@@ -23,8 +22,8 @@ export const createRequiredLiveHeartCollection = (): HeartCollection => {
   const states = new Map<string, Heart>()
 
   getAllLiveHeartColors().forEach((color) => {
-    const key = getHeartColorValue(color)
-    states.set(key, createHeartState({ color, visibility: true }))
+    const key = color.value
+    states.set(key, createHeart(color))
   })
 
   return { states }
@@ -34,8 +33,8 @@ export const createMemberHeartCollection = (): HeartCollection => {
   const states = new Map<string, Heart>()
 
   getAllMemberHeartColors().forEach((color) => {
-    const key = getHeartColorValue(color)
-    states.set(key, createHeartState({ color, visibility: true }))
+    const key = color.value
+    states.set(key, createHeart(color))
   })
 
   return { states }
@@ -45,7 +44,7 @@ export const withIncrementedHeartCount = (
   collection: HeartCollection,
   color: HeartColor
 ): HeartCollection => {
-  const colorKey = getHeartColorValue(color)
+  const colorKey = color.value
   const currentState = collection.states.get(colorKey)
 
   if (!currentState) {
@@ -62,7 +61,7 @@ export const withDecrementedHeartCount = (
   collection: HeartCollection,
   color: HeartColor
 ): HeartCollection => {
-  const colorKey = getHeartColorValue(color)
+  const colorKey = color.value
   const currentState = collection.states.get(colorKey)
 
   if (!currentState) {
@@ -121,7 +120,7 @@ export const getHeartStateByColor = (
   collection: HeartCollection,
   color: HeartColor
 ): Heart | undefined => {
-  const colorKey = getHeartColorValue(color)
+  const colorKey = color.value
   return collection.states.get(colorKey)
 }
 
@@ -130,7 +129,7 @@ export const getVisibleColorNames = (
 ): MemberHeartColor[] => {
   const visibleColors: MemberHeartColor[] = []
   collection.states.forEach((state) => {
-    const colorValue = getHeartColorValue(state.color)
+    const colorValue = state.color.value
     if (state.visibility && colorValue !== 'gray') {
       visibleColors.push(colorValue as MemberHeartColor)
     }

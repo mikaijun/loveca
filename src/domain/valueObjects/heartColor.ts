@@ -45,10 +45,6 @@ export const getAllMemberHeartColors = (): HeartColor[] => {
   ]
 }
 
-export const getHeartColorValue = (color: HeartColor): HeartColor['value'] => {
-  return color.value
-}
-
 export const isGrayHeart = (color: HeartColor): boolean => {
-  return getHeartColorValue(color) === 'gray'
+  return color.value === 'gray'
 }

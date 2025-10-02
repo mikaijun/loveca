@@ -6,15 +6,11 @@ export interface Heart {
   readonly visibility: boolean
 }
 
-export const createHeartState = (args: {
-  color: HeartColor
-  count?: number
-  visibility?: boolean
-}): Heart => {
+export const createHeart = (color: HeartColor): Heart => {
   return {
-    color: args.color,
-    count: args.count ?? 0,
-    visibility: args.visibility ?? true,
+    color,
+    count: 0,
+    visibility: true,
   }
 }
 

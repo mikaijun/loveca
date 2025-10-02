@@ -3,7 +3,6 @@ import {
   createHeartColor,
   getAllLiveHeartColors,
   getAllMemberHeartColors,
-  getHeartColorValue,
   isGrayHeart,
   type HeartColor,
 } from '@domain/valueObjects/heartColor'
@@ -55,16 +54,6 @@ describe('getAllMemberHeartColors', () => {
     ]
 
     expect(actual).toEqual(expected)
-  })
-})
-
-describe('getHeartColorValue', () => {
-  it('HeartColorオブジェクトから正しい値が取得されること', () => {
-    const pinkHeartColor: HeartColor = { value: 'pink' }
-    const actual = getHeartColorValue(pinkHeartColor)
-    const expected = 'pink'
-
-    expect(actual).toBe(expected)
   })
 })
 
