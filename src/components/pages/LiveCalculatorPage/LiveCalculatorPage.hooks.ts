@@ -1,89 +1,60 @@
 import { useMemo, useState, useCallback } from 'react'
-import { chanceOfPicking } from '@utils'
+import {
+  LiveCalculation,
+  calculateLiveSuccessProbability,
+} from '@domain/entities/liveCalculation'
 
-/**
- * 非復元抽出で成功回数が z 回以上となる確率を計算
- */
-const calculateProbability = (
-  N: number,
-  K: number,
-  n: number,
-  z: number
-): number => {
-  let probability = 0
-  for (let k = 0; k < z; k++) {
-    probability += chanceOfPicking(N, K, n, k)
-  }
-  return 1 - probability
-}
-
-/**
- * LiveCalculatorPage のロジック
- */
 export const useLiveCalculator = () => {
-  const [memberHeartCount, setMemberHeartCount] = useState<number>(0)
-  const [requiredLiveHeartCount, setRequiredLiveHeart] = useState<number>(0)
-  const [yellCount, setYellCount] = useState<number>(0)
-  const [deckBladeHeartCount, setDeckBladeHeartCount] = useState<number>(60)
-  const [deckCount, setDeckCount] = useState<number>(60)
+  const [liveCalculation, setLiveCalculation] = useState<LiveCalculation>({
+    memberHeartCount: 0,
+    requiredLiveHeartCount: 0,
+    yellCount: 0,
+    deckBladeHeartCount: 60,
+    deckCount: 60,
+  })
 
   const handleChangeMemberHeartCount = useCallback((count: number) => {
-    setMemberHeartCount(count)
+    setLiveCalculation((prev) => ({ ...prev, memberHeartCount: count }))
   }, [])
 
   const handleChangeRequiredLiveHeartCount = useCallback((count: number) => {
-    setRequiredLiveHeart(count)
+    setLiveCalculation((prev) => ({ ...prev, requiredLiveHeartCount: count }))
   }, [])
 
   const handleChangeYellCount = useCallback((count: number) => {
-    setYellCount(count)
+    setLiveCalculation((prev) => ({ ...prev, yellCount: count }))
   }, [])
 
   const handleChangeDeckBladeHeartCount = useCallback((count: number) => {
-    setDeckBladeHeartCount(count)
+    setLiveCalculation((prev) => ({ ...prev, deckBladeHeartCount: count }))
   }, [])
 
   const handleChangeDeckCount = useCallback((count: number) => {
-    setDeckCount(count)
+    setLiveCalculation((prev) => ({ ...prev, deckCount: count }))
   }, [])
 
   const handleResetHeart = useCallback(() => {
-    setMemberHeartCount(0)
-    setRequiredLiveHeart(0)
-    setYellCount(0)
-    setDeckBladeHeartCount(60)
-    setDeckCount(60)
+    setLiveCalculation({
+      memberHeartCount: 0,
+      requiredLiveHeartCount: 0,
+      yellCount: 0,
+      deckBladeHeartCount: 60,
+      deckCount: 60,
+    })
   }, [])
 
-  const liveSuccessProbability = useMemo(() => {
-    if (yellCount === 0 || requiredLiveHeartCount === 0 || deckCount === 0)
-      return '-'
-
-    if (deckCount < deckBladeHeartCount) return 'ブレードハート枚数が不正です'
-
-    const N = deckCount
-    const K = deckBladeHeartCount
-    const n = yellCount
-    const z = requiredLiveHeartCount - memberHeartCount
-    const probability = calculateProbability(N, K, n, z)
-    if (probability <= 0) return '0'
-    if (probability === 1) return '100'
-    return (Math.floor(probability * 1000) / 10).toFixed(1)
-  }, [
-    deckBladeHeartCount,
-    yellCount,
-    requiredLiveHeartCount,
-    memberHeartCount,
-    deckCount,
-  ])
+  // 確率計算結果
+  const liveSuccessProbabilityResult = useMemo(() => {
+    return calculateLiveSuccessProbability(liveCalculation)
+  }, [liveCalculation])
 
   return {
-    memberHeartCount,
-    requiredLiveHeartCount,
-    yellCount,
-    deckBladeHeartCount,
-    deckCount,
-    liveSuccessProbability,
+    memberHeartCount: liveCalculation.memberHeartCount,
+    requiredLiveHeartCount: liveCalculation.requiredLiveHeartCount,
+    yellCount: liveCalculation.yellCount,
+    deckBladeHeartCount: liveCalculation.deckBladeHeartCount,
+    deckCount: liveCalculation.deckCount,
+    liveSuccessProbability: liveSuccessProbabilityResult.probability,
     handleChangeMemberHeartCount,
     handleChangeRequiredLiveHeartCount,
     handleChangeYellCount,
