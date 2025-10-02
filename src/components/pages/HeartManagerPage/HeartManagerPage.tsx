@@ -13,8 +13,8 @@ import {
 } from '@domain/services/colorfulHeartService'
 import { getHeartStateByColor } from '@domain/entities/heart/collection'
 import {
-  getAllLiveHeartColors,
-  getAllMemberHeartColors,
+  allLiveHeartColors,
+  allMemberHeartColors,
 } from '@domain/valueObjects/heartColor'
 import { getEffectiveCount, getDisplayCount } from '@domain/entities/heart'
 import { MemberHeartColor } from '@domain/valueObjects/heartColor'
@@ -87,7 +87,7 @@ const ColorfulHeartManager: React.FC<ColorfulHeartManagerProps> = ({
       />
 
       <div className="HeartCounterGroup">
-        {getAllLiveHeartColors().map((color) => {
+        {allLiveHeartColors.map((color) => {
           const colorValue = color
           const requiredState = getHeartStateByColor(requiredLiveHearts, color)
           const bladeState = getHeartStateByColor(requiredBladeHearts, color)
@@ -116,7 +116,7 @@ const ColorfulHeartManager: React.FC<ColorfulHeartManagerProps> = ({
       />
 
       <div className="HeartCounterGroup">
-        {getAllLiveHeartColors().map((color) => {
+        {allLiveHeartColors.map((color) => {
           const colorValue = color
           const state = getHeartStateByColor(requiredLiveHearts, color)
 
@@ -142,7 +142,7 @@ const ColorfulHeartManager: React.FC<ColorfulHeartManagerProps> = ({
       />
 
       <div className="HeartCounterGroup">
-        {getAllMemberHeartColors().map((color) => {
+        {allMemberHeartColors.map((color) => {
           const colorValue = color
           const state = getHeartStateByColor(memberHearts, color)
 

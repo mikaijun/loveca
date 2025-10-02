@@ -9,6 +9,25 @@ export type HeartColor =
 
 export type MemberHeartColor = Exclude<HeartColor, 'gray'>
 
+export const allLiveHeartColors: HeartColor[] = [
+  'pink',
+  'green',
+  'blue',
+  'red',
+  'yellow',
+  'purple',
+  'gray',
+]
+
+export const allMemberHeartColors: HeartColor[] = [
+  'pink',
+  'green',
+  'blue',
+  'red',
+  'yellow',
+  'purple',
+]
+
 export const createHeartColor = (value: string): HeartColor => {
   const validColors: HeartColor[] = [
     'pink',
@@ -25,14 +44,6 @@ export const createHeartColor = (value: string): HeartColor => {
   }
 
   return value as HeartColor
-}
-
-export const getAllLiveHeartColors = (): HeartColor[] => {
-  return ['pink', 'green', 'blue', 'red', 'yellow', 'purple', 'gray']
-}
-
-export const getAllMemberHeartColors = (): HeartColor[] => {
-  return ['pink', 'green', 'blue', 'red', 'yellow', 'purple']
 }
 
 export const isGrayHeart = (color: HeartColor): boolean => {

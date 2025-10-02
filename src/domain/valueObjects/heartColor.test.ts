@@ -1,8 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import {
   createHeartColor,
-  getAllLiveHeartColors,
-  getAllMemberHeartColors,
+  allLiveHeartColors,
   isGrayHeart,
   type HeartColor,
 } from '@domain/valueObjects/heartColor'
@@ -24,7 +23,7 @@ describe('createHeartColor', () => {
 
 describe('getAllLiveHeartColors', () => {
   it('全てのライブ用ハート色が正しく返されること', () => {
-    const actual = getAllLiveHeartColors()
+    const actual = allLiveHeartColors
 
     const expected: HeartColor[] = [
       'pink',
@@ -34,22 +33,6 @@ describe('getAllLiveHeartColors', () => {
       'yellow',
       'purple',
       'gray',
-    ]
-
-    expect(actual).toEqual(expected)
-  })
-})
-
-describe('getAllMemberHeartColors', () => {
-  it('全てのメンバーハート色が正しく返されること', () => {
-    const actual = getAllMemberHeartColors()
-    const expected: HeartColor[] = [
-      'pink',
-      'green',
-      'blue',
-      'red',
-      'yellow',
-      'purple',
     ]
 
     expect(actual).toEqual(expected)

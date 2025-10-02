@@ -9,21 +9,21 @@ import {
 } from '@domain/entities/heart'
 import {
   HeartColor,
-  getAllLiveHeartColors,
-  getAllMemberHeartColors,
+  allLiveHeartColors,
+  allMemberHeartColors,
   MemberHeartColor,
 } from '@domain/valueObjects/heartColor'
 
 export type HeartCollection = readonly Heart[]
 
 /**
- * メンバーハートの各色における余剰数を計算する
+ * メンバーハートの各色における余剰数を配列で返す
  */
 export const calculateMemberHeartSurplus = (
   requiredLiveHearts: HeartCollection,
   memberHearts: HeartCollection
 ): number[] => {
-  return getAllMemberHeartColors().map((color) => {
+  return allMemberHeartColors.map((color) => {
     const requiredState = getHeartStateByColor(requiredLiveHearts, color)
     const memberState = getHeartStateByColor(memberHearts, color)
 
@@ -49,11 +49,11 @@ export const calculateTotalMemberHeartSurplus = (
 }
 
 export const createMemberHeartCollection = (): HeartCollection => {
-  return getAllMemberHeartColors().map((color) => createHeart(color))
+  return allMemberHeartColors.map((color) => createHeart(color))
 }
 
 export const createRequiredLiveHeartCollection = (): HeartCollection => {
-  return getAllLiveHeartColors().map((color) => createHeart(color))
+  return allLiveHeartColors.map((color) => createHeart(color))
 }
 
 export const getHeartStateByColor = (
