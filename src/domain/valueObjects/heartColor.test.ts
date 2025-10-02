@@ -9,11 +9,10 @@ import {
 
 describe('createHeartColor', () => {
   it('有効な色を指定した場合、正しくHeartColorが作成されること', () => {
-    const pinkHeartColor: HeartColor = { value: 'pink' }
-    const actual = createHeartColor(pinkHeartColor.value)
-    const expected = pinkHeartColor
+    const actual = createHeartColor('pink')
+    const expected: HeartColor = 'pink'
 
-    expect(actual).toEqual(expected)
+    expect(actual).toBe(expected)
   })
 
   it('無効な色を指定した場合、エラーが投げられること', () => {
@@ -28,13 +27,13 @@ describe('getAllLiveHeartColors', () => {
     const actual = getAllLiveHeartColors()
 
     const expected: HeartColor[] = [
-      { value: 'pink' },
-      { value: 'green' },
-      { value: 'blue' },
-      { value: 'red' },
-      { value: 'yellow' },
-      { value: 'purple' },
-      { value: 'gray' },
+      'pink',
+      'green',
+      'blue',
+      'red',
+      'yellow',
+      'purple',
+      'gray',
     ]
 
     expect(actual).toEqual(expected)
@@ -44,13 +43,13 @@ describe('getAllLiveHeartColors', () => {
 describe('getAllMemberHeartColors', () => {
   it('全てのメンバーハート色が正しく返されること', () => {
     const actual = getAllMemberHeartColors()
-    const expected = [
-      { value: 'pink' },
-      { value: 'green' },
-      { value: 'blue' },
-      { value: 'red' },
-      { value: 'yellow' },
-      { value: 'purple' },
+    const expected: HeartColor[] = [
+      'pink',
+      'green',
+      'blue',
+      'red',
+      'yellow',
+      'purple',
     ]
 
     expect(actual).toEqual(expected)
@@ -59,7 +58,7 @@ describe('getAllMemberHeartColors', () => {
 
 describe('isGrayHeart', () => {
   it('灰色ハートの場合、trueが返されること', () => {
-    const grayHeartColor: HeartColor = { value: 'gray' }
+    const grayHeartColor: HeartColor = 'gray'
     const actual = isGrayHeart(grayHeartColor)
     const expected = true
 
@@ -67,7 +66,7 @@ describe('isGrayHeart', () => {
   })
 
   it('灰色以外のハートの場合、falseが返されること', () => {
-    const pinkHeartColor: HeartColor = { value: 'pink' }
+    const pinkHeartColor: HeartColor = 'pink'
     const actual = isGrayHeart(pinkHeartColor)
     const expected = false
 

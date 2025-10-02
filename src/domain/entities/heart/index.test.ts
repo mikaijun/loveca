@@ -9,7 +9,7 @@ import { HeartColor } from '@domain/valueObjects/heartColor'
 
 // テストヘルパー関数
 const createTestHeart = (count: number, visibility: boolean): Heart => {
-  const color: HeartColor = { value: 'pink' }
+  const color: HeartColor = 'pink'
   return { color, count, visibility }
 }
 

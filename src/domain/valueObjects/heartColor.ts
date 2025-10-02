@@ -1,11 +1,16 @@
-export type HeartColor = Readonly<{
-  value: 'pink' | 'green' | 'blue' | 'red' | 'yellow' | 'purple' | 'gray'
-}>
+export type HeartColor =
+  | 'pink'
+  | 'green'
+  | 'blue'
+  | 'red'
+  | 'yellow'
+  | 'purple'
+  | 'gray'
 
-export type MemberHeartColor = Exclude<HeartColor['value'], 'gray'>
+export type MemberHeartColor = Exclude<HeartColor, 'gray'>
 
 export const createHeartColor = (value: string): HeartColor => {
-  const validColors: HeartColor['value'][] = [
+  const validColors: HeartColor[] = [
     'pink',
     'green',
     'blue',
@@ -15,36 +20,21 @@ export const createHeartColor = (value: string): HeartColor => {
     'gray',
   ]
 
-  if (!validColors.includes(value as HeartColor['value'])) {
+  if (!validColors.includes(value as HeartColor)) {
     throw new Error(`無効なハートの色です: ${value}`)
   }
 
-  return { value: value as HeartColor['value'] }
+  return value as HeartColor
 }
 
 export const getAllLiveHeartColors = (): HeartColor[] => {
-  return [
-    createHeartColor('pink'),
-    createHeartColor('green'),
-    createHeartColor('blue'),
-    createHeartColor('red'),
-    createHeartColor('yellow'),
-    createHeartColor('purple'),
-    createHeartColor('gray'),
-  ]
+  return ['pink', 'green', 'blue', 'red', 'yellow', 'purple', 'gray']
 }
 
 export const getAllMemberHeartColors = (): HeartColor[] => {
-  return [
-    createHeartColor('pink'),
-    createHeartColor('green'),
-    createHeartColor('blue'),
-    createHeartColor('red'),
-    createHeartColor('yellow'),
-    createHeartColor('purple'),
-  ]
+  return ['pink', 'green', 'blue', 'red', 'yellow', 'purple']
 }
 
 export const isGrayHeart = (color: HeartColor): boolean => {
-  return color.value === 'gray'
+  return color === 'gray'
 }

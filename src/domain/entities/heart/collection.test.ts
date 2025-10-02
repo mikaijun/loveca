@@ -21,9 +21,7 @@ const createTestHeartCollection = (
   const states = new Map()
 
   Object.entries(heartCounts).forEach(([colorValue, count]) => {
-    const color: HeartColor = {
-      value: colorValue as HeartColor['value'],
-    }
+    const color: HeartColor = colorValue as HeartColor
     const heart: Heart = {
       color,
       count,
@@ -36,7 +34,7 @@ const createTestHeartCollection = (
 }
 
 const createTestHeartColor = (value: string): HeartColor => {
-  return { value: value as HeartColor['value'] }
+  return value as HeartColor
 }
 
 describe('withIncrementedHeartCount', () => {
@@ -141,7 +139,7 @@ describe('getHeartStateByColor', () => {
 
     const state = getHeartStateByColor(collection, color)
     expect(state).toBeDefined()
-    expect(state?.color.value).toBe('red')
+    expect(state?.color).toBe('red')
     expect(state?.count).toBe(0)
     expect(state?.visibility).toBe(true)
   })

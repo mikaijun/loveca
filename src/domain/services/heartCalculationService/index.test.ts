@@ -11,9 +11,7 @@ const createTestHeartCollection = (
   const states = new Map()
 
   Object.entries(heartCounts).forEach(([colorValue, count]) => {
-    const color: HeartColor = {
-      value: colorValue as HeartColor['value'],
-    }
+    const color: HeartColor = colorValue as HeartColor
     const heart: Heart = {
       color,
       count,
@@ -29,7 +27,7 @@ describe('calculateRequiredBladeHeartByColor', () => {
   it('必要なブレードハート数を正しく計算できるか確認', () => {
     const requiredLiveHearts = createTestHeartCollection({ pink: 3 })
     const memberHearts = createTestHeartCollection({ pink: 1 })
-    const pinkColor: HeartColor = { value: 'pink' }
+    const pinkColor: HeartColor = 'pink'
 
     const result = heartCalculationService.calculateRequiredBladeHeartByColor(
       requiredLiveHearts,
@@ -44,7 +42,7 @@ describe('calculateRequiredBladeHeartByColor', () => {
   it('メンバーのハートが十分な場合、0を返すか確認', () => {
     const requiredLiveHearts = createTestHeartCollection({ pink: 1 })
     const memberHearts = createTestHeartCollection({ pink: 3 })
-    const pinkColor: HeartColor = { value: 'pink' }
+    const pinkColor: HeartColor = 'pink'
 
     const result = heartCalculationService.calculateRequiredBladeHeartByColor(
       requiredLiveHearts,
@@ -62,7 +60,7 @@ describe('calculateRequiredBladeHeartByColor', () => {
       pink: 1,
       green: 2, // 余剰合計3個
     })
-    const grayColor: HeartColor = { value: 'gray' }
+    const grayColor: HeartColor = 'gray'
 
     const result = heartCalculationService.calculateRequiredBladeHeartByColor(
       requiredLiveHearts,
@@ -77,7 +75,7 @@ describe('calculateRequiredBladeHeartByColor', () => {
   it('存在しない色の状態でも正しく計算されることを確認', () => {
     const requiredLiveHearts = createTestHeartCollection({ pink: 2 })
     const memberHearts = createTestHeartCollection({}) // blueが存在しない
-    const blueColor: HeartColor = { value: 'blue' }
+    const blueColor: HeartColor = 'blue'
 
     const result = heartCalculationService.calculateRequiredBladeHeartByColor(
       requiredLiveHearts,
