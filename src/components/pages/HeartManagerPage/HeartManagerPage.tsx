@@ -69,14 +69,11 @@ const ColorfulHeartManager: React.FC<ColorfulHeartManagerProps> = ({
   handleChangeRequiredLiveHeartVisibility,
   handleChangeMemberHeartVisibility,
 }) => {
-  const totalRequiredBladeHearts =
-    getTotalEffectiveCount(requiredLiveHearts) === 0
-      ? 0
-      : calculateTotalRequiredBladeHearts(requiredLiveHearts, memberHearts)
-
-  const liveResultMessage = totalRequiredBladeHearts
-    ? `必要ブレードハート数: ${totalRequiredBladeHearts}`
-    : 'ライブ成功'
+  const liveResultMessage =
+    calculateTotalRequiredBladeHearts(requiredLiveHearts, memberHearts) === 0 &&
+    requiredLiveHeartCount > 0
+      ? 'ライブ成功'
+      : `必要ブレードハート数: ${calculateTotalRequiredBladeHearts(requiredLiveHearts, memberHearts)}`
 
   return (
     <div className="HeartManagerContainer">
