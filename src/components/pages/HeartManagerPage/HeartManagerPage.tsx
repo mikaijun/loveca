@@ -11,7 +11,10 @@ import {
   ColorfulHeartState,
   ColorfulHeartSummary,
 } from '@domain/services/colorfulHeartService'
-import { getHeartStateByColor } from '@domain/entities/heart/collection'
+import {
+  getHeartStateByColor,
+  getTotalEffectiveCount,
+} from '@domain/entities/heart/collection'
 import {
   allLiveHeartColors,
   allMemberHeartColors,
@@ -27,12 +30,12 @@ import { NumberSelect } from '@components/commons/function/NumberSelect'
 import { colors } from '@constants/colors'
 import './HeartManagerPage.css'
 
+import { calculateTotalRequiredBladeHearts } from '@domain/entities/heart/collection'
 interface ColorfulHeartManagerProps {
   requiredLiveHearts: ColorfulHeartState['requiredLiveHearts']
   memberHearts: ColorfulHeartState['memberHearts']
   requiredLiveHeartCount: number
   memberHeartCount: number
-  liveResultMessage: string
   requiredBladeHearts: ColorfulHeartSummary['requiredBladeHearts']
   requiredLiveHeartColorList: MemberHeartColor[]
   memberHeartColorList: MemberHeartColor[]
@@ -52,7 +55,6 @@ const ColorfulHeartManager: React.FC<ColorfulHeartManagerProps> = ({
   memberHearts,
   requiredLiveHeartCount,
   memberHeartCount,
-  liveResultMessage,
   requiredBladeHearts,
   requiredLiveHeartColorList,
   memberHeartColorList,
@@ -64,6 +66,15 @@ const ColorfulHeartManager: React.FC<ColorfulHeartManagerProps> = ({
   handleChangeRequiredLiveHeartVisibility,
   handleChangeMemberHeartVisibility,
 }) => {
+  const totalRequiredBladeHearts =
+    getTotalEffectiveCount(requiredLiveHearts) === 0
+      ? 0
+      : calculateTotalRequiredBladeHearts(requiredLiveHearts, memberHearts)
+
+  const liveResultMessage = totalRequiredBladeHearts
+    ? `必要ブレードハート数: ${totalRequiredBladeHearts}`
+    : 'ライブ成功'
+
   return (
     <div className="HeartManagerContainer">
       <div className="HeartManagerHeader">
@@ -298,7 +309,6 @@ export default function HeartManagerPage() {
             colorful.handleIncrementRequiredLiveHeart
           }
           handleResetAllHeartCounts={colorful.handleResetAllHeartCounts}
-          liveResultMessage={colorful.colorfulHeartSummary.liveResultMessage}
           memberHeartColorList={colorful.colorfulHeartSummary.memberHeartColors}
           memberHeartCount={colorful.colorfulHeartSummary.memberHeartCount}
           memberHearts={memberHearts}

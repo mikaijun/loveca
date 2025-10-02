@@ -1,4 +1,3 @@
-import { heartCalculationService } from '@domain/services/heartCalculationService'
 import {
   HeartCollection,
   createRequiredLiveHeartCollection,
@@ -9,6 +8,8 @@ import {
   withUpdatedVisibilities,
   getTotalEffectiveCount,
   getVisibleColorNames,
+  calculateTotalRequiredBladeHearts,
+  calculateAllRequiredBladeHearts,
 } from '@domain/entities/heart/collection'
 import {
   createHeartColor,
@@ -28,7 +29,6 @@ export interface ColorfulHeartSummary {
   requiredLiveHeartCount: number
   memberHeartCount: number
   totalRequiredBladeHearts: number
-  liveResultMessage: string
   requiredBladeHearts: HeartCollection
   requiredLiveHeartColors: MemberHeartColor[]
   memberHeartColors: MemberHeartColor[]
@@ -149,21 +149,15 @@ export const colorfulHeartService = {
       state.requiredLiveHearts
     )
     const memberHeartCount = getTotalEffectiveCount(state.memberHearts)
-    const totalRequiredBladeHearts =
-      heartCalculationService.calculateTotalRequiredBladeHearts(
-        state.requiredLiveHearts,
-        state.memberHearts
-      )
-    const liveResultMessage = heartCalculationService.getLiveResultMessage(
+    const totalRequiredBladeHearts = calculateTotalRequiredBladeHearts(
       state.requiredLiveHearts,
       state.memberHearts
     )
 
-    const requiredBladeHearts =
-      heartCalculationService.calculateAllRequiredBladeHearts(
-        state.requiredLiveHearts,
-        state.memberHearts
-      )
+    const requiredBladeHearts = calculateAllRequiredBladeHearts(
+      state.requiredLiveHearts,
+      state.memberHearts
+    )
 
     // 表示中のハート色リストの取得
     const requiredLiveHeartColors = getVisibleColorNames(
@@ -175,7 +169,6 @@ export const colorfulHeartService = {
       requiredLiveHeartCount,
       memberHeartCount,
       totalRequiredBladeHearts,
-      liveResultMessage,
       requiredBladeHearts,
       requiredLiveHeartColors,
       memberHeartColors,

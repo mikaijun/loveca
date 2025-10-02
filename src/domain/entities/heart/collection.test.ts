@@ -4,6 +4,8 @@ import {
   HeartCollection,
   calculateMemberHeartSurplus,
   calculateTotalMemberHeartSurplus,
+  calculateRequiredGrayBladeHeart,
+  calculateRequiredBladeHeartByColor,
   getHeartStateByColor,
   getTotalEffectiveCount,
   getVisibleColorNames,
@@ -13,7 +15,35 @@ import {
   withUpdatedVisibilities,
   createMemberHeartCollection,
   createRequiredLiveHeartCollection,
+  calculateTotalRequiredBladeHearts,
+  calculateAllRequiredBladeHearts,
 } from '@domain/entities/heart/collection'
+
+describe('calculateAllRequiredBladeHearts', () => {
+  it('全ての必要ブレードハート数が正しく計算されることを確認', () => {
+    const requiredLiveHearts: HeartCollection = [
+      { color: 'pink', count: 4, visibility: true },
+      { color: 'green', count: 3, visibility: true },
+    ]
+
+    const memberHearts: HeartCollection = [
+      { color: 'pink', count: 2, visibility: true },
+      { color: 'green', count: 1, visibility: true },
+    ]
+
+    const actual = calculateAllRequiredBladeHearts(
+      requiredLiveHearts,
+      memberHearts
+    )
+
+    const expected = [
+      { color: 'pink', count: 4 - 2, visibility: true },
+      { color: 'green', count: 3 - 1, visibility: true },
+    ]
+
+    expect(actual).toEqual(expected)
+  })
+})
 
 describe('calculateMemberHeartSurplus', () => {
   it('メンバーハートが必要数を上回る場合、余剰数が正しく計算されること', () => {
@@ -64,6 +94,144 @@ describe('calculateMemberHeartSurplus', () => {
 
     // 余剰がない場合は全て0
     expect(actual).toEqual([0, 0, 0, 0, 0, 0])
+  })
+})
+
+describe('calculateRequiredGrayBladeHeart', () => {
+  it('灰色ハートの必要数からメンバーハートの余剰数を差し引いた値が返されること', () => {
+    const requiredLiveHearts: HeartCollection = [
+      { color: 'pink', count: 2, visibility: true },
+      { color: 'green', count: 1, visibility: true },
+      { color: 'blue', count: 0, visibility: true },
+      { color: 'red', count: 3, visibility: true },
+      { color: 'yellow', count: 0, visibility: true },
+      { color: 'purple', count: 1, visibility: true },
+      { color: 'gray', count: 5, visibility: true }, // 灰色必要数: 5
+    ]
+
+    const memberHearts: HeartCollection = [
+      { color: 'pink', count: 4, visibility: true }, // 余剰: 2
+      { color: 'green', count: 2, visibility: true }, // 余剰: 1
+      { color: 'blue', count: 1, visibility: true }, // 余剰: 1
+      { color: 'red', count: 3, visibility: true }, // 余剰: 0
+      { color: 'yellow', count: 2, visibility: true }, // 余剰: 2
+      { color: 'purple', count: 1, visibility: true }, // 余剰: 0
+    ]
+
+    const actual = calculateRequiredGrayBladeHeart(
+      requiredLiveHearts,
+      memberHearts
+    )
+
+    // 灰色必要数5 - メンバー余剰数合計(2+1+1+0+2+0=6) = -1 → 0 (最小値)
+    const expected = 0
+    expect(actual).toBe(expected)
+  })
+
+  it('メンバーハートの余剰がない場合、灰色ハートの必要数がそのまま返されること', () => {
+    const requiredLiveHearts: HeartCollection = [
+      { color: 'pink', count: 5, visibility: true },
+      { color: 'green', count: 3, visibility: true },
+      { color: 'blue', count: 2, visibility: true },
+      { color: 'red', count: 4, visibility: true },
+      { color: 'yellow', count: 1, visibility: true },
+      { color: 'purple', count: 2, visibility: true },
+      { color: 'gray', count: 3, visibility: true }, // 灰色必要数: 3
+    ]
+
+    const memberHearts: HeartCollection = [
+      { color: 'pink', count: 2, visibility: true }, // 不足
+      { color: 'green', count: 3, visibility: true }, // 同じ
+      { color: 'blue', count: 1, visibility: true }, // 不足
+      { color: 'red', count: 0, visibility: true }, // 不足
+      { color: 'yellow', count: 1, visibility: true }, // 同じ
+      { color: 'purple', count: 0, visibility: true }, // 不足
+    ]
+
+    const actual = calculateRequiredGrayBladeHeart(
+      requiredLiveHearts,
+      memberHearts
+    )
+
+    // 灰色必要数3 - メンバー余剰数合計0 = 3
+    const expected = 3
+    expect(actual).toBe(expected)
+  })
+})
+
+describe('calculateRequiredBladeHeartByColor', () => {
+  it('通常の色の場合、必要数からメンバー数を差し引いた値が返されること', () => {
+    const requiredLiveHearts: HeartCollection = [
+      { color: 'pink', count: 5, visibility: true },
+      { color: 'green', count: 3, visibility: true },
+    ]
+
+    const memberHearts: HeartCollection = [
+      { color: 'pink', count: 2, visibility: true },
+      { color: 'green', count: 4, visibility: true },
+    ]
+
+    const actual = calculateRequiredBladeHeartByColor(
+      requiredLiveHearts,
+      memberHearts,
+      'pink'
+    )
+
+    const expected = 5 - 2
+    expect(actual).toBe(expected)
+  })
+
+  it('grayの場合、灰色ハートの必要数からメンバーハートの余剰数を差し引いた値が返されることを確認', () => {
+    const requiredLiveHearts: HeartCollection = [
+      { color: 'pink', count: 2, visibility: true },
+      { color: 'green', count: 1, visibility: true },
+      { color: 'blue', count: 0, visibility: true },
+      { color: 'red', count: 3, visibility: true },
+      { color: 'yellow', count: 0, visibility: true },
+      { color: 'purple', count: 1, visibility: true },
+      { color: 'gray', count: 5, visibility: true },
+    ]
+
+    const memberHearts: HeartCollection = [
+      { color: 'pink', count: 3, visibility: true }, // 余剰: 1
+      { color: 'green', count: 2, visibility: true }, // 余剰: 1
+      { color: 'blue', count: 1, visibility: true }, // 余剰: 1
+      { color: 'red', count: 3, visibility: true }, // 余剰: 0
+      { color: 'yellow', count: 2, visibility: true }, // 余剰: 2
+      { color: 'purple', count: 1, visibility: true }, // 余剰: 0
+    ]
+
+    const actual = calculateRequiredBladeHeartByColor(
+      requiredLiveHearts,
+      memberHearts,
+      'gray'
+    )
+
+    // 灰色必要数5 - メンバー余剰数合計(1+1+1+0+2+0=5) = 0
+    const expected = 0
+    expect(actual).toBe(expected)
+  })
+})
+
+describe('calculateTotalRequiredBladeHearts', () => {
+  it('合計必要ブレードハート数が正しく計算されることを確認', () => {
+    const requiredLiveHearts: HeartCollection = [
+      { color: 'pink', count: 4, visibility: true },
+      { color: 'green', count: 3, visibility: true },
+    ]
+
+    const memberHearts: HeartCollection = [
+      { color: 'pink', count: 2, visibility: true },
+      { color: 'green', count: 1, visibility: true },
+    ]
+
+    const actual = calculateTotalRequiredBladeHearts(
+      requiredLiveHearts,
+      memberHearts
+    )
+
+    const expected = 4 - 2 + (3 - 1)
+    expect(actual).toBe(expected)
   })
 })
 
