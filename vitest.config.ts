@@ -11,6 +11,7 @@ export default defineConfig({
       '@constants/': path.join(__dirname, 'src/constants/'),
       '@components/': path.join(__dirname, 'src/components/'),
       '@domain/': path.join(__dirname, 'src/domain/'),
+      '@utils/': path.join(__dirname, 'src/utils/'),
     },
   },
 })
