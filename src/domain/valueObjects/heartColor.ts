@@ -51,3 +51,10 @@ export const getAllMemberHeartColors = (): HeartColor[] => {
     createHeartColor('purple'),
   ]
 }
+
+/**
+ * 灰色ハートかどうかを判定する
+ */
+export const isGrayHeart = (color: HeartColor): boolean => {
+  return getHeartColorValue(color) === 'gray'
+}

@@ -9,6 +9,8 @@ import {
   getTotalEffectiveCount,
   withUpdatedVisibilities,
   getVisibleColorNames,
+  calculateMemberHeartSurplus,
+  calculateTotalMemberHeartSurplus,
 } from '@domain/entities/heart/collection'
 import { Heart } from '@domain/entities/heart'
 import { HeartColor, MemberHeartColor } from '@domain/valueObjects/heartColor'
@@ -320,5 +322,166 @@ describe('getVisibleColorNames', () => {
 
     expect(visibleColorNames).toContain('pink')
     expect(visibleColorNames).not.toContain('gray') // visibleでもgrayは除外
+  })
+})
+
+describe('calculateMemberHeartSurplus', () => {
+  it('メンバーハートが必要数を上回る場合、余剰数が正しく計算されること', () => {
+    const requiredLiveHearts = createTestHeartCollection({
+      pink: 2,
+      green: 1,
+      blue: 0,
+      red: 3,
+      yellow: 0,
+      purple: 1,
+    })
+
+    const memberHearts = createTestHeartCollection({
+      pink: 5, // 3余剰
+      green: 1, // 0余剰
+      blue: 2, // 2余剰
+      red: 1, // 0余剰（不足）
+      yellow: 3, // 3余剰
+      purple: 4, // 3余剰
+    })
+
+    const surplus = calculateMemberHeartSurplus(
+      requiredLiveHearts,
+      memberHearts
+    )
+
+    // 各色の余剰数を確認（getAllMemberHeartColorsの順序: pink, green, blue, red, yellow, purple）
+    expect(surplus).toEqual([3, 0, 2, 0, 3, 3])
+  })
+
+  it('メンバーハートが必要数に満たない場合、余剰数は0になること', () => {
+    const requiredLiveHearts = createTestHeartCollection({
+      pink: 5,
+      green: 3,
+      blue: 2,
+      red: 4,
+      yellow: 1,
+      purple: 2,
+    })
+
+    const memberHearts = createTestHeartCollection({
+      pink: 2, // 不足
+      green: 3, // 同じ
+      blue: 1, // 不足
+      red: 0, // 不足
+      yellow: 1, // 同じ
+      purple: 0, // 不足
+    })
+
+    const surplus = calculateMemberHeartSurplus(
+      requiredLiveHearts,
+      memberHearts
+    )
+
+    // 余剰がない場合は全て0
+    expect(surplus).toEqual([0, 0, 0, 0, 0, 0])
+  })
+
+  it('必要ライブハートに存在しない色のメンバーハートは余剰として計算されること', () => {
+    const requiredLiveHearts = createTestHeartCollection({
+      pink: 2,
+      // その他の色は存在しない（0と同じ扱い）
+    })
+
+    const memberHearts = createTestHeartCollection({
+      pink: 3, // 1余剰
+      green: 2, // 2余剰（必要数0なので）
+      blue: 1, // 1余剰（必要数0なので）
+      red: 0, // 0余剰
+      yellow: 4, // 4余剰（必要数0なので）
+      purple: 0, // 0余剰
+    })
+
+    const surplus = calculateMemberHeartSurplus(
+      requiredLiveHearts,
+      memberHearts
+    )
+
+    expect(surplus).toEqual([1, 2, 1, 0, 4, 0])
+  })
+})
+
+describe('calculateTotalMemberHeartSurplus', () => {
+  it('メンバーハートの余剰数の合計が正しく計算されること', () => {
+    const requiredLiveHearts = createTestHeartCollection({
+      pink: 2,
+      green: 1,
+      blue: 0,
+      red: 3,
+      yellow: 0,
+      purple: 1,
+    })
+
+    const memberHearts = createTestHeartCollection({
+      pink: 5, // 3余剰
+      green: 1, // 0余剰
+      blue: 2, // 2余剰
+      red: 1, // 0余剰（不足）
+      yellow: 3, // 3余剰
+      purple: 4, // 3余剰
+    })
+
+    const total = calculateTotalMemberHeartSurplus(
+      requiredLiveHearts,
+      memberHearts
+    )
+
+    // 3 + 0 + 2 + 0 + 3 + 3 = 11
+    expect(total).toBe(11)
+  })
+
+  it('余剰がない場合、合計は0になること', () => {
+    const requiredLiveHearts = createTestHeartCollection({
+      pink: 5,
+      green: 3,
+      blue: 2,
+      red: 4,
+      yellow: 1,
+      purple: 2,
+    })
+
+    const memberHearts = createTestHeartCollection({
+      pink: 2, // 不足
+      green: 3, // 同じ
+      blue: 1, // 不足
+      red: 0, // 不足
+      yellow: 1, // 同じ
+      purple: 0, // 不足
+    })
+
+    const total = calculateTotalMemberHeartSurplus(
+      requiredLiveHearts,
+      memberHearts
+    )
+
+    expect(total).toBe(0)
+  })
+
+  it('全てのメンバーハートが余剰の場合、正しい合計が返されること', () => {
+    const requiredLiveHearts = createTestHeartCollection({
+      // 全て0（必要数なし）
+    })
+
+    const memberHearts = createTestHeartCollection({
+      pink: 2,
+      green: 3,
+      blue: 1,
+      red: 4,
+      yellow: 2,
+      purple: 1,
+    })
+
+    const total = calculateTotalMemberHeartSurplus(
+      requiredLiveHearts,
+      memberHearts
+    )
+
+    // 2 + 3 + 1 + 4 + 2 + 1 = 13
+    expect(total).toBe(13)
   })
 })
