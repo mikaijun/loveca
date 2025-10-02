@@ -28,7 +28,7 @@ const createTestHeartCollection = (
     return heart
   })
 
-  return { states }
+  return states
 }
 
 const createTestHeartColor = (value: string): HeartColor => {
@@ -208,7 +208,7 @@ describe('createMemberHeartCollection', () => {
     })
     const expectedColors = ['pink', 'green', 'blue', 'red', 'yellow', 'purple']
 
-    expect(collection.states.length).toBe(expectedColors.length)
+    expect(collection.length).toBe(expectedColors.length)
 
     expectedColors.forEach((colorValue) => {
       const color = createTestHeartColor(colorValue)
@@ -241,7 +241,7 @@ describe('createRequiredLiveHeartCollection', () => {
       'gray',
     ]
 
-    expect(collection.states.length).toBe(expectedColors.length)
+    expect(collection.length).toBe(expectedColors.length)
 
     expectedColors.forEach((colorValue) => {
       const color = createTestHeartColor(colorValue)

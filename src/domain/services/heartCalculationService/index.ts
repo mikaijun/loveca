@@ -70,7 +70,7 @@ export const heartCalculationService = {
     requiredLiveHearts: HeartCollection,
     memberHearts: HeartCollection
   ): HeartCollection => {
-    const states = requiredLiveHearts.states.map((state) => {
+    const states = requiredLiveHearts.map((state) => {
       const requiredBladeCount =
         heartCalculationService.calculateRequiredBladeHeartByColor(
           requiredLiveHearts,
@@ -81,7 +81,7 @@ export const heartCalculationService = {
       return { ...state, count: requiredBladeCount }
     })
 
-    return { states }
+    return states
   },
 
   /**

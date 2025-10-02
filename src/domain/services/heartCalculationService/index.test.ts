@@ -18,7 +18,7 @@ const createTestHeartCollection = (
     return heart
   })
 
-  return { states }
+  return states
 }
 
 describe('calculateRequiredBladeHeartByColor', () => {
