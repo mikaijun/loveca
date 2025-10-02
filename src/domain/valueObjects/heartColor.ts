@@ -22,13 +22,6 @@ export const createHeartColor = (value: string): HeartColor => {
   return { value: value as HeartColor['value'] }
 }
 
-export const getHeartColorValue = (color: HeartColor): HeartColor['value'] => {
-  return color.value
-}
-
-/**
- * 全てのライブ用ハート色を取得
- */
 export const getAllLiveHeartColors = (): HeartColor[] => {
   return [
     createHeartColor('pink'),
@@ -52,9 +45,10 @@ export const getAllMemberHeartColors = (): HeartColor[] => {
   ]
 }
 
-/**
- * 灰色ハートかどうかを判定する
- */
+export const getHeartColorValue = (color: HeartColor): HeartColor['value'] => {
+  return color.value
+}
+
 export const isGrayHeart = (color: HeartColor): boolean => {
   return getHeartColorValue(color) === 'gray'
 }
