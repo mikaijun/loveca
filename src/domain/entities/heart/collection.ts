@@ -18,13 +18,80 @@ export interface HeartCollection {
   readonly states: readonly Heart[]
 }
 
+/**
+ * メンバーハートの各色における余剰数を計算する
+ */
+export const calculateMemberHeartSurplus = (
+  requiredLiveHearts: HeartCollection,
+  memberHearts: HeartCollection
+): number[] => {
+  return getAllMemberHeartColors().map((color) => {
+    const requiredState = getHeartStateByColor(requiredLiveHearts, color)
+    const memberState = getHeartStateByColor(memberHearts, color)
+
+    const requiredCount = requiredState ? getEffectiveCount(requiredState) : 0
+    const memberCount = memberState ? getEffectiveCount(memberState) : 0
+
+    return Math.max(memberCount - requiredCount, 0)
+  })
+}
+
+/**
+ * メンバーハートの余剰数の合計を計算する
+ */
+export const calculateTotalMemberHeartSurplus = (
+  requiredLiveHearts: HeartCollection,
+  memberHearts: HeartCollection
+): number => {
+  const surplusArray = calculateMemberHeartSurplus(
+    requiredLiveHearts,
+    memberHearts
+  )
+  return surplusArray.reduce((acc, surplus) => acc + surplus, 0)
+}
+
+export const createMemberHeartCollection = (): HeartCollection => {
+  const states = getAllMemberHeartColors().map((color) => createHeart(color))
+  return { states }
+}
+
 export const createRequiredLiveHeartCollection = (): HeartCollection => {
   const states = getAllLiveHeartColors().map((color) => createHeart(color))
   return { states }
 }
 
-export const createMemberHeartCollection = (): HeartCollection => {
-  const states = getAllMemberHeartColors().map((color) => createHeart(color))
+export const getHeartStateByColor = (
+  collection: HeartCollection,
+  color: HeartColor
+): Heart | undefined => {
+  return collection.states.find((heart) => heart.color === color)
+}
+
+export const getTotalEffectiveCount = (collection: HeartCollection): number => {
+  return collection.states.reduce((total, heart) => {
+    return total + getEffectiveCount(heart)
+  }, 0)
+}
+
+export const getVisibleColorNames = (
+  collection: HeartCollection
+): MemberHeartColor[] => {
+  return collection.states
+    .filter((heart) => heart.visibility && heart.color !== 'gray')
+    .map((heart) => heart.color as MemberHeartColor)
+}
+
+export const withDecrementedHeartCount = (
+  collection: HeartCollection,
+  color: HeartColor
+): HeartCollection => {
+  const states = collection.states.map((heart) => {
+    if (heart.color === color) {
+      return withDecrementedCount(heart)
+    }
+    return heart
+  })
+
   return { states }
 }
 
@@ -35,20 +102,6 @@ export const withIncrementedHeartCount = (
   const states = collection.states.map((heart) => {
     if (heart.color === color) {
       return withIncrementedCount(heart)
-    }
-    return heart
-  })
-
-  return { states }
-}
-
-export const withDecrementedHeartCount = (
-  collection: HeartCollection,
-  color: HeartColor
-): HeartCollection => {
-  const states = collection.states.map((heart) => {
-    if (heart.color === color) {
-      return withDecrementedCount(heart)
     }
     return heart
   })
@@ -81,57 +134,4 @@ export const withUpdatedVisibilities = (
   })
 
   return { states }
-}
-
-export const getTotalEffectiveCount = (collection: HeartCollection): number => {
-  return collection.states.reduce((total, heart) => {
-    return total + getEffectiveCount(heart)
-  }, 0)
-}
-
-export const getHeartStateByColor = (
-  collection: HeartCollection,
-  color: HeartColor
-): Heart | undefined => {
-  return collection.states.find((heart) => heart.color === color)
-}
-
-export const getVisibleColorNames = (
-  collection: HeartCollection
-): MemberHeartColor[] => {
-  return collection.states
-    .filter((heart) => heart.visibility && heart.color !== 'gray')
-    .map((heart) => heart.color as MemberHeartColor)
-}
-
-/**
- * メンバーハートの各色における余剰数を計算する
- */
-export const calculateMemberHeartSurplus = (
-  requiredLiveHearts: HeartCollection,
-  memberHearts: HeartCollection
-): number[] => {
-  return getAllMemberHeartColors().map((color) => {
-    const requiredState = getHeartStateByColor(requiredLiveHearts, color)
-    const memberState = getHeartStateByColor(memberHearts, color)
-
-    const requiredCount = requiredState ? getEffectiveCount(requiredState) : 0
-    const memberCount = memberState ? getEffectiveCount(memberState) : 0
-
-    return Math.max(memberCount - requiredCount, 0)
-  })
-}
-
-/**
- * メンバーハートの余剰数の合計を計算する
- */
-export const calculateTotalMemberHeartSurplus = (
-  requiredLiveHearts: HeartCollection,
-  memberHearts: HeartCollection
-): number => {
-  const surplusArray = calculateMemberHeartSurplus(
-    requiredLiveHearts,
-    memberHearts
-  )
-  return surplusArray.reduce((acc, surplus) => acc + surplus, 0)
 }
