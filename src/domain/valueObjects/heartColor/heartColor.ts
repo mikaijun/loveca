@@ -9,7 +9,7 @@ export type HeartColor =
 
 export type MemberHeartColor = Exclude<HeartColor, 'gray'>
 
-export const allLiveHeartColors: HeartColor[] = [
+export const liveHeartColors: HeartColor[] = [
   'pink',
   'green',
   'blue',

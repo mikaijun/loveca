@@ -17,7 +17,7 @@ import {
   getVisibleColorNames,
 } from '@domain/entities/heart/collection'
 import {
-  allLiveHeartColors,
+  liveHeartColors,
   allMemberHeartColors,
 } from '@domain/valueObjects/heartColor/heartColor'
 import { getEffectiveCount, getDisplayCount } from '@domain/entities/heart'
@@ -109,7 +109,7 @@ export default function HeartManagerPage() {
           />
 
           <div className="HeartCounterGroup">
-            {allLiveHeartColors.map((color) => {
+            {liveHeartColors.map((color) => {
               const colorValue = color
               const requiredState = getHeartStateByColor(
                 requiredLiveHearts,
@@ -146,7 +146,7 @@ export default function HeartManagerPage() {
           />
 
           <div className="HeartCounterGroup">
-            {allLiveHeartColors.map((color) => {
+            {liveHeartColors.map((color) => {
               const colorValue = color
               const state = getHeartStateByColor(requiredLiveHearts, color)
 

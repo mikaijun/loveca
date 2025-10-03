@@ -9,7 +9,7 @@ import {
 } from '@domain/entities/heart'
 import {
   HeartColor,
-  allLiveHeartColors,
+  liveHeartColors,
   allMemberHeartColors,
   MemberHeartColor,
 } from '@domain/valueObjects/heartColor/heartColor'
@@ -131,7 +131,7 @@ export const createMemberHeartCollection = (): HeartCollection => {
 }
 
 export const createRequiredLiveHeartCollection = (): HeartCollection => {
-  return allLiveHeartColors.map((color) => createHeart(color))
+  return liveHeartColors.map((color) => createHeart(color))
 }
 
 export const getHeartStateByColor = (
