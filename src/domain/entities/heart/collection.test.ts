@@ -16,10 +16,10 @@ import {
   createMemberHeartCollection,
   createRequiredLiveHeartCollection,
   calculateTotalRequiredBladeHearts,
-  calculateAllRequiredBladeHearts,
+  calculateRequiredBladeHearts,
 } from '@domain/entities/heart/collection'
 
-describe('calculateAllRequiredBladeHearts', () => {
+describe('calculateRequiredBladeHearts', () => {
   it('全ての必要ブレードハート数が正しく計算されることを確認', () => {
     const requiredLiveHearts: HeartCollection = [
       { color: 'pink', count: 4, visibility: true },
@@ -31,7 +31,7 @@ describe('calculateAllRequiredBladeHearts', () => {
       { color: 'green', count: 1, visibility: true },
     ]
 
-    const actual = calculateAllRequiredBladeHearts(
+    const actual = calculateRequiredBladeHearts(
       requiredLiveHearts,
       memberHearts
     )

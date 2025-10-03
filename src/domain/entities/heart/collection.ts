@@ -19,7 +19,7 @@ export type HeartCollection = readonly Heart[]
 /**
  * 全ての必要ブレードハートの状態を計算する
  */
-export const calculateAllRequiredBladeHearts = (
+export const calculateRequiredBladeHearts = (
   requiredLiveHearts: HeartCollection,
   memberHearts: HeartCollection
 ): HeartCollection => {
@@ -118,7 +118,7 @@ export const calculateTotalRequiredBladeHearts = (
   requiredLiveHearts: HeartCollection,
   memberHearts: HeartCollection
 ): number => {
-  const allBladeHearts = calculateAllRequiredBladeHearts(
+  const allBladeHearts = calculateRequiredBladeHearts(
     requiredLiveHearts,
     memberHearts
   )

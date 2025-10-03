@@ -13,7 +13,7 @@ import {
 import {
   getHeartStateByColor,
   getTotalEffectiveCount,
-  calculateAllRequiredBladeHearts,
+  calculateRequiredBladeHearts,
   getVisibleColorNames,
 } from '@domain/entities/heart/collection'
 import {
@@ -58,7 +58,7 @@ export default function HeartManagerPage() {
   const colorfulRequiredLiveHeartCount =
     getTotalEffectiveCount(requiredLiveHearts)
   const colorfulMemberHeartCount = getTotalEffectiveCount(memberHearts)
-  const requiredBladeHearts = calculateAllRequiredBladeHearts(
+  const requiredBladeHearts = calculateRequiredBladeHearts(
     requiredLiveHearts,
     memberHearts
   )
