@@ -10,7 +10,7 @@ describe('createKasumiCard', () => {
       count: 2,
       ability: {
         lookCount: 5,
-        successRemoveCount: 1,
+        successRemoveCount: 4,
         failRemoveCount: 5,
       },
     }

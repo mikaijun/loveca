@@ -10,7 +10,7 @@ export function createRenCard(count: number): RenCard {
     count,
     ability: {
       lookCount: 5,
-      successRemoveCount: 1,
+      successRemoveCount: 4,
       failRemoveCount: 5,
     },
   }
