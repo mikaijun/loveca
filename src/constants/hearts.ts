@@ -2,7 +2,15 @@
  * ラブカに存在するハートの色
  */
 export type HeartIconProps = {
-  color: 'pink' | 'green' | 'blue' | 'red' | 'yellow' | 'purple' | 'gray'
+  color:
+    | 'pink'
+    | 'green'
+    | 'blue'
+    | 'red'
+    | 'yellow'
+    | 'purple'
+    | 'gray'
+    | 'all'
 }
 
 /**

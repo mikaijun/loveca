@@ -12,6 +12,7 @@ const iconMap = {
   yellow: Sparkle,
   purple: Diamond,
   gray: null,
+  all: null,
 }
 
 const colorMap = {
@@ -22,6 +23,7 @@ const colorMap = {
   yellow: colors.amber[9],
   purple: colors.purple[10],
   gray: colors.slate[11],
+  all: colors.white,
 }
 
 export const HeartIcon: React.FC<HeartIconProps> = ({ color }) => {
