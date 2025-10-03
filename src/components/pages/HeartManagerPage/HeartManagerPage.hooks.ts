@@ -1,5 +1,5 @@
 import { useState, useCallback, useMemo } from 'react'
-import { MemberHeartColor } from '@domain/valueObjects/heartColor/heartColor'
+
 import {
   createRequiredLiveHeartCollection,
   createMemberHeartCollection,
@@ -9,8 +9,10 @@ import {
   withUpdatedVisibilities,
   calculateTotalRequiredBladeHearts,
   getTotalEffectiveCount,
+  filterRequiredLiveHeartCollection,
+  filterMemberHeartCollection,
 } from '@domain/entities/heart/collection'
-import { HeartIconProps } from '@constants/hearts'
+import { HeartColor } from '@domain/valueObjects/heartColor/heartColor'
 
 export const useColorfulHeartManager = () => {
   const [colorfulHeartState, setColorfulHeartState] = useState(() => ({
@@ -27,69 +29,61 @@ export const useColorfulHeartManager = () => {
       : `必要ブレードハート数: ${calculateTotalRequiredBladeHearts(colorfulHeartState.requiredLiveHearts, colorfulHeartState.memberHearts)}`
   }, [colorfulHeartState.requiredLiveHearts, colorfulHeartState.memberHearts])
 
-  const handleIncrementRequiredLiveHeart = useCallback(
-    (color: HeartIconProps['color']) => {
-      setColorfulHeartState((prev) => {
-        const newRequiredLiveHearts = withIncrementedHeartCount(
-          prev.requiredLiveHearts,
-          color
-        )
-        return {
-          ...prev,
-          requiredLiveHearts: newRequiredLiveHearts,
-        }
-      })
-    },
-    []
-  )
+  const handleIncrementRequiredLiveHeart = useCallback((color: HeartColor) => {
+    setColorfulHeartState((prev) => {
+      const newRequiredLiveHearts = withIncrementedHeartCount(
+        prev.requiredLiveHearts,
+        color
+      )
+      return {
+        ...prev,
+        requiredLiveHearts: filterRequiredLiveHeartCollection(
+          newRequiredLiveHearts
+        ),
+      }
+    })
+  }, [])
 
-  const handleDecrementRequiredLiveHeart = useCallback(
-    (color: HeartIconProps['color']) => {
-      setColorfulHeartState((prev) => {
-        const newRequiredLiveHearts = withDecrementedHeartCount(
-          prev.requiredLiveHearts,
-          color
-        )
-        return {
-          ...prev,
-          requiredLiveHearts: newRequiredLiveHearts,
-        }
-      })
-    },
-    []
-  )
+  const handleDecrementRequiredLiveHeart = useCallback((color: HeartColor) => {
+    setColorfulHeartState((prev) => {
+      const newRequiredLiveHearts = withDecrementedHeartCount(
+        prev.requiredLiveHearts,
+        color
+      )
+      return {
+        ...prev,
+        requiredLiveHearts: filterRequiredLiveHeartCollection(
+          newRequiredLiveHearts
+        ),
+      }
+    })
+  }, [])
 
-  const handleIncrementMemberHeart = useCallback(
-    (color: HeartIconProps['color']) => {
-      setColorfulHeartState((prev) => {
-        const newMemberHearts = withIncrementedHeartCount(
-          prev.memberHearts,
-          color
-        )
-        return {
-          ...prev,
-          memberHearts: newMemberHearts,
-        }
-      })
-    },
-    []
-  )
+  const handleIncrementMemberHeart = useCallback((color: HeartColor) => {
+    setColorfulHeartState((prev) => {
+      const newMemberHearts = withIncrementedHeartCount(
+        prev.memberHearts,
+        color
+      )
+      return {
+        ...prev,
+        memberHearts: filterMemberHeartCollection(newMemberHearts),
+      }
+    })
+  }, [])
 
-  const handleDecrementMemberHeart = useCallback(
-    (color: HeartIconProps['color']) => {
-      setColorfulHeartState((prev) => {
-        const newMemberHearts = withDecrementedHeartCount(
-          prev.memberHearts,
-          color
-        )
-        return {
-          ...prev,
-          memberHearts: newMemberHearts,
-        }
-      })
-    },
-    []
-  )
+  const handleDecrementMemberHeart = useCallback((color: HeartColor) => {
+    setColorfulHeartState((prev) => {
+      const newMemberHearts = withDecrementedHeartCount(
+        prev.memberHearts,
+        color
+      )
+      return {
+        ...prev,
+        memberHearts: filterMemberHeartCollection(newMemberHearts),
+      }
+    })
+  }, [])
 
   const handleResetHeartCounts = useCallback(() => {
     setColorfulHeartState((prev) => {
@@ -98,14 +92,16 @@ export const useColorfulHeartManager = () => {
       )
       const newMemberHearts = withResetHeartCounts(prev.memberHearts)
       return {
-        requiredLiveHearts: newRequiredLiveHearts,
-        memberHearts: newMemberHearts,
+        requiredLiveHearts: filterRequiredLiveHeartCollection(
+          newRequiredLiveHearts
+        ),
+        memberHearts: filterMemberHeartCollection(newMemberHearts),
       }
     })
   }, [])
 
   const handleChangeRequiredLiveHeartVisibility = useCallback(
-    (visibleColors: MemberHeartColor[]) => {
+    (visibleColors: HeartColor[]) => {
       setColorfulHeartState((prev) => {
         const newRequiredLiveHearts = withUpdatedVisibilities(
           prev.requiredLiveHearts,
@@ -114,7 +110,9 @@ export const useColorfulHeartManager = () => {
         )
         return {
           ...prev,
-          requiredLiveHearts: newRequiredLiveHearts,
+          requiredLiveHearts: filterRequiredLiveHeartCollection(
+            newRequiredLiveHearts
+          ),
         }
       })
     },
@@ -122,7 +120,7 @@ export const useColorfulHeartManager = () => {
   )
 
   const handleChangeMemberHeartVisibility = useCallback(
-    (visibleColors: MemberHeartColor[]) => {
+    (visibleColors: HeartColor[]) => {
       setColorfulHeartState((prev) => {
         const newMemberHearts = withUpdatedVisibilities(
           prev.memberHearts,
@@ -131,7 +129,7 @@ export const useColorfulHeartManager = () => {
         )
         return {
           ...prev,
-          memberHearts: newMemberHearts,
+          memberHearts: filterMemberHeartCollection(newMemberHearts),
         }
       })
     },

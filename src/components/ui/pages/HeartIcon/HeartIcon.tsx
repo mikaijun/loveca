@@ -2,7 +2,7 @@ import React from 'react'
 import { Flex } from '@radix-ui/themes'
 import { Heart, Plus, Asterisk, Minus, Sparkle, Diamond } from 'lucide-react'
 import { colors } from '@constants/colors'
-import { HeartIconProps } from '@constants/hearts'
+import { HeartColor } from '@domain/valueObjects/heartColor/heartColor'
 
 const iconMap = {
   pink: Plus,
@@ -26,7 +26,7 @@ const colorMap = {
   all: colors.white,
 }
 
-export const HeartIcon: React.FC<HeartIconProps> = ({ color }) => {
+export const HeartIcon: React.FC<{ color: HeartColor }> = ({ color }) => {
   const Icon = iconMap[color]
   const iconColor = colorMap[color]
   // NOTE: ハートの中のアイコンは種類によってサイズが異なるため、サイズを調整する

@@ -1,21 +1,13 @@
 import { describe, it, expect } from 'vitest'
 import {
-  getEffectiveCount,
-  withIncrementedCount,
-  withDecrementedCount,
-  createHeart,
   getDisplayCount,
+  getEffectiveCount,
+  isMemberHeart,
+  isRequiredLiveHeart,
+  withDecrementedCount,
+  withIncrementedCount,
   type Heart,
 } from '@domain/entities/heart'
-
-describe('createHeart', () => {
-  it('正しくHeartオブジェクトが作成されること', () => {
-    const actual = createHeart('pink')
-
-    const expected: Heart = { color: 'pink', count: 0, visibility: true }
-    expect(actual).toMatchObject(expected)
-  })
-})
 
 describe('getDisplayCount', () => {
   it('正しくcountが返されること', () => {
@@ -42,6 +34,52 @@ describe('getEffectiveCount', () => {
 
     const expected = 0
     expect(actual).toBe(expected)
+  })
+})
+
+describe('isMemberHeart', () => {
+  it('gray以外の色の場合、trueが返されること', () => {
+    const heart: Heart = { color: 'pink', count: 1, visibility: true }
+    const actual = isMemberHeart(heart)
+
+    expect(actual).toBe(true)
+  })
+
+  it('grayの場合、falseが返されること', () => {
+    const heart: Heart = { color: 'gray', count: 1, visibility: true }
+    const actual = isMemberHeart(heart)
+
+    expect(actual).toBe(false)
+  })
+
+  it('allの場合、trueが返されること', () => {
+    const heart: Heart = { color: 'all', count: 1, visibility: true }
+    const actual = isMemberHeart(heart)
+
+    expect(actual).toBe(true)
+  })
+})
+
+describe('isRequiredLiveHeart', () => {
+  it('all以外の色の場合、trueが返されること', () => {
+    const heart: Heart = { color: 'pink', count: 1, visibility: true }
+    const actual = isRequiredLiveHeart(heart)
+
+    expect(actual).toBe(true)
+  })
+
+  it('allの場合、falseが返されること', () => {
+    const heart: Heart = { color: 'all', count: 1, visibility: true }
+    const actual = isRequiredLiveHeart(heart)
+
+    expect(actual).toBe(false)
+  })
+
+  it('grayの場合、trueが返されること', () => {
+    const heart: Heart = { color: 'gray', count: 1, visibility: true }
+    const actual = isRequiredLiveHeart(heart)
+
+    expect(actual).toBe(true)
   })
 })
 

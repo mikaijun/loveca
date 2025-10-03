@@ -1,27 +1,22 @@
 import React, { useState } from 'react'
 import { Meta, StoryObj } from '@storybook/react'
 import { HeartColorSettingsModal } from './HeartColorSettingsModal'
-import { MemberHeartColor } from '@constants/hearts'
+import { HeartColor } from '@domain/valueObjects/heartColor/heartColor'
+import {
+  liveHeartColors,
+  memberHeartColors,
+} from '@domain/valueObjects/heartColor/heartColor'
 
 export default {
   component: HeartColorSettingsModal,
 } as Meta<typeof HeartColorSettingsModal>
 
-const DEFAULT_HEART_COLORS: MemberHeartColor[] = [
-  'pink',
-  'green',
-  'blue',
-  'red',
-  'yellow',
-  'purple',
-]
-
 export const Default: StoryObj<typeof HeartColorSettingsModal> = {
   render: () => {
     const [requiredLiveHeartColorList, setRequiredLiveHeartColorList] =
-      useState<MemberHeartColor[]>(DEFAULT_HEART_COLORS)
+      useState<HeartColor[]>(liveHeartColors)
     const [memberHeartColorList, setMemberHeartColorList] =
-      useState<MemberHeartColor[]>(DEFAULT_HEART_COLORS)
+      useState<HeartColor[]>(memberHeartColors)
     return (
       <>
         <HeartColorSettingsModal
@@ -38,9 +33,9 @@ export const Default: StoryObj<typeof HeartColorSettingsModal> = {
 export const Empty: StoryObj<typeof HeartColorSettingsModal> = {
   render: () => {
     const [requiredLiveHeartColorList, setRequiredLiveHeartColorList] =
-      useState<MemberHeartColor[]>([])
+      useState<HeartColor[]>([])
     const [memberHeartColorList, setMemberHeartColorList] = useState<
-      MemberHeartColor[]
+      HeartColor[]
     >([])
     return (
       <>

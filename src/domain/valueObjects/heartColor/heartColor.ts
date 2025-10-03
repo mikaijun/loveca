@@ -11,7 +11,7 @@ export type HeartColor =
 export type MemberHeartColor = Exclude<HeartColor, 'gray'>
 export type RequiredLiveHeartColor = Exclude<HeartColor, 'all'>
 
-export const liveHeartColors: HeartColor[] = [
+export const liveHeartColors: RequiredLiveHeartColor[] = [
   'pink',
   'green',
   'blue',

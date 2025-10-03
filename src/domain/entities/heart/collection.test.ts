@@ -2,10 +2,18 @@ import { describe, it, expect } from 'vitest'
 
 import {
   HeartCollection,
+  RequiredLiveHeartCollection,
+  MemberHeartCollection,
   calculateMemberHeartSurplus,
   calculateTotalMemberHeartSurplus,
   calculateRequiredGrayBladeHeart,
   calculateRequiredBladeHeartByColor,
+  calculateRequiredBladeHearts,
+  calculateTotalRequiredBladeHearts,
+  createMemberHeartCollection,
+  createRequiredLiveHeartCollection,
+  filterMemberHeartCollection,
+  filterRequiredLiveHeartCollection,
   getHeartStateByColor,
   getTotalEffectiveCount,
   getVisibleColorNames,
@@ -13,23 +21,19 @@ import {
   withIncrementedHeartCount,
   withResetHeartCounts,
   withUpdatedVisibilities,
-  createMemberHeartCollection,
-  createRequiredLiveHeartCollection,
-  calculateTotalRequiredBladeHearts,
-  calculateRequiredBladeHearts,
 } from '@domain/entities/heart/collection'
 
 describe('calculateRequiredBladeHearts', () => {
   it('全ての必要ブレードハート数が正しく計算されることを確認', () => {
-    const requiredLiveHearts: HeartCollection = [
+    const requiredLiveHearts: RequiredLiveHeartCollection = [
       { color: 'pink', count: 4, visibility: true },
       { color: 'green', count: 3, visibility: true },
-    ]
+    ] as const
 
-    const memberHearts: HeartCollection = [
+    const memberHearts: MemberHeartCollection = [
       { color: 'pink', count: 2, visibility: true },
       { color: 'green', count: 1, visibility: true },
-    ]
+    ] as const
 
     const actual = calculateRequiredBladeHearts(
       requiredLiveHearts,
@@ -39,7 +43,7 @@ describe('calculateRequiredBladeHearts', () => {
     const expected = [
       { color: 'pink', count: 4 - 2, visibility: true },
       { color: 'green', count: 3 - 1, visibility: true },
-    ]
+    ] as const
 
     expect(actual).toEqual(expected)
   })
@@ -47,22 +51,25 @@ describe('calculateRequiredBladeHearts', () => {
 
 describe('calculateMemberHeartSurplus', () => {
   it('メンバーハートが必要数を上回る場合、余剰数が正しく計算されること', () => {
-    const heartCollection: HeartCollection = [
+    const heartCollection: RequiredLiveHeartCollection = [
       { color: 'pink', count: 1, visibility: true },
       { color: 'green', count: 2, visibility: true },
       { color: 'blue', count: 3, visibility: true },
       { color: 'red', count: 4, visibility: true },
       { color: 'yellow', count: 5, visibility: true },
       { color: 'purple', count: 6, visibility: true },
-    ]
+    ] as const
 
     const requiredLiveHearts = heartCollection
 
-    const memberHearts: HeartCollection = [
+    const memberHearts: MemberHeartCollection = [
       { color: 'pink', count: 6, visibility: true },
       { color: 'green', count: 3, visibility: true },
-      ...heartCollection,
-    ]
+      { color: 'blue', count: 3, visibility: true },
+      { color: 'red', count: 4, visibility: true },
+      { color: 'yellow', count: 5, visibility: true },
+      { color: 'purple', count: 6, visibility: true },
+    ] as const
 
     const actual = calculateMemberHeartSurplus(requiredLiveHearts, memberHearts)
 
@@ -72,23 +79,23 @@ describe('calculateMemberHeartSurplus', () => {
   })
 
   it('メンバーハートが必要数に満たない場合、余剰数は0になること', () => {
-    const requiredLiveHearts: HeartCollection = [
+    const requiredLiveHearts: RequiredLiveHeartCollection = [
       { color: 'pink', count: 1, visibility: true },
       { color: 'green', count: 2, visibility: true },
       { color: 'blue', count: 3, visibility: true },
       { color: 'red', count: 4, visibility: true },
       { color: 'yellow', count: 5, visibility: true },
       { color: 'purple', count: 6, visibility: true },
-    ]
+    ] as const
 
-    const memberHearts: HeartCollection = [
+    const memberHearts: MemberHeartCollection = [
       { color: 'pink', count: 0, visibility: true },
       { color: 'green', count: 1, visibility: true },
       { color: 'blue', count: 2, visibility: true },
       { color: 'red', count: 3, visibility: true },
       { color: 'yellow', count: 4, visibility: true },
       { color: 'purple', count: 5, visibility: true },
-    ]
+    ] as const
 
     const actual = calculateMemberHeartSurplus(requiredLiveHearts, memberHearts)
 
@@ -99,7 +106,7 @@ describe('calculateMemberHeartSurplus', () => {
 
 describe('calculateRequiredGrayBladeHeart', () => {
   it('灰色ハートの必要数からメンバーハートの余剰数を差し引いた値が返されること', () => {
-    const requiredLiveHearts: HeartCollection = [
+    const requiredLiveHearts: RequiredLiveHeartCollection = [
       { color: 'pink', count: 2, visibility: true },
       { color: 'green', count: 1, visibility: true },
       { color: 'blue', count: 0, visibility: true },
@@ -107,16 +114,16 @@ describe('calculateRequiredGrayBladeHeart', () => {
       { color: 'yellow', count: 0, visibility: true },
       { color: 'purple', count: 1, visibility: true },
       { color: 'gray', count: 5, visibility: true }, // 灰色必要数: 5
-    ]
+    ] as const
 
-    const memberHearts: HeartCollection = [
+    const memberHearts: MemberHeartCollection = [
       { color: 'pink', count: 4, visibility: true }, // 余剰: 2
       { color: 'green', count: 2, visibility: true }, // 余剰: 1
       { color: 'blue', count: 1, visibility: true }, // 余剰: 1
       { color: 'red', count: 3, visibility: true }, // 余剰: 0
       { color: 'yellow', count: 2, visibility: true }, // 余剰: 2
       { color: 'purple', count: 1, visibility: true }, // 余剰: 0
-    ]
+    ] as const
 
     const actual = calculateRequiredGrayBladeHeart(
       requiredLiveHearts,
@@ -129,7 +136,7 @@ describe('calculateRequiredGrayBladeHeart', () => {
   })
 
   it('メンバーハートの余剰がない場合、灰色ハートの必要数がそのまま返されること', () => {
-    const requiredLiveHearts: HeartCollection = [
+    const requiredLiveHearts: RequiredLiveHeartCollection = [
       { color: 'pink', count: 5, visibility: true },
       { color: 'green', count: 3, visibility: true },
       { color: 'blue', count: 2, visibility: true },
@@ -137,16 +144,16 @@ describe('calculateRequiredGrayBladeHeart', () => {
       { color: 'yellow', count: 1, visibility: true },
       { color: 'purple', count: 2, visibility: true },
       { color: 'gray', count: 3, visibility: true }, // 灰色必要数: 3
-    ]
+    ] as const
 
-    const memberHearts: HeartCollection = [
+    const memberHearts: MemberHeartCollection = [
       { color: 'pink', count: 2, visibility: true }, // 不足
       { color: 'green', count: 3, visibility: true }, // 同じ
       { color: 'blue', count: 1, visibility: true }, // 不足
       { color: 'red', count: 0, visibility: true }, // 不足
       { color: 'yellow', count: 1, visibility: true }, // 同じ
       { color: 'purple', count: 0, visibility: true }, // 不足
-    ]
+    ] as const
 
     const actual = calculateRequiredGrayBladeHeart(
       requiredLiveHearts,
@@ -161,15 +168,15 @@ describe('calculateRequiredGrayBladeHeart', () => {
 
 describe('calculateRequiredBladeHeartByColor', () => {
   it('通常の色の場合、必要数からメンバー数を差し引いた値が返されること', () => {
-    const requiredLiveHearts: HeartCollection = [
+    const requiredLiveHearts: RequiredLiveHeartCollection = [
       { color: 'pink', count: 5, visibility: true },
       { color: 'green', count: 3, visibility: true },
-    ]
+    ] as const
 
-    const memberHearts: HeartCollection = [
+    const memberHearts: MemberHeartCollection = [
       { color: 'pink', count: 2, visibility: true },
       { color: 'green', count: 4, visibility: true },
-    ]
+    ] as const
 
     const actual = calculateRequiredBladeHeartByColor(
       requiredLiveHearts,
@@ -182,7 +189,7 @@ describe('calculateRequiredBladeHeartByColor', () => {
   })
 
   it('grayの場合、灰色ハートの必要数からメンバーハートの余剰数を差し引いた値が返されることを確認', () => {
-    const requiredLiveHearts: HeartCollection = [
+    const requiredLiveHearts: RequiredLiveHeartCollection = [
       { color: 'pink', count: 2, visibility: true },
       { color: 'green', count: 1, visibility: true },
       { color: 'blue', count: 0, visibility: true },
@@ -190,16 +197,16 @@ describe('calculateRequiredBladeHeartByColor', () => {
       { color: 'yellow', count: 0, visibility: true },
       { color: 'purple', count: 1, visibility: true },
       { color: 'gray', count: 5, visibility: true },
-    ]
+    ] as const
 
-    const memberHearts: HeartCollection = [
+    const memberHearts: MemberHeartCollection = [
       { color: 'pink', count: 3, visibility: true }, // 余剰: 1
       { color: 'green', count: 2, visibility: true }, // 余剰: 1
       { color: 'blue', count: 1, visibility: true }, // 余剰: 1
       { color: 'red', count: 3, visibility: true }, // 余剰: 0
       { color: 'yellow', count: 2, visibility: true }, // 余剰: 2
       { color: 'purple', count: 1, visibility: true }, // 余剰: 0
-    ]
+    ] as const
 
     const actual = calculateRequiredBladeHeartByColor(
       requiredLiveHearts,
@@ -215,15 +222,15 @@ describe('calculateRequiredBladeHeartByColor', () => {
 
 describe('calculateTotalRequiredBladeHearts', () => {
   it('合計必要ブレードハート数が正しく計算されることを確認', () => {
-    const requiredLiveHearts: HeartCollection = [
+    const requiredLiveHearts: RequiredLiveHeartCollection = [
       { color: 'pink', count: 4, visibility: true },
       { color: 'green', count: 3, visibility: true },
-    ]
+    ] as const
 
-    const memberHearts: HeartCollection = [
+    const memberHearts: MemberHeartCollection = [
       { color: 'pink', count: 2, visibility: true },
       { color: 'green', count: 1, visibility: true },
-    ]
+    ] as const
 
     const actual = calculateTotalRequiredBladeHearts(
       requiredLiveHearts,
@@ -237,21 +244,24 @@ describe('calculateTotalRequiredBladeHearts', () => {
 
 describe('calculateTotalMemberHeartSurplus', () => {
   it('メンバーハートの余剰数の合計が正しく計算されること', () => {
-    const heartCollection: HeartCollection = [
+    const heartCollection: RequiredLiveHeartCollection = [
       { color: 'pink', count: 1, visibility: true },
       { color: 'green', count: 2, visibility: true },
       { color: 'blue', count: 3, visibility: true },
       { color: 'red', count: 4, visibility: true },
       { color: 'yellow', count: 5, visibility: true },
       { color: 'purple', count: 6, visibility: true },
-    ]
+    ] as const
 
     const requiredLiveHearts = heartCollection
-    const memberHearts: HeartCollection = [
+    const memberHearts: MemberHeartCollection = [
       { color: 'pink', count: 6, visibility: true },
       { color: 'green', count: 3, visibility: true },
-      ...requiredLiveHearts,
-    ]
+      { color: 'blue', count: 3, visibility: true },
+      { color: 'red', count: 4, visibility: true },
+      { color: 'yellow', count: 5, visibility: true },
+      { color: 'purple', count: 6, visibility: true },
+    ] as const
 
     const actual = calculateTotalMemberHeartSurplus(
       requiredLiveHearts,
@@ -272,7 +282,7 @@ describe('createMemberHeartCollection', () => {
       { color: 'red', count: 0, visibility: true },
       { color: 'yellow', count: 0, visibility: true },
       { color: 'purple', count: 0, visibility: true },
-    ]
+    ] as const
 
     const expected = createMemberHeartCollection()
     expect(actual).toMatchObject(expected)
@@ -289,10 +299,90 @@ describe('createRequiredLiveHeartCollection', () => {
       { color: 'yellow', count: 0, visibility: true },
       { color: 'purple', count: 0, visibility: true },
       { color: 'gray', count: 0, visibility: true },
-    ]
+    ] as const
 
     const expected = createRequiredLiveHeartCollection()
     expect(actual).toMatchObject(expected)
+  })
+})
+
+describe('filterMemberHeartCollection', () => {
+  it('gray以外のハートのみが返されることを確認', () => {
+    const heartCollection: HeartCollection = [
+      { color: 'pink', count: 1, visibility: true },
+      { color: 'green', count: 2, visibility: true },
+      { color: 'blue', count: 3, visibility: true },
+      { color: 'red', count: 4, visibility: true },
+      { color: 'yellow', count: 5, visibility: true },
+      { color: 'purple', count: 6, visibility: true },
+      { color: 'gray', count: 7, visibility: true },
+      { color: 'all', count: 8, visibility: true },
+    ] as const
+
+    const actual = filterMemberHeartCollection(heartCollection)
+
+    const expected = [
+      { color: 'pink', count: 1, visibility: true },
+      { color: 'green', count: 2, visibility: true },
+      { color: 'blue', count: 3, visibility: true },
+      { color: 'red', count: 4, visibility: true },
+      { color: 'yellow', count: 5, visibility: true },
+      { color: 'purple', count: 6, visibility: true },
+      { color: 'all', count: 8, visibility: true },
+    ] as const
+
+    expect(actual).toEqual(expected)
+  })
+
+  it('grayのみのコレクションの場合、空配列が返されること', () => {
+    const heartCollection: HeartCollection = [
+      { color: 'gray', count: 1, visibility: true },
+      { color: 'gray', count: 2, visibility: true },
+    ] as const
+
+    const actual = filterMemberHeartCollection(heartCollection)
+
+    expect(actual).toEqual([])
+  })
+})
+
+describe('filterRequiredLiveHeartCollection', () => {
+  it('all以外のハートのみが返されることを確認', () => {
+    const heartCollection: HeartCollection = [
+      { color: 'pink', count: 1, visibility: true },
+      { color: 'green', count: 2, visibility: true },
+      { color: 'blue', count: 3, visibility: true },
+      { color: 'red', count: 4, visibility: true },
+      { color: 'yellow', count: 5, visibility: true },
+      { color: 'purple', count: 6, visibility: true },
+      { color: 'gray', count: 7, visibility: true },
+      { color: 'all', count: 8, visibility: true },
+    ] as const
+
+    const actual = filterRequiredLiveHeartCollection(heartCollection)
+
+    const expected = [
+      { color: 'pink', count: 1, visibility: true },
+      { color: 'green', count: 2, visibility: true },
+      { color: 'blue', count: 3, visibility: true },
+      { color: 'red', count: 4, visibility: true },
+      { color: 'yellow', count: 5, visibility: true },
+      { color: 'purple', count: 6, visibility: true },
+      { color: 'gray', count: 7, visibility: true },
+    ] as const
+
+    expect(actual).toEqual(expected)
+  })
+
+  it('allのみのコレクションの場合、空配列が返されること', () => {
+    const heartCollection: HeartCollection = [
+      { color: 'all', count: 1, visibility: true },
+      { color: 'all', count: 2, visibility: true },
+    ] as const
+
+    const actual = filterRequiredLiveHeartCollection(heartCollection)
+
+    expect(actual).toEqual([])
   })
 })
 
@@ -305,7 +395,7 @@ describe('getHeartStateByColor', () => {
       { color: 'red', count: 4, visibility: true },
       { color: 'yellow', count: 5, visibility: true },
       { color: 'purple', count: 6, visibility: true },
-    ]
+    ] as const
     const actual = getHeartStateByColor(heartCollection, 'red')
 
     const expected = { color: 'red', count: 4, visibility: true }
@@ -320,7 +410,7 @@ describe('getHeartStateByColor', () => {
       { color: 'red', count: 4, visibility: true },
       { color: 'yellow', count: 5, visibility: true },
       { color: 'purple', count: 6, visibility: true },
-    ]
+    ] as const
     const actual = getHeartStateByColor(heartCollection, 'gray')
     expect(actual).toBeUndefined()
   })
@@ -331,7 +421,7 @@ describe('getTotalEffectiveCount', () => {
     const collection: HeartCollection = [
       { color: 'red', count: 3, visibility: true },
       { color: 'blue', count: 2, visibility: true },
-    ]
+    ] as const
 
     const actual = getTotalEffectiveCount(collection)
 
@@ -349,7 +439,7 @@ describe('getVisibleColorNames', () => {
       { color: 'red', count: 4, visibility: false },
       { color: 'yellow', count: 5, visibility: false },
       { color: 'purple', count: 6, visibility: false },
-    ]
+    ] as const
 
     const actual = getVisibleColorNames(heartCollection)
 
@@ -366,7 +456,7 @@ describe('getVisibleColorNames', () => {
       { color: 'yellow', count: 5, visibility: false },
       { color: 'purple', count: 6, visibility: false },
       { color: 'gray', count: 7, visibility: true },
-    ]
+    ] as const
 
     const visibleColorNames = getVisibleColorNames(heartCollection)
 
@@ -384,7 +474,7 @@ describe('withDecrementedHeartCount', () => {
       { color: 'red', count: 4, visibility: false },
       { color: 'yellow', count: 5, visibility: false },
       { color: 'purple', count: 6, visibility: false },
-    ]
+    ] as const
 
     const actual = withDecrementedHeartCount(heartCollection, 'pink')
 
@@ -407,7 +497,7 @@ describe('withDecrementedHeartCount', () => {
       { color: 'red', count: 4, visibility: false },
       { color: 'yellow', count: 5, visibility: false },
       { color: 'purple', count: 6, visibility: false },
-    ]
+    ] as const
 
     const actual = withDecrementedHeartCount(heartCollection, 'pink')
 
@@ -432,7 +522,7 @@ describe('withIncrementedHeartCount', () => {
       { color: 'red', count: 4, visibility: false },
       { color: 'yellow', count: 5, visibility: false },
       { color: 'purple', count: 6, visibility: false },
-    ]
+    ] as const
 
     const actual = withIncrementedHeartCount(heartCollection, 'pink')
 
@@ -457,7 +547,7 @@ describe('withResetHeartCounts', () => {
       { color: 'red', count: 4, visibility: false },
       { color: 'yellow', count: 5, visibility: false },
       { color: 'purple', count: 6, visibility: false },
-    ]
+    ] as const
 
     const actual = withResetHeartCounts(heartCollection)
 
@@ -482,7 +572,7 @@ describe('withUpdatedVisibilities', () => {
       { color: 'red', count: 4, visibility: false },
       { color: 'yellow', count: 5, visibility: false },
       { color: 'purple', count: 6, visibility: false },
-    ]
+    ] as const
 
     const actual = withUpdatedVisibilities(
       heartCollection,
@@ -510,7 +600,7 @@ describe('withUpdatedVisibilities', () => {
       { color: 'yellow', count: 5, visibility: false },
       { color: 'purple', count: 6, visibility: false },
       { color: 'gray', count: 7, visibility: false },
-    ]
+    ] as const
 
     const actual = withUpdatedVisibilities(
       heartCollection,

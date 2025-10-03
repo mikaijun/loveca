@@ -1,4 +1,8 @@
-import { HeartColor } from '@domain/valueObjects/heartColor/heartColor'
+import {
+  HeartColor,
+  RequiredLiveHeartColor,
+  MemberHeartColor,
+} from '@domain/valueObjects/heartColor/heartColor'
 
 export interface Heart {
   readonly color: HeartColor
@@ -6,7 +10,28 @@ export interface Heart {
   readonly visibility: boolean
 }
 
-export const createHeart = (color: HeartColor): Heart => {
+export interface RequiredLiveHeart {
+  readonly color: RequiredLiveHeartColor
+  readonly count: number
+  readonly visibility: boolean
+}
+export interface MemberHeart {
+  readonly color: MemberHeartColor
+  readonly count: number
+  readonly visibility: boolean
+}
+
+export const createRequiredLiveHeart = (
+  color: RequiredLiveHeartColor
+): RequiredLiveHeart => {
+  return {
+    color,
+    count: 0,
+    visibility: true,
+  }
+}
+
+export const createMemberHeart = (color: MemberHeartColor): MemberHeart => {
   return {
     color,
     count: 0,
@@ -23,6 +48,16 @@ export const getEffectiveCount = (state: Heart): number => {
     return 0
   }
   return state.count
+}
+
+export const isMemberHeart = (heart: Heart): heart is MemberHeart => {
+  return heart.color !== 'gray'
+}
+
+export const isRequiredLiveHeart = (
+  heart: Heart
+): heart is RequiredLiveHeart => {
+  return heart.color !== 'all'
 }
 
 export const withDecrementedCount = (state: Heart): Heart => {
