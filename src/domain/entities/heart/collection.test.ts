@@ -66,7 +66,7 @@ describe('calculateMemberHeartSurplus', () => {
 
     const actual = calculateMemberHeartSurplus(requiredLiveHearts, memberHearts)
 
-    // 各色の余剰数を確認（getAllMemberHeartColorsの順序: pink, green, blue, red, yellow, purple）
+    // 各色の余剰数を確認（memberHeartColorsの順序: pink, green, blue, red, yellow, purple）
     const expected = [6 - 1, 3 - 2, 0, 0, 0, 0]
     expect(actual).toEqual(expected)
   })
