@@ -7,9 +7,9 @@ import { Dialog } from 'radix-ui'
 import { BsCupFill } from 'react-icons/bs'
 import { HiExternalLink } from 'react-icons/hi'
 import Link from 'next/link'
-import { Modal } from '@components/commons/ui/Modal'
-import { NumberSelect } from '@components/commons/function/NumberSelect'
-import { Summary } from '@components/commons/ui/Summary'
+import { Modal } from '@components/ui/commons/ui/Modal'
+import { NumberSelect } from '@components/ui/commons/function/NumberSelect'
+import { Summary } from '@components/ui/commons/ui/Summary'
 import './CardSettingsModal.css'
 
 interface CardSettingsModalProps {

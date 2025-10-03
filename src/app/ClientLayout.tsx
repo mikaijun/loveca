@@ -2,7 +2,7 @@
 
 import { Box, Theme, Text, Container, Flex } from '@radix-ui/themes'
 import { FaHeartCircleCheck } from 'react-icons/fa6'
-import { BottomNavigation } from '@components/commons/ui/BottomNavigation'
+import { BottomNavigation } from '@components/ui/commons/ui/BottomNavigation'
 import { colors } from '@constants/colors'
 
 export function ClientLayout({ children }: { children: React.ReactNode }) {
