@@ -13,12 +13,12 @@ import {
 import {
   getHeartStateByColor,
   getTotalEffectiveCount,
-  calculateAllRequiredBladeHearts,
+  calculateRequiredBladeHearts,
   getVisibleColorNames,
 } from '@domain/entities/heart/collection'
 import {
-  allLiveHeartColors,
-  allMemberHeartColors,
+  liveHeartColors,
+  memberHeartColors,
 } from '@domain/valueObjects/heartColor/heartColor'
 import { getEffectiveCount, getDisplayCount } from '@domain/entities/heart'
 import { HeartColorSettingsModal } from '@components/ui/pages/HeartColorSettingsModal'
@@ -39,7 +39,7 @@ export default function HeartManagerPage() {
     handleDecrementRequiredLiveHeart,
     handleIncrementMemberHeart,
     handleDecrementMemberHeart,
-    handleResetAllHeartCounts,
+    handleResetHeartCounts,
     handleChangeRequiredLiveHeartVisibility,
     handleChangeMemberHeartVisibility,
   } = useColorfulHeartManager()
@@ -58,7 +58,7 @@ export default function HeartManagerPage() {
   const colorfulRequiredLiveHeartCount =
     getTotalEffectiveCount(requiredLiveHearts)
   const colorfulMemberHeartCount = getTotalEffectiveCount(memberHearts)
-  const requiredBladeHearts = calculateAllRequiredBladeHearts(
+  const requiredBladeHearts = calculateRequiredBladeHearts(
     requiredLiveHearts,
     memberHearts
   )
@@ -98,7 +98,7 @@ export default function HeartManagerPage() {
               requiredLiveHeartColorList={requiredLiveHeartColorList}
             />
             <ResetButton
-              onReset={handleResetAllHeartCounts}
+              onReset={handleResetHeartCounts}
               text="カウントリセット"
             />
           </div>
@@ -109,7 +109,7 @@ export default function HeartManagerPage() {
           />
 
           <div className="HeartCounterGroup">
-            {allLiveHeartColors.map((color) => {
+            {liveHeartColors.map((color) => {
               const colorValue = color
               const requiredState = getHeartStateByColor(
                 requiredLiveHearts,
@@ -146,7 +146,7 @@ export default function HeartManagerPage() {
           />
 
           <div className="HeartCounterGroup">
-            {allLiveHeartColors.map((color) => {
+            {liveHeartColors.map((color) => {
               const colorValue = color
               const state = getHeartStateByColor(requiredLiveHearts, color)
 
@@ -172,7 +172,7 @@ export default function HeartManagerPage() {
           />
 
           <div className="HeartCounterGroup">
-            {allMemberHeartColors.map((color) => {
+            {memberHeartColors.map((color) => {
               const colorValue = color
               const state = getHeartStateByColor(memberHearts, color)
 

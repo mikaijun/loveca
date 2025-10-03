@@ -11,15 +11,15 @@ import {
   getVisibleColorNames,
   withDecrementedHeartCount,
   withIncrementedHeartCount,
-  withResetAllHeartCounts,
+  withResetHeartCounts,
   withUpdatedVisibilities,
   createMemberHeartCollection,
   createRequiredLiveHeartCollection,
   calculateTotalRequiredBladeHearts,
-  calculateAllRequiredBladeHearts,
+  calculateRequiredBladeHearts,
 } from '@domain/entities/heart/collection'
 
-describe('calculateAllRequiredBladeHearts', () => {
+describe('calculateRequiredBladeHearts', () => {
   it('全ての必要ブレードハート数が正しく計算されることを確認', () => {
     const requiredLiveHearts: HeartCollection = [
       { color: 'pink', count: 4, visibility: true },
@@ -31,7 +31,7 @@ describe('calculateAllRequiredBladeHearts', () => {
       { color: 'green', count: 1, visibility: true },
     ]
 
-    const actual = calculateAllRequiredBladeHearts(
+    const actual = calculateRequiredBladeHearts(
       requiredLiveHearts,
       memberHearts
     )
@@ -66,7 +66,7 @@ describe('calculateMemberHeartSurplus', () => {
 
     const actual = calculateMemberHeartSurplus(requiredLiveHearts, memberHearts)
 
-    // 各色の余剰数を確認（getAllMemberHeartColorsの順序: pink, green, blue, red, yellow, purple）
+    // 各色の余剰数を確認（memberHeartColorsの順序: pink, green, blue, red, yellow, purple）
     const expected = [6 - 1, 3 - 2, 0, 0, 0, 0]
     expect(actual).toEqual(expected)
   })
@@ -448,7 +448,7 @@ describe('withIncrementedHeartCount', () => {
   })
 })
 
-describe('withResetAllHeartCounts', () => {
+describe('withResetHeartCounts', () => {
   it('全ての色のハートカウントが0にリセットされることを確認', () => {
     const heartCollection: HeartCollection = [
       { color: 'pink', count: 1, visibility: true },
@@ -459,7 +459,7 @@ describe('withResetAllHeartCounts', () => {
       { color: 'purple', count: 6, visibility: false },
     ]
 
-    const actual = withResetAllHeartCounts(heartCollection)
+    const actual = withResetHeartCounts(heartCollection)
 
     const expected = [
       { color: 'pink', count: 0, visibility: true },

@@ -9,8 +9,8 @@ import {
 } from '@domain/entities/heart'
 import {
   HeartColor,
-  allLiveHeartColors,
-  allMemberHeartColors,
+  liveHeartColors,
+  memberHeartColors,
   MemberHeartColor,
 } from '@domain/valueObjects/heartColor/heartColor'
 
@@ -19,7 +19,7 @@ export type HeartCollection = readonly Heart[]
 /**
  * 全ての必要ブレードハートの状態を計算する
  */
-export const calculateAllRequiredBladeHearts = (
+export const calculateRequiredBladeHearts = (
   requiredLiveHearts: HeartCollection,
   memberHearts: HeartCollection
 ): HeartCollection => {
@@ -86,7 +86,7 @@ export const calculateMemberHeartSurplus = (
   requiredLiveHearts: HeartCollection,
   memberHearts: HeartCollection
 ): number[] => {
-  return allMemberHeartColors.map((color) => {
+  return memberHeartColors.map((color) => {
     const requiredState = getHeartStateByColor(requiredLiveHearts, color)
     const memberState = getHeartStateByColor(memberHearts, color)
 
@@ -118,7 +118,7 @@ export const calculateTotalRequiredBladeHearts = (
   requiredLiveHearts: HeartCollection,
   memberHearts: HeartCollection
 ): number => {
-  const allBladeHearts = calculateAllRequiredBladeHearts(
+  const allBladeHearts = calculateRequiredBladeHearts(
     requiredLiveHearts,
     memberHearts
   )
@@ -127,11 +127,11 @@ export const calculateTotalRequiredBladeHearts = (
 }
 
 export const createMemberHeartCollection = (): HeartCollection => {
-  return allMemberHeartColors.map((color) => createHeart(color))
+  return memberHeartColors.map((color) => createHeart(color))
 }
 
 export const createRequiredLiveHeartCollection = (): HeartCollection => {
-  return allLiveHeartColors.map((color) => createHeart(color))
+  return liveHeartColors.map((color) => createHeart(color))
 }
 
 export const getHeartStateByColor = (
@@ -179,7 +179,7 @@ export const withIncrementedHeartCount = (
   })
 }
 
-export const withResetAllHeartCounts = (
+export const withResetHeartCounts = (
   collection: HeartCollection
 ): HeartCollection => {
   return collection.map((heart) => withResetCount(heart))

@@ -1,43 +1,8 @@
 import { describe, it, expect } from 'vitest'
 import {
-  createHeartColor,
-  allLiveHeartColors,
   isGrayHeart,
   type HeartColor,
 } from '@domain/valueObjects/heartColor/heartColor'
-
-describe('createHeartColor', () => {
-  it('有効な色を指定した場合、正しくHeartColorが作成されること', () => {
-    const actual = createHeartColor('pink')
-    const expected: HeartColor = 'pink'
-
-    expect(actual).toBe(expected)
-  })
-
-  it('無効な色を指定した場合、エラーが投げられること', () => {
-    const invalidHeartColorValue = 'invalid'
-
-    expect(() => createHeartColor(invalidHeartColorValue)).toThrow()
-  })
-})
-
-describe('getAllLiveHeartColors', () => {
-  it('全てのライブ用ハート色が正しく返されること', () => {
-    const actual = allLiveHeartColors
-
-    const expected: HeartColor[] = [
-      'pink',
-      'green',
-      'blue',
-      'red',
-      'yellow',
-      'purple',
-      'gray',
-    ]
-
-    expect(actual).toEqual(expected)
-  })
-})
 
 describe('isGrayHeart', () => {
   it('灰色ハートの場合、trueが返されること', () => {
