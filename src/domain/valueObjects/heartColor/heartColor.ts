@@ -19,7 +19,7 @@ export const liveHeartColors: HeartColor[] = [
   'gray',
 ]
 
-export const memberHeartColors: HeartColor[] = [
+export const memberHeartColors: MemberHeartColor[] = [
   'pink',
   'green',
   'blue',
