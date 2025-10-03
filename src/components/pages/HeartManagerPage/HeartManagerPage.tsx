@@ -19,14 +19,14 @@ import {
 import {
   allLiveHeartColors,
   allMemberHeartColors,
-} from '@domain/valueObjects/heartColor'
+} from '@domain/valueObjects/heartColor/heartColor'
 import { getEffectiveCount, getDisplayCount } from '@domain/entities/heart'
-import { HeartColorSettingsModal } from '@components/ui/HeartColorSettingsModal'
-import { HeartCounter } from '@components/ui/HeartCounter'
-import { HeartIcon } from '@components/ui/HeartIcon'
-import { ResetButton } from '@components/commons/ui/ResetButton'
-import { Summary } from '@components/commons/ui/Summary'
-import { NumberSelect } from '@components/commons/function/NumberSelect'
+import { HeartColorSettingsModal } from '@components/ui/pages/HeartColorSettingsModal'
+import { HeartCounter } from '@components/ui/pages/HeartCounter'
+import { HeartIcon } from '@components/ui/pages/HeartIcon'
+import { ResetButton } from '@components/ui/commons/ui/ResetButton'
+import { Summary } from '@components/ui/commons/ui/Summary'
+import { NumberSelect } from '@components/ui/commons/function/NumberSelect'
 import { colors } from '@constants/colors'
 
 import './HeartManagerPage.css'

@@ -2,7 +2,7 @@ import React from 'react'
 import { Text, IconButton } from '@radix-ui/themes'
 import { DialogTitle, DialogDescription } from '@radix-ui/react-dialog'
 import { InfoCircledIcon } from '@radix-ui/react-icons'
-import { Modal } from '@components/commons/ui/Modal'
+import { Modal } from '@components/ui/commons/ui/Modal'
 
 export const CalculationMethodModal: React.FC = () => {
   return (

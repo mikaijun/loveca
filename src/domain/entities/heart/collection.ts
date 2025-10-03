@@ -12,7 +12,7 @@ import {
   allLiveHeartColors,
   allMemberHeartColors,
   MemberHeartColor,
-} from '@domain/valueObjects/heartColor'
+} from '@domain/valueObjects/heartColor/heartColor'
 
 export type HeartCollection = readonly Heart[]
 

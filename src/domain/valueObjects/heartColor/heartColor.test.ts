@@ -4,7 +4,7 @@ import {
   allLiveHeartColors,
   isGrayHeart,
   type HeartColor,
-} from '@domain/valueObjects/heartColor'
+} from '@domain/valueObjects/heartColor/heartColor'
 
 describe('createHeartColor', () => {
   it('有効な色を指定した場合、正しくHeartColorが作成されること', () => {

@@ -1,5 +1,5 @@
 import { useState, useCallback, useMemo } from 'react'
-import { MemberHeartColor } from '@domain/valueObjects/heartColor'
+import { MemberHeartColor } from '@domain/valueObjects/heartColor/heartColor'
 import {
   createRequiredLiveHeartCollection,
   createMemberHeartCollection,

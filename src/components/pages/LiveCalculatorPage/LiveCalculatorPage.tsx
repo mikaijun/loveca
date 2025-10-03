@@ -8,9 +8,9 @@ import { VscWand } from 'react-icons/vsc'
 import { BsPersonHearts } from 'react-icons/bs'
 
 import { useLiveCalculator } from './LiveCalculatorPage.hooks'
-import { Summary } from '@components/commons/ui/Summary'
-import { ResetButton } from '@components/commons/ui/ResetButton'
-import { NumberSelect } from '@components/commons/function/NumberSelect'
+import { Summary } from '@components/ui/commons/ui/Summary'
+import { ResetButton } from '@components/ui/commons/ui/ResetButton'
+import { NumberSelect } from '@components/ui/commons/function/NumberSelect'
 
 import './LiveCalculatorPage.css'
 

@@ -1,4 +1,4 @@
-import { HeartColor } from '@domain/valueObjects/heartColor'
+import { HeartColor } from '@domain/valueObjects/heartColor/heartColor'
 
 export interface Heart {
   readonly color: HeartColor
