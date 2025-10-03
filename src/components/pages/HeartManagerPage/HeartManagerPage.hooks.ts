@@ -91,7 +91,7 @@ export const useColorfulHeartManager = () => {
     []
   )
 
-  const handleResetAllHeartCounts = useCallback(() => {
+  const handleResetHeartCounts = useCallback(() => {
     setColorfulHeartState((prev) => {
       const newRequiredLiveHearts = withResetHeartCounts(
         prev.requiredLiveHearts
@@ -145,7 +145,7 @@ export const useColorfulHeartManager = () => {
     handleDecrementRequiredLiveHeart,
     handleIncrementMemberHeart,
     handleDecrementMemberHeart,
-    handleResetAllHeartCounts,
+    handleResetHeartCounts,
     handleChangeRequiredLiveHeartVisibility,
     handleChangeMemberHeartVisibility,
   }

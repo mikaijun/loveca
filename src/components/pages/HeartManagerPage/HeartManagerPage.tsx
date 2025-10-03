@@ -39,7 +39,7 @@ export default function HeartManagerPage() {
     handleDecrementRequiredLiveHeart,
     handleIncrementMemberHeart,
     handleDecrementMemberHeart,
-    handleResetAllHeartCounts,
+    handleResetHeartCounts,
     handleChangeRequiredLiveHeartVisibility,
     handleChangeMemberHeartVisibility,
   } = useColorfulHeartManager()
@@ -98,7 +98,7 @@ export default function HeartManagerPage() {
               requiredLiveHeartColorList={requiredLiveHeartColorList}
             />
             <ResetButton
-              onReset={handleResetAllHeartCounts}
+              onReset={handleResetHeartCounts}
               text="カウントリセット"
             />
           </div>
