@@ -18,7 +18,7 @@ import {
 } from '@domain/entities/heart/collection'
 import {
   liveHeartColors,
-  allMemberHeartColors,
+  memberHeartColors,
 } from '@domain/valueObjects/heartColor/heartColor'
 import { getEffectiveCount, getDisplayCount } from '@domain/entities/heart'
 import { HeartColorSettingsModal } from '@components/ui/pages/HeartColorSettingsModal'
@@ -172,7 +172,7 @@ export default function HeartManagerPage() {
           />
 
           <div className="HeartCounterGroup">
-            {allMemberHeartColors.map((color) => {
+            {memberHeartColors.map((color) => {
               const colorValue = color
               const state = getHeartStateByColor(memberHearts, color)
 

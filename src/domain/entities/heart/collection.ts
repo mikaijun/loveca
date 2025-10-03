@@ -10,7 +10,7 @@ import {
 import {
   HeartColor,
   liveHeartColors,
-  allMemberHeartColors,
+  memberHeartColors,
   MemberHeartColor,
 } from '@domain/valueObjects/heartColor/heartColor'
 
@@ -86,7 +86,7 @@ export const calculateMemberHeartSurplus = (
   requiredLiveHearts: HeartCollection,
   memberHearts: HeartCollection
 ): number[] => {
-  return allMemberHeartColors.map((color) => {
+  return memberHeartColors.map((color) => {
     const requiredState = getHeartStateByColor(requiredLiveHearts, color)
     const memberState = getHeartStateByColor(memberHearts, color)
 
@@ -127,7 +127,7 @@ export const calculateTotalRequiredBladeHearts = (
 }
 
 export const createMemberHeartCollection = (): HeartCollection => {
-  return allMemberHeartColors.map((color) => createHeart(color))
+  return memberHeartColors.map((color) => createHeart(color))
 }
 
 export const createRequiredLiveHeartCollection = (): HeartCollection => {
