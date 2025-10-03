@@ -11,7 +11,7 @@ import {
   getVisibleColorNames,
   withDecrementedHeartCount,
   withIncrementedHeartCount,
-  withResetAllHeartCounts,
+  withResetHeartCounts,
   withUpdatedVisibilities,
   createMemberHeartCollection,
   createRequiredLiveHeartCollection,
@@ -448,7 +448,7 @@ describe('withIncrementedHeartCount', () => {
   })
 })
 
-describe('withResetAllHeartCounts', () => {
+describe('withResetHeartCounts', () => {
   it('全ての色のハートカウントが0にリセットされることを確認', () => {
     const heartCollection: HeartCollection = [
       { color: 'pink', count: 1, visibility: true },
@@ -459,7 +459,7 @@ describe('withResetAllHeartCounts', () => {
       { color: 'purple', count: 6, visibility: false },
     ]
 
-    const actual = withResetAllHeartCounts(heartCollection)
+    const actual = withResetHeartCounts(heartCollection)
 
     const expected = [
       { color: 'pink', count: 0, visibility: true },

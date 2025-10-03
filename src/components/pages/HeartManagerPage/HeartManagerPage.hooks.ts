@@ -5,7 +5,7 @@ import {
   createMemberHeartCollection,
   withIncrementedHeartCount,
   withDecrementedHeartCount,
-  withResetAllHeartCounts,
+  withResetHeartCounts,
   withUpdatedVisibilities,
   calculateTotalRequiredBladeHearts,
   getTotalEffectiveCount,
@@ -93,10 +93,10 @@ export const useColorfulHeartManager = () => {
 
   const handleResetAllHeartCounts = useCallback(() => {
     setColorfulHeartState((prev) => {
-      const newRequiredLiveHearts = withResetAllHeartCounts(
+      const newRequiredLiveHearts = withResetHeartCounts(
         prev.requiredLiveHearts
       )
-      const newMemberHearts = withResetAllHeartCounts(prev.memberHearts)
+      const newMemberHearts = withResetHeartCounts(prev.memberHearts)
       return {
         requiredLiveHearts: newRequiredLiveHearts,
         memberHearts: newMemberHearts,

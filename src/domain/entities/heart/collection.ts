@@ -179,7 +179,7 @@ export const withIncrementedHeartCount = (
   })
 }
 
-export const withResetAllHeartCounts = (
+export const withResetHeartCounts = (
   collection: HeartCollection
 ): HeartCollection => {
   return collection.map((heart) => withResetCount(heart))
