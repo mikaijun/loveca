@@ -11,11 +11,7 @@ export const Default: StoryObj<typeof MulliganLineChart> = {
   render: () => (
     <Container p="8px" size="2">
       <MulliganLineChart
-        deckSize={60}
-        kasumiCount={0}
-        mulliganCount={3}
-        renCount={0}
-        wantCardCount={8}
+        probabilities={[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]}
       />
     </Container>
   ),
