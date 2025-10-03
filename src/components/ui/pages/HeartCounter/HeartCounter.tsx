@@ -1,13 +1,13 @@
 import React from 'react'
 import { HeartIcon } from '@components/ui/pages/HeartIcon'
-import { HeartIconProps } from '@constants/hearts'
+import { HeartColor } from '@domain/valueObjects/heartColor/heartColor'
 import './HeartCounter.css'
 
 type HeartCounterProps = {
-  color: HeartIconProps['color']
+  color: HeartColor
   count: number
-  onIncrement: (color: HeartIconProps['color']) => void
-  onDecrement: (color: HeartIconProps['color']) => void
+  onIncrement: (color: HeartColor) => void
+  onDecrement: (color: HeartColor) => void
 }
 
 export const HeartCounter: React.FC<HeartCounterProps> = ({

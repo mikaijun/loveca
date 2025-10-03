@@ -9,14 +9,16 @@ import { TbSettingsHeart } from 'react-icons/tb'
 import { Summary } from '@components/ui/commons/ui/Summary'
 import { Modal } from '@components/ui/commons/ui/Modal'
 import { HeartIcon } from '@components/ui/pages/HeartIcon'
-import { MemberHeartColor, memberHeartColors } from '@constants/hearts'
+import { HeartColor } from '@domain/valueObjects/heartColor/heartColor'
+import { memberHeartColors } from '@domain/valueObjects/heartColor/heartColor'
+
 import './HeartColorSettingsModal.css'
 
 export type HeartColorSettingsModalProps = {
-  requiredLiveHeartColorList: MemberHeartColor[]
-  memberHeartColorList: MemberHeartColor[]
-  onChangeRequiredLiveHeartColor: (value: MemberHeartColor[]) => void
-  onChangeMemberHeartColor: (value: MemberHeartColor[]) => void
+  requiredLiveHeartColorList: HeartColor[]
+  memberHeartColorList: HeartColor[]
+  onChangeRequiredLiveHeartColor: (value: HeartColor[]) => void
+  onChangeMemberHeartColor: (value: HeartColor[]) => void
 }
 
 export const HeartColorSettingsModal: React.FC<
@@ -28,7 +30,7 @@ export const HeartColorSettingsModal: React.FC<
   onChangeMemberHeartColor,
 }) => {
   const createHandleChange = useCallback(
-    (onChange: (values: MemberHeartColor[]) => void) => {
+    (onChange: (values: HeartColor[]) => void) => {
       return (values: string[]) => {
         const validValues = memberHeartColors.filter((color) =>
           values.includes(color)

@@ -1,11 +1,16 @@
 import {
   Heart,
-  createHeart,
   withIncrementedCount,
   withDecrementedCount,
   withResetCount,
   getEffectiveCount,
   withUpdatedVisibility,
+  RequiredLiveHeart,
+  MemberHeart,
+  createMemberHeart,
+  createRequiredLiveHeart,
+  isMemberHeart,
+  isRequiredLiveHeart,
 } from '@domain/entities/heart'
 import {
   HeartColor,
@@ -15,13 +20,15 @@ import {
 } from '@domain/valueObjects/heartColor/heartColor'
 
 export type HeartCollection = readonly Heart[]
+export type RequiredLiveHeartCollection = readonly RequiredLiveHeart[]
+export type MemberHeartCollection = readonly MemberHeart[]
 
 /**
  * 全ての必要ブレードハートの状態を計算する
  */
 export const calculateRequiredBladeHearts = (
-  requiredLiveHearts: HeartCollection,
-  memberHearts: HeartCollection
+  requiredLiveHearts: RequiredLiveHeartCollection,
+  memberHearts: MemberHeartCollection
 ): HeartCollection => {
   return requiredLiveHearts.map((state) => {
     const requiredBladeCount = calculateRequiredBladeHeartByColor(
@@ -38,8 +45,8 @@ export const calculateRequiredBladeHearts = (
  * 指定した色の必要ブレードハート数を計算する
  */
 export const calculateRequiredBladeHeartByColor = (
-  requiredLiveHearts: HeartCollection,
-  memberHearts: HeartCollection,
+  requiredLiveHearts: RequiredLiveHeartCollection,
+  memberHearts: MemberHeartCollection,
   color: HeartColor
 ): number => {
   // 灰色の場合は特別な計算
@@ -61,8 +68,8 @@ export const calculateRequiredBladeHeartByColor = (
  * 必要な灰色ブレードハート数を計算する
  */
 export const calculateRequiredGrayBladeHeart = (
-  requiredLiveHearts: HeartCollection,
-  memberHearts: HeartCollection
+  requiredLiveHearts: RequiredLiveHeartCollection,
+  memberHearts: MemberHeartCollection
 ): number => {
   // 灰色ハートの必要数を取得
   const grayRequiredState = getHeartStateByColor(requiredLiveHearts, 'gray')
@@ -83,8 +90,8 @@ export const calculateRequiredGrayBladeHeart = (
  * メンバーハートの各色における余剰数を配列で返す
  */
 export const calculateMemberHeartSurplus = (
-  requiredLiveHearts: HeartCollection,
-  memberHearts: HeartCollection
+  requiredLiveHearts: RequiredLiveHeartCollection,
+  memberHearts: MemberHeartCollection
 ): number[] => {
   return memberHeartColors.map((color) => {
     const requiredState = getHeartStateByColor(requiredLiveHearts, color)
@@ -101,8 +108,8 @@ export const calculateMemberHeartSurplus = (
  * メンバーハートの余剰数の合計を計算する
  */
 export const calculateTotalMemberHeartSurplus = (
-  requiredLiveHearts: HeartCollection,
-  memberHearts: HeartCollection
+  requiredLiveHearts: RequiredLiveHeartCollection,
+  memberHearts: MemberHeartCollection
 ): number => {
   const surplusArray = calculateMemberHeartSurplus(
     requiredLiveHearts,
@@ -115,8 +122,8 @@ export const calculateTotalMemberHeartSurplus = (
  * 合計必要ブレードハート数を計算する
  */
 export const calculateTotalRequiredBladeHearts = (
-  requiredLiveHearts: HeartCollection,
-  memberHearts: HeartCollection
+  requiredLiveHearts: RequiredLiveHeartCollection,
+  memberHearts: MemberHeartCollection
 ): number => {
   const allBladeHearts = calculateRequiredBladeHearts(
     requiredLiveHearts,
@@ -126,12 +133,25 @@ export const calculateTotalRequiredBladeHearts = (
   return getTotalEffectiveCount(allBladeHearts)
 }
 
-export const createMemberHeartCollection = (): HeartCollection => {
-  return memberHeartColors.map((color) => createHeart(color))
+export const createMemberHeartCollection = (): MemberHeartCollection => {
+  return memberHeartColors.map((color) => createMemberHeart(color))
 }
 
-export const createRequiredLiveHeartCollection = (): HeartCollection => {
-  return liveHeartColors.map((color) => createHeart(color))
+export const createRequiredLiveHeartCollection =
+  (): RequiredLiveHeartCollection => {
+    return liveHeartColors.map((color) => createRequiredLiveHeart(color))
+  }
+
+export const filterMemberHeartCollection = (
+  collection: HeartCollection
+): MemberHeartCollection => {
+  return collection.filter(isMemberHeart)
+}
+
+export const filterRequiredLiveHeartCollection = (
+  collection: HeartCollection
+): RequiredLiveHeartCollection => {
+  return collection.filter(isRequiredLiveHeart)
 }
 
 export const getHeartStateByColor = (
@@ -187,7 +207,7 @@ export const withResetHeartCounts = (
 
 export const withUpdatedVisibilities = (
   collection: HeartCollection,
-  visibleColors: MemberHeartColor[],
+  visibleColors: HeartColor[],
   forceGrayVisible: boolean = false
 ): HeartCollection => {
   return collection.map((heart) => {
