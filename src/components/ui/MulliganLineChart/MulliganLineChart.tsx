@@ -14,7 +14,6 @@ import {
   ChartOptions,
   ChartData,
 } from 'chart.js'
-import { calculateMulliganProbability } from './MulliganLineChart.hooks'
 
 ChartJS.register(
   CategoryScale,
@@ -32,30 +31,12 @@ const labels = [
 ]
 
 interface MulliganLineChartProps {
-  deckSize: number
-  kasumiCount: number
-  renCount: number
-  mulliganCount: number
-  wantCardCount: number
-  height?: number
+  probabilities: number[]
 }
 
 export const MulliganLineChart: React.FC<MulliganLineChartProps> = ({
-  deckSize,
-  kasumiCount,
-  renCount,
-  mulliganCount,
-  wantCardCount,
-  height = 300,
+  probabilities,
 }) => {
-  const probabilities = calculateMulliganProbability({
-    deckSize,
-    kasumiCount,
-    renCount,
-    wantCardCount,
-    mulliganCount,
-  })
-
   const data: ChartData<'line'> = {
     labels,
     datasets: [
@@ -97,5 +78,5 @@ export const MulliganLineChart: React.FC<MulliganLineChartProps> = ({
     },
   }
 
-  return <Line data={data} height={height} options={options} />
+  return <Line data={data} height={300} options={options} />
 }

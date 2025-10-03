@@ -4,12 +4,15 @@ import React from 'react'
 import { Box, Flex, Text } from '@radix-ui/themes'
 import { GiCardPick, GiCardPlay } from 'react-icons/gi'
 import { useMulliganCalculatorPage } from './MulliganCalculatorPage.hooks'
-import { CardSettingsModal } from '@components/features/mulliganCalculator/CardSettingsModal'
+import { CardSettingsModal } from '@components/ui/CardSettingsModal'
 import { Summary } from '@components/commons/ui/Summary'
 import { ResetButton } from '@components/commons/ui/ResetButton'
 import { NumberSelect } from '@components/commons/function/NumberSelect'
-import { MulliganLineChart } from '@components/features/mulliganCalculator/MulliganLineChart'
-import { CalculationMethodModal } from '@components/features/mulliganCalculator/CalculationMethodModal'
+import { MulliganLineChart } from '@components/ui/MulliganLineChart'
+import { CalculationMethodModal } from '@components/ui/CalculationMethodModal'
+import { createMulliganCalculation } from '@domain/entities/mulliganCalculation'
+import { calculateMulliganProbability } from '@domain/services/mulliganProbabilityService'
+
 import './MulliganCalculatorPage.css'
 
 export const MulliganCalculatorPage: React.FC = () => {
@@ -24,6 +27,16 @@ export const MulliganCalculatorPage: React.FC = () => {
     handleChangeKasumiCount,
     handleChangeRenCount,
   } = useMulliganCalculatorPage()
+
+  const calculation = createMulliganCalculation({
+    deckSize: 60,
+    kasumiCount,
+    renCount,
+    wantCardCount,
+    mulliganCount,
+  })
+
+  const probabilities = calculateMulliganProbability(calculation)
 
   return (
     <Flex className="MulliganCalculator" direction="column" gap="2">
@@ -107,13 +120,7 @@ export const MulliganCalculatorPage: React.FC = () => {
           )}
         </Box>
         <Box className="MulliganCalculatorChart">
-          <MulliganLineChart
-            deckSize={60}
-            kasumiCount={kasumiCount}
-            mulliganCount={mulliganCount}
-            renCount={renCount}
-            wantCardCount={wantCardCount}
-          />
+          <MulliganLineChart probabilities={probabilities} />
         </Box>
       </Flex>
     </Flex>
